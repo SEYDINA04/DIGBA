@@ -1,0 +1,58 @@
+# ── Environnements Python ─────────────────────────────
+.venv/
+ag_env/
+__pycache__/
+*.py[oc]
+*.egg-info/
+build/
+dist/
+wheels/
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+
+# ── Variables d'environnement (NE JAMAIS committer) ───
+.env
+.env.local
+.env.*.local
+
+# ── Données satellite brutes (fichiers lourds) ────────
+backend/data/satellite/*.jp2
+backend/data/satellite/*.tif
+backend/data/satellite/*.TIF
+
+# ── Outputs générés automatiquement ──────────────────
+backend/data/outputs/
+backend/data/rasff/*.db
+backend/data/rasff/*.sqlite
+
+# ── Base de données locale ────────────────────────────
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# ── Frontend ──────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.env
+frontend/.env.local
+
+# ── Docker ────────────────────────────────────────────
+docker-compose.override.yml
+
+# ── OS ────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# ── IDE ───────────────────────────────────────────────
+.idea/
+.vscode/
+*.code-workspace
+
+# ── Claude Code (sessions internes) ───────────────────
+.claude/
