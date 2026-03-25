@@ -1,6 +1,7 @@
 /**
  * DIGBA — Page Historique des scores
  */
+import { ClipboardList, Trash2 } from "lucide-react";
 import { useHistoryStore } from "../../store/historyStore";
 import { Badge } from "../../components/ui/Badge";
 import type { NiveauRisque } from "../../types/api";
@@ -15,11 +16,8 @@ function scoreColor(score: number): string {
 function formatDate(iso: string, locale: string): string {
   try {
     return new Intl.DateTimeFormat(locale, {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
+      day: "2-digit", month: "2-digit", year: "numeric",
+      hour: "2-digit", minute: "2-digit",
     }).format(new Date(iso));
   } catch {
     return iso.slice(0, 16);
@@ -42,20 +40,19 @@ export default function History() {
         </div>
         {entries.length > 0 && (
           <button
-            onClick={() => {
-              if (confirm(t.history.confirm_clear)) clearHistory();
-            }}
+            onClick={() => { if (confirm(t.history.confirm_clear)) clearHistory(); }}
             className="flex items-center gap-1.5 text-sm text-red-600 hover:text-red-700 border border-red-200 hover:border-red-300 bg-red-50 hover:bg-red-100 px-3 py-2 rounded-lg transition-colors"
           >
-            🗑️ {t.history.clear}
+            <Trash2 className="h-4 w-4" />
+            {t.history.clear}
           </button>
         )}
       </div>
 
       {/* Empty state */}
       {entries.length === 0 && (
-        <div className="bg-card rounded-xl border border-dashed border-border p-12 flex flex-col items-center gap-2 text-center">
-          <span className="text-4xl">📋</span>
+        <div className="bg-card rounded-xl border border-dashed border-border p-12 flex flex-col items-center gap-3 text-center">
+          <ClipboardList className="h-10 w-10 text-muted-foreground/30" />
           <p className="text-muted-foreground text-sm">
             {t.history.empty_desc}
             <br />
@@ -82,10 +79,7 @@ export default function History() {
               </thead>
               <tbody>
                 {entries.map((entry) => (
-                  <tr
-                    key={entry.id}
-                    className="border-b border-border hover:bg-muted/40 transition-colors"
-                  >
+                  <tr key={entry.id} className="border-b border-border hover:bg-muted/40 transition-colors">
                     <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">
                       {formatDate(entry.date, lang === "fr" ? "fr-FR" : "en-GB")}
                     </td>
@@ -93,9 +87,7 @@ export default function History() {
                       {t.products[entry.produit as keyof typeof t.products] ?? entry.produit}
                     </td>
                     <td className="px-4 py-3 text-foreground/80">{entry.region}</td>
-                    <td className="px-4 py-3 text-foreground/80 max-w-[160px] truncate">
-                      {entry.fournisseur}
-                    </td>
+                    <td className="px-4 py-3 text-foreground/80 max-w-[160px] truncate">{entry.fournisseur}</td>
                     <td className="px-4 py-3 text-muted-foreground">
                       {t.storage[entry.stockage as keyof typeof t.storage] ?? entry.stockage}
                     </td>

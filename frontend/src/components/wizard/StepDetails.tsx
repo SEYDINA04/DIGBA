@@ -2,11 +2,11 @@
  * DIGBA Wizard — Étape 2 : Produit & Opérateur
  */
 import { useState } from "react";
+import { Factory, Warehouse, Leaf, Wheat, Sprout, Target, ArrowRight } from "lucide-react";
 import { PRODUITS, STOCKAGES, CERTIFICATIONS } from "../../data/countries";
 import type { Produit, Stockage } from "../../types/api";
 import { useLang } from "../../i18n/LangContext";
 
-import imgCashew  from "../../assets/images/cashew-nuts.avif";
 import imgPeanuts from "../../assets/images/peanuts.webp";
 import imgMillet  from "../../assets/images/millet-grain.avif";
 import imgSorghum from "../../assets/images/sorghum.avif";
@@ -14,12 +14,26 @@ import imgSesame  from "../../assets/images/sesame-seeds.avif";
 import imgCocoa   from "../../assets/images/cocoa-beans.webp";
 
 const PRODUCT_IMAGES: Record<string, string> = {
-  noix_de_cajou: imgCashew,
-  arachide:      imgPeanuts,
-  mil:           imgMillet,
-  sorgho:        imgSorghum,
-  sesame:        imgSesame,
-  cacao:         imgCocoa,
+  arachide: imgPeanuts,
+  mil:      imgMillet,
+  sorgho:   imgSorghum,
+  sesame:   imgSesame,
+  cacao:    imgCocoa,
+};
+
+// Fallback icon when no image available
+const PRODUCT_ICONS: Record<string, React.ElementType> = {
+  arachide: Sprout,
+  mil:      Wheat,
+  sorgho:   Wheat,
+  sesame:   Leaf,
+  cacao:    Leaf,
+};
+
+const STORAGE_ICONS: Record<string, React.ElementType> = {
+  silo_ventile: Factory,
+  hangar:       Warehouse,
+  plein_air:    Leaf,
 };
 
 interface StepDetailsValues {
@@ -36,7 +50,7 @@ interface StepDetailsProps {
 const RISK_COLOR: Record<string, string> = {
   Faible: "text-emerald-600 bg-emerald-50 border-emerald-200",
   Modéré: "text-amber-600 bg-amber-50 border-amber-200",
-  Élevé: "text-red-600 bg-red-50 border-red-200",
+  Élevé:  "text-red-600 bg-red-50 border-red-200",
 };
 
 export function StepDetails({ onSubmit }: StepDetailsProps) {
@@ -77,6 +91,7 @@ export function StepDetails({ onSubmit }: StepDetailsProps) {
             const selected = produit === p.value;
             const translatedLabel = t.products[p.value as keyof typeof t.products] ?? p.label;
             const img = PRODUCT_IMAGES[p.value];
+            const FallbackIcon = PRODUCT_ICONS[p.value] ?? Leaf;
             return (
               <button
                 key={p.value}
@@ -95,7 +110,9 @@ export function StepDetails({ onSubmit }: StepDetailsProps) {
                     className="w-10 h-10 rounded-lg object-cover shrink-0"
                   />
                 ) : (
-                  <span className="text-2xl">{p.icon}</span>
+                  <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center shrink-0">
+                    <FallbackIcon className="h-5 w-5 text-muted-foreground" />
+                  </div>
                 )}
                 <div className="min-w-0">
                   <p className={`text-sm font-semibold ${selected ? "text-primary" : "text-foreground"}`}>
@@ -140,6 +157,7 @@ export function StepDetails({ onSubmit }: StepDetailsProps) {
             const selected = stockage === s.value;
             const translatedLabel = t.storage[s.value as keyof typeof t.storage] ?? s.label;
             const translatedRisk = t.risk[s.risk as keyof typeof t.risk] ?? s.risk;
+            const StorageIcon = STORAGE_ICONS[s.value] ?? Warehouse;
             return (
               <button
                 key={s.value}
@@ -151,7 +169,7 @@ export function StepDetails({ onSubmit }: StepDetailsProps) {
                     : "border-border bg-card hover:border-primary/40"
                 }`}
               >
-                <span className="text-2xl">{s.icon}</span>
+                <StorageIcon className={`h-6 w-6 ${selected ? "text-primary" : "text-muted-foreground"}`} />
                 <p className={`text-xs font-semibold leading-tight ${selected ? "text-primary" : "text-foreground"}`}>
                   {translatedLabel}
                 </p>
@@ -211,11 +229,9 @@ export function StepDetails({ onSubmit }: StepDetailsProps) {
       >
         {canSubmit ? (
           <>
-            <span>🎯</span>
+            <Target className="h-4 w-4" />
             {t.wizard.btn_score}
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
+            <ArrowRight className="h-4 w-4" />
           </>
         ) : (
           t.wizard.btn_complete

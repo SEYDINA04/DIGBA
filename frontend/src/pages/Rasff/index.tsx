@@ -1,19 +1,15 @@
 /**
  * DIGBA — Page Statistiques RASFF EU
  */
+import { AlertTriangle, Factory } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { rasffApi } from "../../services/api";
 import type { RasffStatsDanger, RasffStatsFournisseur } from "../../types/api";
 import { useLang } from "../../i18n/LangContext";
 
-// ── Table dangers ──────────────────────────────────────────────────────────
-
 function TableDangers({ data, col_danger, col_category, col_rejets, col_last }: {
   data: RasffStatsDanger[];
-  col_danger: string;
-  col_category: string;
-  col_rejets: string;
-  col_last: string;
+  col_danger: string; col_category: string; col_rejets: string; col_last: string;
 }) {
   return (
     <div className="overflow-x-auto">
@@ -28,10 +24,7 @@ function TableDangers({ data, col_danger, col_category, col_rejets, col_last }: 
         </thead>
         <tbody>
           {data.map((row, i) => (
-            <tr
-              key={i}
-              className="border-b border-border hover:bg-muted/40 transition-colors"
-            >
+            <tr key={i} className="border-b border-border hover:bg-muted/40 transition-colors">
               <td className="py-3 font-medium text-foreground">{row.danger}</td>
               <td className="py-3 text-muted-foreground">{row.categorie_danger}</td>
               <td className="py-3 text-right">
@@ -39,9 +32,7 @@ function TableDangers({ data, col_danger, col_category, col_rejets, col_last }: 
                   {row.nb_rejets}
                 </span>
               </td>
-              <td className="py-3 text-right text-muted-foreground">
-                {row.dernier_rejet?.slice(0, 10)}
-              </td>
+              <td className="py-3 text-right text-muted-foreground">{row.dernier_rejet?.slice(0, 10)}</td>
             </tr>
           ))}
         </tbody>
@@ -50,14 +41,9 @@ function TableDangers({ data, col_danger, col_category, col_rejets, col_last }: 
   );
 }
 
-// ── Table fournisseurs ─────────────────────────────────────────────────────
-
 function TableFournisseurs({ data, col_supplier, col_rejets, col_last, col_hazards }: {
   data: RasffStatsFournisseur[];
-  col_supplier: string;
-  col_rejets: string;
-  col_last: string;
-  col_hazards: string;
+  col_supplier: string; col_rejets: string; col_last: string; col_hazards: string;
 }) {
   return (
     <div className="overflow-x-auto">
@@ -72,22 +58,15 @@ function TableFournisseurs({ data, col_supplier, col_rejets, col_last, col_hazar
         </thead>
         <tbody>
           {data.map((row, i) => (
-            <tr
-              key={i}
-              className="border-b border-border hover:bg-muted/40 transition-colors"
-            >
+            <tr key={i} className="border-b border-border hover:bg-muted/40 transition-colors">
               <td className="py-3 font-medium text-foreground">{row.fournisseur}</td>
               <td className="py-3 text-right">
                 <span className="inline-flex items-center justify-center rounded-full bg-orange-100 text-orange-800 text-xs font-semibold px-2 py-0.5 min-w-[28px]">
                   {row.nb_rejets}
                 </span>
               </td>
-              <td className="py-3 text-right text-muted-foreground">
-                {row.dernier_rejet?.slice(0, 10)}
-              </td>
-              <td className="py-3 text-muted-foreground text-xs max-w-[200px] truncate">
-                {row.dangers}
-              </td>
+              <td className="py-3 text-right text-muted-foreground">{row.dernier_rejet?.slice(0, 10)}</td>
+              <td className="py-3 text-muted-foreground text-xs max-w-[200px] truncate">{row.dangers}</td>
             </tr>
           ))}
         </tbody>
@@ -95,8 +74,6 @@ function TableFournisseurs({ data, col_supplier, col_rejets, col_last, col_hazar
     </div>
   );
 }
-
-// ── Skeleton loader ────────────────────────────────────────────────────────
 
 function TableSkeleton() {
   return (
@@ -108,20 +85,11 @@ function TableSkeleton() {
   );
 }
 
-// ── Page ───────────────────────────────────────────────────────────────────
-
 export default function Rasff() {
   const { t } = useLang();
 
-  const statsQuery = useQuery({
-    queryKey: ["rasff-stats"],
-    queryFn: rasffApi.getStats,
-  });
-
-  const fournsQuery = useQuery({
-    queryKey: ["rasff-fournisseurs"],
-    queryFn: rasffApi.getFournisseurs,
-  });
+  const statsQuery = useQuery({ queryKey: ["rasff-stats"],        queryFn: rasffApi.getStats        });
+  const fournsQuery = useQuery({ queryKey: ["rasff-fournisseurs"], queryFn: rasffApi.getFournisseurs });
 
   return (
     <div className="space-y-6">
@@ -134,7 +102,7 @@ export default function Rasff() {
         {/* Table dangers */}
         <div className="bg-card rounded-xl border border-border shadow-sm p-6">
           <div className="flex items-center gap-2 mb-5">
-            <span className="text-xl">⚠️</span>
+            <AlertTriangle className="h-5 w-5 text-red-500" />
             <h2 className="font-semibold text-foreground">{t.rasff.dangers_title}</h2>
             {statsQuery.data && (
               <span className="ml-auto text-xs text-muted-foreground/60">
@@ -143,9 +111,7 @@ export default function Rasff() {
             )}
           </div>
           {statsQuery.isLoading && <TableSkeleton />}
-          {statsQuery.isError && (
-            <p className="text-sm text-red-600">{statsQuery.error.message}</p>
-          )}
+          {statsQuery.isError  && <p className="text-sm text-red-600">{statsQuery.error.message}</p>}
           {statsQuery.data && (
             <TableDangers
               data={statsQuery.data}
@@ -160,7 +126,7 @@ export default function Rasff() {
         {/* Table fournisseurs */}
         <div className="bg-card rounded-xl border border-border shadow-sm p-6">
           <div className="flex items-center gap-2 mb-5">
-            <span className="text-xl">🏭</span>
+            <Factory className="h-5 w-5 text-slate-500" />
             <h2 className="font-semibold text-foreground">{t.rasff.fournisseurs_title}</h2>
             {fournsQuery.data && (
               <span className="ml-auto text-xs text-muted-foreground/60">
@@ -169,9 +135,7 @@ export default function Rasff() {
             )}
           </div>
           {fournsQuery.isLoading && <TableSkeleton />}
-          {fournsQuery.isError && (
-            <p className="text-sm text-red-600">{fournsQuery.error.message}</p>
-          )}
+          {fournsQuery.isError  && <p className="text-sm text-red-600">{fournsQuery.error.message}</p>}
           {fournsQuery.data && (
             <TableFournisseurs
               data={fournsQuery.data}

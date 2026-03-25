@@ -1,17 +1,14 @@
 /**
- * DIGBA — ProgressTracker v2
- * Animation créative : orbe central + satellites orbitaux par phase.
- * Remplace la liste d'étapes linéaire par une visualisation circulaire immersive.
- *
- * Logique identique à v1 :
- *   - Chaque étape a une durée en ms
- *   - onAllDone() déclenché quand animation ET API sont terminées
+ * DIGBA — ProgressTracker v3
+ * Animation orbitale : icônes lucide-react à la place des emojis.
  */
 import { useEffect, useRef, useState } from "react";
+import { CheckCircle2 } from "lucide-react";
+import type { LucideProps } from "lucide-react";
 
 export interface TrackerStep {
   id: string;
-  icon: string;
+  Icon: React.ComponentType<LucideProps>;
   label: string;
   durationMs: number;
 }
@@ -24,8 +21,7 @@ interface ProgressTrackerProps {
 
 type StepStatus = "pending" | "active" | "done";
 
-// Positions angulaires des satellites autour de l'orbe central
-const ORBIT_ANGLES = [270, 0, 90, 180]; // top, right, bottom, left
+const ORBIT_ANGLES = [270, 0, 90, 180];
 
 export function ProgressTracker({ steps, isApiDone, onAllDone }: ProgressTrackerProps) {
   const [statuses, setStatuses] = useState<StepStatus[]>(
@@ -33,17 +29,13 @@ export function ProgressTracker({ steps, isApiDone, onAllDone }: ProgressTracker
   );
   const [tick, setTick] = useState(0);
   const animDoneRef = useRef(false);
-  const startRef = useRef(Date.now());
 
-  // Ticker pour animer l'orbe (rotation continue)
   useEffect(() => {
     const id = setInterval(() => setTick((t) => t + 1), 50);
     return () => clearInterval(id);
   }, []);
 
-  // Séquence d'animation identique à v1
   useEffect(() => {
-    startRef.current = Date.now();
     const timers: ReturnType<typeof setTimeout>[] = [];
     let cumulative = 0;
 
@@ -68,9 +60,7 @@ export function ProgressTracker({ steps, isApiDone, onAllDone }: ProgressTracker
             next[i] = "done";
             return next;
           });
-          if (i === steps.length - 1) {
-            animDoneRef.current = true;
-          }
+          if (i === steps.length - 1) animDoneRef.current = true;
         }, cumulative)
       );
     });
@@ -78,7 +68,6 @@ export function ProgressTracker({ steps, isApiDone, onAllDone }: ProgressTracker
     return () => timers.forEach(clearTimeout);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Déclencher onAllDone quand animation + API terminées (150ms pour laisser le cercle à 100%)
   useEffect(() => {
     if (isApiDone && animDoneRef.current) {
       const t = setTimeout(onAllDone, 150);
@@ -86,26 +75,23 @@ export function ProgressTracker({ steps, isApiDone, onAllDone }: ProgressTracker
     }
   }, [isApiDone, statuses]);
 
-  const doneCount = statuses.filter((s) => s === "done").length;
-  const progress  = doneCount / steps.length; // 0 → 1
-  const activeIdx = statuses.findIndex((s) => s === "active");
+  const doneCount  = statuses.filter((s) => s === "done").length;
+  const progress   = doneCount / steps.length;
+  const activeIdx  = statuses.findIndex((s) => s === "active");
   const activeStep = activeIdx >= 0 ? steps[activeIdx] : null;
 
-  // Arc SVG pour la progression circulaire
-  const R = 54;
-  const CIRC = 2 * Math.PI * R;
+  const R        = 54;
+  const CIRC     = 2 * Math.PI * R;
   const dashOffset = CIRC * (1 - progress);
-
-  // Rotation continue de l'anneau animé
   const rotation = (tick * 3) % 360;
 
   return (
     <div className="flex flex-col items-center justify-center py-10 px-4 select-none">
 
-      {/* ── Orbe central ─────────────────────────────────────────── */}
+      {/* ── Orbe central ── */}
       <div className="relative" style={{ width: 200, height: 200 }}>
 
-        {/* Halo extérieur pulsant */}
+        {/* Halo pulsant */}
         <div
           className="absolute inset-0 rounded-full"
           style={{
@@ -114,21 +100,9 @@ export function ProgressTracker({ steps, isApiDone, onAllDone }: ProgressTracker
           }}
         />
 
-        {/* Anneau de progression SVG */}
-        <svg
-          className="absolute inset-0"
-          width={200}
-          height={200}
-          viewBox="0 0 120 120"
-        >
-          {/* Piste de fond */}
-          <circle
-            cx="60" cy="60" r={R}
-            fill="none"
-            stroke="rgba(255,255,255,0.08)"
-            strokeWidth="6"
-          />
-          {/* Arc de progression */}
+        {/* Anneau SVG */}
+        <svg className="absolute inset-0" width={200} height={200} viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="6" />
           <circle
             cx="60" cy="60" r={R}
             fill="none"
@@ -140,7 +114,6 @@ export function ProgressTracker({ steps, isApiDone, onAllDone }: ProgressTracker
             transform="rotate(-90 60 60)"
             style={{ transition: "stroke-dashoffset 0.6s ease" }}
           />
-          {/* Anneau tournant secondaire */}
           <circle
             cx="60" cy="60" r={R - 10}
             fill="none"
@@ -159,14 +132,15 @@ export function ProgressTracker({ steps, isApiDone, onAllDone }: ProgressTracker
 
         {/* Contenu central */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          {/* Icône active animée */}
-          <span
-            className="text-3xl mb-1"
+          <div
+            className="mb-1 text-white"
             style={{ animation: "bounce-soft 1.2s ease-in-out infinite" }}
           >
-            {activeStep ? activeStep.icon : "✅"}
-          </span>
-          {/* Pourcentage */}
+            {activeStep
+              ? <activeStep.Icon className="h-7 w-7" />
+              : <CheckCircle2 className="h-7 w-7 text-emerald-400" />
+            }
+          </div>
           <span className="text-xl font-black text-white tabular-nums">
             {Math.round(progress * 100)}%
           </span>
@@ -175,12 +149,12 @@ export function ProgressTracker({ steps, isApiDone, onAllDone }: ProgressTracker
           </span>
         </div>
 
-        {/* ── Satellites orbitaux ──────────────────────────────────── */}
+        {/* ── Satellites orbitaux ── */}
         {steps.map((step, i) => {
-          const status  = statuses[i];
+          const status   = statuses[i];
           const angleDeg = ORBIT_ANGLES[i % ORBIT_ANGLES.length];
           const angleRad = (angleDeg * Math.PI) / 180;
-          const orbitR   = 88;                    // rayon de l'orbite
+          const orbitR   = 88;
           const cx = 100 + Math.cos(angleRad) * orbitR;
           const cy = 100 + Math.sin(angleRad) * orbitR;
 
@@ -188,18 +162,10 @@ export function ProgressTracker({ steps, isApiDone, onAllDone }: ProgressTracker
             <div
               key={step.id}
               className="absolute flex flex-col items-center"
-              style={{
-                left: cx - 18,
-                top:  cy - 18,
-                width: 36,
-                height: 36,
-                transition: "all 0.4s ease",
-              }}
+              style={{ left: cx - 18, top: cy - 18, width: 36, height: 36, transition: "all 0.4s ease" }}
             >
-              {/* Bulle satellite */}
               <div
-                className={`w-9 h-9 rounded-full flex items-center justify-center text-base
-                  border-2 transition-all duration-500 shadow-lg
+                className={`w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all duration-500 shadow-lg
                   ${status === "done"
                     ? "bg-emerald-500 border-emerald-400 scale-110"
                     : status === "active"
@@ -219,9 +185,9 @@ export function ProgressTracker({ steps, isApiDone, onAllDone }: ProgressTracker
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 ) : (
-                  <span style={{ filter: status === "active" ? "none" : "grayscale(1)" }}>
-                    {step.icon}
-                  </span>
+                  <step.Icon
+                    className={`w-4 h-4 ${status === "active" ? "text-cyan-600" : "text-gray-500"}`}
+                  />
                 )}
               </div>
             </div>
@@ -229,7 +195,7 @@ export function ProgressTracker({ steps, isApiDone, onAllDone }: ProgressTracker
         })}
       </div>
 
-      {/* ── Label étape active ────────────────────────────────────── */}
+      {/* ── Label étape active ── */}
       <div className="mt-8 text-center min-h-[48px]">
         {activeStep ? (
           <>
@@ -242,38 +208,24 @@ export function ProgressTracker({ steps, isApiDone, onAllDone }: ProgressTracker
           </>
         ) : (
           <>
-            <p className="text-sm font-semibold text-emerald-400">
-              Analyse terminée
-            </p>
+            <p className="text-sm font-semibold text-emerald-400">Analyse terminée</p>
             <p className="text-xs text-white/40 mt-1">Chargement des résultats…</p>
           </>
         )}
       </div>
 
-      {/* ── Légende des phases ────────────────────────────────────── */}
+      {/* ── Légende ── */}
       <div className="mt-6 grid grid-cols-2 gap-x-8 gap-y-2">
         {steps.map((step, i) => {
           const status = statuses[i];
           return (
             <div key={step.id} className="flex items-center gap-2">
-              <span
-                className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
-                  status === "done"
-                    ? "bg-emerald-400"
-                    : status === "active"
-                    ? "bg-cyan-400 animate-pulse"
-                    : "bg-gray-600"
-                }`}
-              />
-              <span
-                className={`text-xs truncate ${
-                  status === "done"
-                    ? "text-emerald-400"
-                    : status === "active"
-                    ? "text-white"
-                    : "text-white/30"
-                }`}
-              >
+              <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
+                status === "done" ? "bg-emerald-400" : status === "active" ? "bg-cyan-400 animate-pulse" : "bg-gray-600"
+              }`} />
+              <span className={`text-xs truncate ${
+                status === "done" ? "text-emerald-400" : status === "active" ? "text-white" : "text-white/30"
+              }`}>
                 {step.label}
               </span>
             </div>
@@ -281,7 +233,6 @@ export function ProgressTracker({ steps, isApiDone, onAllDone }: ProgressTracker
         })}
       </div>
 
-      {/* Keyframes injectées inline */}
       <style>{`
         @keyframes bounce-soft {
           0%, 100% { transform: translateY(0px); }

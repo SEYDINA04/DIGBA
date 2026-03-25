@@ -2,16 +2,16 @@
  * DIGBA — Barre de navigation
  */
 import { NavLink } from "react-router-dom";
-import { ShieldCheck } from "lucide-react";
+import { ShieldCheck, BarChart3, ClipboardList, Globe } from "lucide-react";
 import { useLang } from "../../i18n/LangContext";
 
 export function Navbar() {
   const { lang, setLang, t } = useLang();
 
   const links = [
-    { to: "/",        label: t.nav.analyse,  icon: "🧮" },
-    { to: "/rasff",   label: t.nav.rasff,    icon: "🇪🇺" },
-    { to: "/history", label: t.nav.history,  icon: "📋" },
+    { to: "/",        label: t.nav.analyse,  Icon: BarChart3    },
+    { to: "/rasff",   label: t.nav.rasff,    Icon: Globe        },
+    { to: "/history", label: t.nav.history,  Icon: ClipboardList },
   ];
 
   return (
@@ -29,7 +29,7 @@ export function Navbar() {
         {/* Navigation + Lang toggle */}
         <div className="flex items-center gap-2">
           <nav className="flex items-center gap-1">
-            {links.map(({ to, label, icon }) => (
+            {links.map(({ to, label, Icon }) => (
               <NavLink
                 key={to}
                 to={to}
@@ -42,7 +42,7 @@ export function Navbar() {
                   }`
                 }
               >
-                <span>{icon}</span>
+                <Icon className="h-4 w-4" />
                 <span className="hidden sm:inline">{label}</span>
               </NavLink>
             ))}

@@ -129,20 +129,20 @@ def _precip_score(precip_mm: float) -> float:
 
 
 def _anomaly_label(z: float, var: str) -> str:
-    """Génère un label lisible pour un z-score météo."""
+    """Génère un label lisible pour un z-score météo (sans emoji)."""
     sign = f"+{z:.1f}σ" if z >= 0 else f"{z:.1f}σ"
     if var == "temp":
-        if z > 2.0:    return f"🌡️ Canicule exceptionnelle ({sign})"
-        elif z > 1.0:  return f"🌡️ Chaleur anormale ({sign})"
-        elif z < -2.0: return f"❄️ Fraîcheur exceptionnelle ({sign})"
-        elif z < -1.0: return f"❄️ Fraîcheur anormale ({sign})"
-        else:          return f"✅ Température normale ({sign})"
+        if z > 2.0:    return f"Canicule exceptionnelle ({sign})"
+        elif z > 1.0:  return f"Chaleur anormale ({sign})"
+        elif z < -2.0: return f"Fraîcheur exceptionnelle ({sign})"
+        elif z < -1.0: return f"Fraîcheur anormale ({sign})"
+        else:          return f"Température normale ({sign})"
     else:  # precip
-        if z > 2.0:    return f"🌧️ Excès pluie exceptionnel ({sign})"
-        elif z > 1.0:  return f"🌧️ Pluies au-dessus normale ({sign})"
-        elif z < -2.0: return f"🏜️ Sécheresse sévère ({sign})"
-        elif z < -1.0: return f"🏜️ Déficit pluviométrique ({sign})"
-        else:          return f"✅ Précipitations normales ({sign})"
+        if z > 2.0:    return f"Excès pluie exceptionnel ({sign})"
+        elif z > 1.0:  return f"Pluies au-dessus normale ({sign})"
+        elif z < -2.0: return f"Sécheresse sévère ({sign})"
+        elif z < -1.0: return f"Déficit pluviométrique ({sign})"
+        else:          return f"Précipitations normales ({sign})"
 
 
 def _anomaly_penalty(z_temp: float, z_precip: float) -> float:
@@ -271,6 +271,8 @@ def get_weather(region: str) -> WeatherResult:
 
         return WeatherResult(
             city=city_label,
+            lat=lat,
+            lon=lon,
             humidity=humidity,
             temp_c=temp_c,
             precip_mm=precip_mm,
@@ -286,6 +288,8 @@ def get_weather(region: str) -> WeatherResult:
         logger.warning(f"Open-Meteo indisponible pour {region} : {exc} — score 50")
         return WeatherResult(
             city=city_label,
+            lat=lat,
+            lon=lon,
             humidity=70,
             temp_c=30.0,
             precip_mm=0.0,

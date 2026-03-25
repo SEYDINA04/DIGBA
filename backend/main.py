@@ -76,7 +76,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="DIGBA API",
-    description="Système de scoring de risque alimentaire pour l'export d'anacarde sénégalais",
+    description="Système de scoring de risque alimentaire pour l'export de produits agricoles ouest-africains",
     version=settings.app_version,
     docs_url="/docs",
     redoc_url="/redoc",

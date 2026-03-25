@@ -2,7 +2,8 @@
  * DIGBA Wizard — Étape 1 : Sélection du pays et de la région
  */
 import { useState } from "react";
-import { COUNTRIES, type CountryData } from "../../data/countries";
+import { MapPin, Satellite, ArrowRight } from "lucide-react";
+import { COUNTRIES, REGION_COORDS, type CountryData } from "../../data/countries";
 import { useLang } from "../../i18n/LangContext";
 
 interface StepLocationProps {
@@ -42,7 +43,6 @@ export function StepLocation({ onSubmit }: StepLocationProps) {
                     : "border-border bg-card hover:border-primary/40"
                 }`}
               >
-                {/* Selected checkmark */}
                 {isSelected && (
                   <div className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-primary">
                     <svg className="h-3 w-3 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -50,7 +50,6 @@ export function StepLocation({ onSubmit }: StepLocationProps) {
                     </svg>
                   </div>
                 )}
-
                 <span className="text-3xl">{country.flag}</span>
                 <div>
                   <p className={`font-semibold text-sm ${isSelected ? "text-primary" : "text-foreground"}`}>
@@ -83,19 +82,27 @@ export function StepLocation({ onSubmit }: StepLocationProps) {
             <div className="grid grid-cols-3 gap-2">
               {selectedCountry.regions.map((region) => {
                 const isSelected = selectedRegion === region;
+                const coords = REGION_COORDS[region];
                 return (
                   <button
                     key={region}
                     type="button"
                     onClick={() => setSelectedRegion(region)}
-                    className={`rounded-lg border-2 px-3 py-2.5 text-sm font-medium transition-all duration-150 focus:outline-none ${
+                    className={`flex flex-col items-start gap-0.5 rounded-lg border-2 px-3 py-2.5 text-left transition-all duration-150 focus:outline-none ${
                       isSelected
                         ? "border-primary bg-primary text-primary-foreground shadow-sm"
                         : "border-border bg-card text-foreground hover:border-primary/40 hover:bg-primary/5"
                     }`}
                   >
-                    <span className="text-xs mr-1">📍</span>
-                    {region}
+                    <div className="flex items-center gap-1">
+                      <MapPin className={`h-3 w-3 shrink-0 ${isSelected ? "text-primary-foreground/80" : "text-muted-foreground"}`} />
+                      <span className="text-sm font-medium">{region}</span>
+                    </div>
+                    {coords && (
+                      <span className={`text-[10px] font-mono ${isSelected ? "text-primary-foreground/60" : "text-muted-foreground/60"}`}>
+                        {coords.lat.toFixed(2)}°N {Math.abs(coords.lon).toFixed(2)}°{coords.lon < 0 ? "W" : "E"}
+                      </span>
+                    )}
                   </button>
                 );
               })}
@@ -117,11 +124,9 @@ export function StepLocation({ onSubmit }: StepLocationProps) {
       >
         {canSubmit ? (
           <>
-            <span>🛰️</span>
+            <Satellite className="h-4 w-4" />
             {t.wizard.btn_analyse(selectedRegion, selectedCountry?.name ?? "")}
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
+            <ArrowRight className="h-4 w-4" />
           </>
         ) : (
           t.wizard.btn_select

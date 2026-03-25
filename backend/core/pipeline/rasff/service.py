@@ -127,15 +127,12 @@ def lookup_rasff(
     cutoff_12m = today - timedelta(days=_BLACKLIST_MONTHS * 30)
 
     # ── Normalisation du produit pour la recherche DB ─────────────────────────
-    produit_db = produit.replace("_", " ").replace("noix de cajou", "Noix de cajou")
-    if "cajou" in produit.lower():
-        produit_db = "Noix de cajou"
+    produit_db = produit.replace("_", " ").title()
 
     # ── Filtre de base (produit + 24 derniers mois) ───────────────────────────
     base_filter = and_(
         RasffRejet.date >= cutoff_24m,
-        RasffRejet.produit.ilike("%cajou%") if "cajou" in produit.lower()
-        else RasffRejet.produit.ilike(f"%{produit_db}%"),
+        RasffRejet.produit.ilike(f"%{produit_db}%"),
     )
 
     # ── 1. Nb rejets fournisseur (24 mois) ────────────────────────────────────

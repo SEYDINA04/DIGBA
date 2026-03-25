@@ -416,12 +416,11 @@ def encode_input(
     """
     # Conversion produit → catégorie produit
     produit_to_cat: dict[str, str] = {
-        "noix_de_cajou": "nuts",
-        "arachide":      "nuts",
-        "mil":           "cereals",
-        "sorgho":        "cereals",
-        "sesame":        "herbs_spices",
-        "cacao":         "cocoa_coffee",
+        "arachide": "nuts",
+        "mil":      "cereals",
+        "sorgho":   "cereals",
+        "sesame":   "herbs_spices",
+        "cacao":    "cocoa_coffee",
     }
     category_norm = produit_to_cat.get(produit.lower(), "other")
 

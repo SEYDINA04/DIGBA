@@ -1,6 +1,7 @@
 /**
  * DIGBA — 4 cards de détail : NDVI / Météo / RASFF / Opérateur
  */
+import { Satellite, Cloud, Globe, User } from "lucide-react";
 import type { ScoreResponse } from "../../types/api";
 import { Card } from "../ui/Card";
 import { ScoreBar } from "../ui/ScoreBar";
@@ -18,7 +19,6 @@ function DetailRow({ label, value }: { label: string; value: React.ReactNode }) 
   );
 }
 
-/** Retourne le libellé de la classe végétale dominante depuis le dict classes */
 function dominantClass(classes: Record<string, number>): string {
   const labels: Record<string, string> = {
     eau_nuages: "Eau / Nuages",
@@ -39,17 +39,11 @@ export function ScoreDetails({ result }: ScoreDetailsProps) {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-      {/* ── NDVI ──────────────────────────────── */}
-      <Card title="NDVI Satellite" icon="🛰️">
-        <div className="mb-3">
-          <ScoreBar score={ndvi.score} showLabel />
-        </div>
+      <Card title="NDVI Satellite" icon={<Satellite className="h-5 w-5 text-emerald-600" />}>
+        <div className="mb-3"><ScoreBar score={ndvi.score} showLabel /></div>
         <div className="space-y-0">
           <DetailRow label="Indice NDVI" value={ndvi.ndvi_mean.toFixed(3)} />
-          <DetailRow
-            label="Min / Max"
-            value={`${ndvi.ndvi_min.toFixed(2)} / ${ndvi.ndvi_max.toFixed(2)}`}
-          />
+          <DetailRow label="Min / Max" value={`${ndvi.ndvi_min.toFixed(2)} / ${ndvi.ndvi_max.toFixed(2)}`} />
           <DetailRow label="Végétation dominante" value={dominantClass(ndvi.classes)} />
         </div>
         {ndvi.map_path && (
@@ -59,36 +53,28 @@ export function ScoreDetails({ result }: ScoreDetailsProps) {
         )}
       </Card>
 
-      {/* ── Météo ─────────────────────────────── */}
-      <Card title="Météo" icon="🌤️">
-        <div className="mb-3">
-          <ScoreBar score={weather.score} showLabel />
-        </div>
+      <Card title="Météo" icon={<Cloud className="h-5 w-5 text-sky-500" />}>
+        <div className="mb-3"><ScoreBar score={weather.score} showLabel /></div>
         <div className="space-y-0">
-          <DetailRow label="Ville" value={weather.city} />
-          <DetailRow label="Humidité" value={`${weather.humidity} %`} />
-          <DetailRow label="Température" value={`${weather.temp_c} °C`} />
+          <DetailRow label="Ville"          value={weather.city} />
+          <DetailRow label="Humidité"       value={`${weather.humidity} %`} />
+          <DetailRow label="Température"    value={`${weather.temp_c} °C`} />
           <DetailRow label="Précipitations" value={`${weather.precip_mm} mm`} />
-          <DetailRow label="Conditions" value={weather.weather_desc} />
+          <DetailRow label="Conditions"     value={weather.weather_desc} />
         </div>
       </Card>
 
-      {/* ── RASFF ─────────────────────────────── */}
-      <Card title="RASFF EU" icon="🇪🇺">
-        <div className="mb-3">
-          <ScoreBar score={rasff.score} showLabel />
-        </div>
+      <Card title="RASFF EU" icon={<span className="text-lg leading-none">🇪🇺</span>}>
+        <div className="mb-3"><ScoreBar score={rasff.score} showLabel /></div>
         <div className="space-y-0">
           <DetailRow label="Rejets (24 mois)" value={rasff.nb_rejets_24m} />
-          <DetailRow label="Rejets (région)" value={rasff.nb_rejets_region} />
+          <DetailRow label="Rejets (région)"  value={rasff.nb_rejets_region} />
           <DetailRow
             label="Blacklisté"
             value={
-              rasff.blackliste ? (
-                <span className="text-red-600 font-semibold">Oui</span>
-              ) : (
-                <span className="text-green-600">Non</span>
-              )
+              rasff.blackliste
+                ? <span className="text-red-600 font-semibold">Oui</span>
+                : <span className="text-green-600">Non</span>
             }
           />
           {rasff.derniers_dangers.length > 0 && (
@@ -105,32 +91,19 @@ export function ScoreDetails({ result }: ScoreDetailsProps) {
         </div>
       </Card>
 
-      {/* ── Opérateur ─────────────────────────── */}
-      <Card title="Opérateur" icon="👤">
-        <div className="mb-3">
-          <ScoreBar score={operator.score} showLabel />
-        </div>
+      <Card title="Opérateur" icon={<User className="h-5 w-5 text-slate-500" />}>
+        <div className="mb-3"><ScoreBar score={operator.score} showLabel /></div>
         <div className="space-y-0">
-          <DetailRow
-            label="Stockage"
-            value={operator.stockage.replace(/_/g, " ")}
-          />
+          <DetailRow label="Stockage"       value={operator.stockage.replace(/_/g, " ")} />
           <DetailRow
             label="Certifications"
-            value={
-              operator.certifications.length > 0
-                ? operator.certifications.join(", ")
-                : "Aucune"
-            }
+            value={operator.certifications.length > 0 ? operator.certifications.join(", ") : "Aucune"}
           />
         </div>
         {Object.keys(operator.facteurs).length > 0 && (
           <div className="mt-3 flex flex-wrap gap-1">
             {Object.values(operator.facteurs).map((label, i) => (
-              <span
-                key={i}
-                className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full"
-              >
+              <span key={i} className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
                 {label}
               </span>
             ))}

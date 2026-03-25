@@ -1,10 +1,14 @@
 /**
  * DIGBA — AnalysisWizard
- * Modal multi-étapes orchestrant tout le flux d'analyse :
- *   step1-form → step1-loading → step1-preview →
- *   step2-form → step2-loading → step2-result
+ * Modal multi-étapes orchestrant tout le flux d'analyse.
  */
 import { useCallback, useReducer, useRef } from "react";
+import {
+  Globe, Zap, Satellite, Package, Target,
+  Leaf, Wheat, Cloud, Search, BarChart3, User,
+  AlertTriangle,
+} from "lucide-react";
+import type { LucideProps } from "lucide-react";
 import type { PreviewResponse, ScoreResponse, Produit, Stockage } from "../../types/api";
 import type { CountryData } from "../../data/countries";
 import { previewApi, scoreApi } from "../../services/api";
@@ -15,15 +19,31 @@ import { ScoringResult } from "./ScoringResult";
 import { ProgressTracker, type TrackerStep } from "./ProgressTracker";
 import { useLang } from "../../i18n/LangContext";
 
-// ── State machine ──────────────────────────────────────────────────────────
+// ── Icon maps (phases & steps) ─────────────────────────────────────────────
 
-type Phase =
-  | "step1-form"
-  | "step1-loading"
-  | "step1-preview"
-  | "step2-form"
-  | "step2-loading"
-  | "step2-result";
+type Phase = "step1-form" | "step1-loading" | "step1-preview" | "step2-form" | "step2-loading" | "step2-result";
+
+const PHASE_ICONS: Record<Phase, React.ComponentType<LucideProps>> = {
+  "step1-form":    Globe,
+  "step1-loading": Zap,
+  "step1-preview": Satellite,
+  "step2-form":    Package,
+  "step2-loading": Zap,
+  "step2-result":  Target,
+};
+
+const STEP_ICONS: Record<string, React.ComponentType<LucideProps>> = {
+  "sat-connect":  Satellite,
+  "ndvi-calc":    Leaf,
+  "meteo-fetch":  Cloud,
+  "meteo-anal":   Wheat,
+  "rasff-query":  Search,
+  "rasff-anal":   BarChart3,
+  "op-score":     User,
+  "final-score":  Target,
+};
+
+// ── State machine ──────────────────────────────────────────────────────────
 
 interface WizardState {
   phase: Phase;
@@ -51,16 +71,9 @@ type WizardAction =
 
 const initial: WizardState = {
   phase: "step1-form",
-  country: null,
-  region: "",
-  preview: null,
-  produit: "",
-  fournisseur: "",
-  stockage: "",
-  certifications: [],
-  result: null,
-  error: null,
-  isApiDone: false,
+  country: null, region: "", preview: null,
+  produit: "", fournisseur: "", stockage: "", certifications: [],
+  result: null, error: null, isApiDone: false,
 };
 
 function reducer(state: WizardState, action: WizardAction): WizardState {
@@ -132,9 +145,8 @@ export function AnalysisWizard({ onClose, onSave }: AnalysisWizardProps) {
   const [state, dispatch] = useReducer(reducer, initial);
   const { t } = useLang();
   const previewDataRef = useRef<PreviewResponse | null>(null);
-  const resultDataRef = useRef<ScoreResponse | null>(null);
+  const resultDataRef  = useRef<ScoreResponse | null>(null);
 
-  // ── Step 1: fetch preview
   const handleLocationSubmit = useCallback(
     (country: CountryData, region: string) => {
       dispatch({ type: "START_LOCATION", country, region });
@@ -142,80 +154,62 @@ export function AnalysisWizard({ onClose, onSave }: AnalysisWizardProps) {
         previewDataRef.current = data;
         dispatch({ type: "PREVIEW_API_DONE", data });
       }).catch((e) => dispatch({ type: "API_ERROR", message: typeof e?.message === "string" ? e.message : String(e ?? "Erreur réseau") }));
-    },
-    []
+    }, []
   );
 
-  const handleStep1AnimDone = useCallback(() => {
-    dispatch({ type: "PREVIEW_ANIM_DONE" });
-  }, []);
+  const handleStep1AnimDone = useCallback(() => dispatch({ type: "PREVIEW_ANIM_DONE" }), []);
 
-  // ── Step 2: fetch score
   const handleDetailsSubmit = useCallback(
     (values: { produit: Produit; fournisseur: string; stockage: Stockage; certifications: string[] }) => {
       if (!state.country || !state.region) return;
       dispatch({ type: "START_SCORING", ...values });
-      scoreApi
-        .submit({
-          produit: values.produit,
-          region: state.region,
-          country: state.country.code,
-          fournisseur: values.fournisseur,
-          stockage: values.stockage,
-          certifications: values.certifications,
-        })
-        .then((data) => {
-          resultDataRef.current = data;
-          dispatch({ type: "SCORE_API_DONE", data });
-        })
-        .catch((e) => dispatch({ type: "API_ERROR", message: typeof e?.message === "string" ? e.message : String(e ?? "Erreur réseau") }));
-    },
-    [state.country, state.region]
+      scoreApi.submit({
+        produit: values.produit, region: state.region, country: state.country.code,
+        fournisseur: values.fournisseur, stockage: values.stockage, certifications: values.certifications,
+      }).then((data) => {
+        resultDataRef.current = data;
+        dispatch({ type: "SCORE_API_DONE", data });
+      }).catch((e) => dispatch({ type: "API_ERROR", message: typeof e?.message === "string" ? e.message : String(e ?? "Erreur réseau") }));
+    }, [state.country, state.region]
   );
 
-  const handleStep2AnimDone = useCallback(() => {
-    dispatch({ type: "SCORE_ANIM_DONE" });
-  }, []);
+  const handleStep2AnimDone = useCallback(() => dispatch({ type: "SCORE_ANIM_DONE" }), []);
 
-  // ── Save and close
   const handleSave = useCallback(() => {
     if (!state.result || !state.country) return;
     onSave(state.result, {
-      country: state.country,
-      region: state.region,
-      produit: state.produit as Produit,
-      fournisseur: state.fournisseur,
-      stockage: state.stockage as Stockage,
-      certifications: state.certifications,
+      country: state.country, region: state.region,
+      produit: state.produit as Produit, fournisseur: state.fournisseur,
+      stockage: state.stockage as Stockage, certifications: state.certifications,
     });
     onClose();
   }, [state, onSave, onClose]);
 
-  const heading = t.wizard.phases[state.phase];
-  const step1Steps: TrackerStep[] = t.wizard.step1_steps.map((s) => ({ ...s }));
-  const step2Steps: TrackerStep[] = t.wizard.step2_steps.map((s) => ({ ...s }));
+  const heading   = t.wizard.phases[state.phase];
+  const PhaseIcon = PHASE_ICONS[state.phase];
+
+  const step1Steps: TrackerStep[] = t.wizard.step1_steps.map((s) => ({
+    id: s.id, label: s.label, durationMs: s.durationMs,
+    Icon: STEP_ICONS[s.id] ?? Zap,
+  }));
+  const step2Steps: TrackerStep[] = t.wizard.step2_steps.map((s) => ({
+    id: s.id, label: s.label, durationMs: s.durationMs,
+    Icon: STEP_ICONS[s.id] ?? Zap,
+  }));
+
+  const isLoading = state.phase === "step1-loading" || state.phase === "step2-loading";
 
   return (
-    /* ── Backdrop ── */
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      {/* ── Panel : flex colonne, hauteur limitée, header fixe + body scroll ── */}
       <div className={`relative w-full max-w-2xl rounded-2xl shadow-2xl flex flex-col max-h-[92vh] transition-colors duration-200 ${
-        state.phase === "step1-loading" || state.phase === "step2-loading"
-          ? "bg-gray-950"
-          : "bg-white"
+        isLoading ? "bg-gray-950" : "bg-white"
       }`}>
 
-        {/* ── HEADER FIXE (ne défile pas) ── */}
-        <div className={`shrink-0 rounded-t-2xl transition-colors duration-200 ${
-          state.phase === "step1-loading" || state.phase === "step2-loading"
-            ? "bg-gray-950"
-            : "bg-white"
-        }`}>
-
-          {/* Close button */}
+        {/* Header */}
+        <div className={`shrink-0 rounded-t-2xl transition-colors duration-200 ${isLoading ? "bg-gray-950" : "bg-white"}`}>
           <button
             type="button"
             onClick={onClose}
@@ -226,81 +220,39 @@ export function AnalysisWizard({ onClose, onSave }: AnalysisWizardProps) {
             </svg>
           </button>
 
-          {/* Step indicator */}
-          <StepIndicator
-            phase={state.phase}
-            label1={t.wizard.step1_label}
-            label2={t.wizard.step2_label}
-          />
+          <StepIndicator phase={state.phase} label1={t.wizard.step1_label} label2={t.wizard.step2_label} />
 
-          {/* Heading */}
-          <div className={`px-6 pt-4 pb-3 border-b transition-colors duration-200 ${
-            state.phase === "step1-loading" || state.phase === "step2-loading"
-              ? "border-white/10"
-              : "border-border"
-          }`}>
+          <div className={`px-6 pt-4 pb-3 border-b transition-colors duration-200 ${isLoading ? "border-white/10" : "border-border"}`}>
             <div className="flex items-center gap-3">
-              <span className="text-2xl">{heading.icon}</span>
+              <PhaseIcon className={`h-6 w-6 ${isLoading ? "text-emerald-400" : "text-primary"}`} />
               <div>
-                <h2 className={`text-lg font-bold transition-colors duration-200 ${
-                  state.phase === "step1-loading" || state.phase === "step2-loading"
-                    ? "text-white"
-                    : "text-gray-900"
-                }`}>{heading.title}</h2>
+                <h2 className={`text-lg font-bold transition-colors duration-200 ${isLoading ? "text-white" : "text-gray-900"}`}>
+                  {heading.title}
+                </h2>
                 <p className="text-xs text-gray-400">{heading.sub}</p>
               </div>
             </div>
           </div>
 
-          {/* Error banner */}
           {state.error && (
-            <div className="mx-6 mt-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-              ⚠️ {state.error}
+            <div className="mx-6 mt-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 flex items-start gap-2">
+              <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
+              {state.error}
             </div>
           )}
         </div>
 
-        {/* ── BODY SCROLLABLE ── */}
+        {/* Body */}
         <div className="flex-1 overflow-y-auto px-6 py-5">
-          {state.phase === "step1-form" && (
-            <StepLocation onSubmit={handleLocationSubmit} />
-          )}
-
-          {state.phase === "step1-loading" && (
-            <ProgressTracker
-              steps={step1Steps}
-              isApiDone={state.isApiDone}
-              onAllDone={handleStep1AnimDone}
-            />
-          )}
-
+          {state.phase === "step1-form"    && <StepLocation onSubmit={handleLocationSubmit} />}
+          {state.phase === "step1-loading" && <ProgressTracker steps={step1Steps} isApiDone={state.isApiDone} onAllDone={handleStep1AnimDone} />}
           {state.phase === "step1-preview" && state.preview && state.country && (
-            <LocationPreview
-              data={state.preview}
-              country={state.country}
-              onContinue={() => dispatch({ type: "CONTINUE_TO_STEP2" })}
-            />
+            <LocationPreview data={state.preview} country={state.country} onContinue={() => dispatch({ type: "CONTINUE_TO_STEP2" })} />
           )}
-
-          {state.phase === "step2-form" && (
-            <StepDetails onSubmit={handleDetailsSubmit} />
-          )}
-
-          {state.phase === "step2-loading" && (
-            <ProgressTracker
-              steps={step2Steps}
-              isApiDone={state.isApiDone}
-              onAllDone={handleStep2AnimDone}
-            />
-          )}
-
-          {state.phase === "step2-result" && state.result && state.country && (
-            <ScoringResult
-              result={state.result}
-              country={state.country}
-              region={state.region}
-              onDone={handleSave}
-            />
+          {state.phase === "step2-form"    && <StepDetails onSubmit={handleDetailsSubmit} />}
+          {state.phase === "step2-loading" && <ProgressTracker steps={step2Steps} isApiDone={state.isApiDone} onAllDone={handleStep2AnimDone} />}
+          {state.phase === "step2-result"  && state.result && state.country && (
+            <ScoringResult result={state.result} country={state.country} region={state.region} onDone={handleSave} />
           )}
         </div>
       </div>

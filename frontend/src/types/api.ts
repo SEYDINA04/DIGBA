@@ -5,7 +5,8 @@
 
 // ── Enums ──────────────────────────────────────────────────────────────────
 
-export type Produit = "noix_de_cajou" | "arachide" | "mil" | "sorgho" | "sesame" | "cacao";
+// noix_de_cajou retiré — FB-01
+export type Produit = "arachide" | "mil" | "sorgho" | "sesame" | "cacao";
 export type Stockage = "silo_ventile" | "hangar" | "plein_air";
 export type NiveauRisque = "Faible" | "Modéré" | "Élevé";
 
@@ -62,6 +63,8 @@ export interface WeatherAnomaly {
 export interface WeatherResult {
   score: number;
   city: string;
+  lat: number;
+  lon: number;
   humidity: number;
   temp_c: number;
   precip_mm: number;

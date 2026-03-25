@@ -11,7 +11,7 @@ type Region = string; // Region is now a plain string (multi-country support)
 // ── Zod schema ─────────────────────────────────────────────────────────────
 
 const schema = z.object({
-  produit: z.enum(["noix_de_cajou", "arachide", "mil", "sorgho"] as const),
+  produit: z.enum(["arachide", "mil", "sorgho", "sesame", "cacao"] as const),
   region: z.enum(["Kaolack", "Thiès", "Dakar", "Ziguinchor", "Saint-Louis"] as const),
   fournisseur: z.string().min(2, "Minimum 2 caractères"),
   stockage: z.enum(["silo_ventile", "hangar", "plein_air"] as const),
@@ -21,10 +21,11 @@ const schema = z.object({
 // ── Options ────────────────────────────────────────────────────────────────
 
 const PRODUITS: { value: Produit; label: string }[] = [
-  { value: "noix_de_cajou", label: "Noix de cajou" },
-  { value: "arachide",      label: "Arachide" },
-  { value: "mil",           label: "Mil" },
-  { value: "sorgho",        label: "Sorgho" },
+  { value: "arachide", label: "Arachide" },
+  { value: "mil",      label: "Mil"      },
+  { value: "sorgho",   label: "Sorgho"   },
+  { value: "sesame",   label: "Sésame"   },
+  { value: "cacao",    label: "Cacao"    },
 ];
 
 const REGIONS: { value: Region; label: string }[] = [
@@ -35,10 +36,10 @@ const REGIONS: { value: Region; label: string }[] = [
   { value: "Saint-Louis",  label: "Saint-Louis" },
 ];
 
-const STOCKAGES: { value: Stockage; label: string; emoji: string; risk: string }[] = [
-  { value: "silo_ventile", label: "Silo ventilé",  emoji: "✅", risk: "Faible risque" },
-  { value: "hangar",       label: "Hangar",         emoji: "⚠️", risk: "Risque modéré" },
-  { value: "plein_air",    label: "Plein air",      emoji: "❌", risk: "Risque élevé" },
+const STOCKAGES: { value: Stockage; label: string; risk: string }[] = [
+  { value: "silo_ventile", label: "Silo ventilé", risk: "Faible risque" },
+  { value: "hangar",       label: "Hangar",        risk: "Risque modéré" },
+  { value: "plein_air",    label: "Plein air",     risk: "Risque élevé"  },
 ];
 
 const CERTIFICATIONS = [
@@ -65,7 +66,7 @@ export function ScoreForm({ onSubmit, isLoading = false }: ScoreFormProps) {
   } = useForm<ScoreRequest>({
     resolver: zodResolver(schema),
     defaultValues: {
-      produit: "noix_de_cajou",
+      produit: "arachide",
       region: "Kaolack",
       fournisseur: "",
       stockage: "hangar",
@@ -143,7 +144,7 @@ export function ScoreForm({ onSubmit, isLoading = false }: ScoreFormProps) {
                     checked={field.value === s.value}
                     onChange={() => field.onChange(s.value)}
                   />
-                  <div className="text-xl mb-1">{s.emoji}</div>
+                  <div className="text-xl mb-1"></div>
                   <div className="text-sm font-medium text-gray-800">{s.label}</div>
                   <div className="text-xs text-gray-500 mt-0.5">{s.risk}</div>
                 </label>

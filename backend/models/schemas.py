@@ -9,12 +9,11 @@ from pydantic import BaseModel, Field
 # ── Enums ─────────────────────────────────────────────────────────────────────
 
 class Produit(str, Enum):
-    noix_de_cajou = "noix_de_cajou"
-    arachide      = "arachide"
-    mil           = "mil"
-    sorgho        = "sorgho"
-    sesame        = "sesame"
-    cacao         = "cacao"
+    arachide = "arachide"
+    mil      = "mil"
+    sorgho   = "sorgho"
+    sesame   = "sesame"
+    cacao    = "cacao"
 
 
 class Region(str, Enum):
@@ -44,10 +43,10 @@ class ScoreRequest(BaseModel):
     model_config = {
         "json_schema_extra": {
             "example": {
-                "produit":        "noix_de_cajou",
+                "produit":        "arachide",
                 "region":         "Kaolack",
                 "country":        "SN",
-                "fournisseur":    "Export Cashew SN",
+                "fournisseur":    "Arachide Export SN",
                 "stockage":       "hangar",
                 "certifications": ["GlobalG.A.P."],
             }
@@ -93,6 +92,8 @@ class WeatherAnomaly(BaseModel):
 
 class WeatherResult(BaseModel):
     city:            str
+    lat:             float = 0.0   # latitude GPS de la zone
+    lon:             float = 0.0   # longitude GPS de la zone
     humidity:        int
     temp_c:          float
     precip_mm:       float
