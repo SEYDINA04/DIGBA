@@ -21,9 +21,10 @@ dependencies = [
     # Base de données
     "sqlalchemy>=2.0.0",
     "alembic>=1.13.0",
-    # Data science (calibration V2)
+    # Data science — ML scoring Random Forest
     "pandas>=2.2.0",
     "scikit-learn>=1.5.0",
+    "openpyxl>=3.1.0",
     # Config & utilitaires
     "python-dotenv>=1.0.0",
     "tqdm>=4.66.0",

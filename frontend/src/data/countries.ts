@@ -47,6 +47,8 @@ export const PRODUITS = [
   { value: "arachide",      label: "Arachide",      icon: "🥜", desc: "Arachis hypogaea" },
   { value: "mil",           label: "Mil",           icon: "🌾", desc: "Pennisetum glaucum" },
   { value: "sorgho",        label: "Sorgho",        icon: "🌾", desc: "Sorghum bicolor" },
+  { value: "sesame",        label: "Sésame",        icon: "🌱", desc: "Sesamum indicum" },
+  { value: "cacao",         label: "Cacao",         icon: "🍫", desc: "Theobroma cacao" },
 ] as const;
 
 export const STOCKAGES = [

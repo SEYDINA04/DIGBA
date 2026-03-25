@@ -1,0 +1,1652 @@
+{
+  "Dakar": {
+    "1": {
+      "temp_mu": 22.54,
+      "temp_sigma": 1.74,
+      "precip_mu": 0.03,
+      "precip_sigma": 0.38,
+      "humidity_mu": 52.81,
+      "humidity_sigma": 12.49,
+      "n_days": 651
+    },
+    "2": {
+      "temp_mu": 21.68,
+      "temp_sigma": 2.02,
+      "precip_mu": 0.02,
+      "precip_sigma": 0.21,
+      "humidity_mu": 59.49,
+      "humidity_sigma": 14.91,
+      "n_days": 593
+    },
+    "3": {
+      "temp_mu": 21.88,
+      "temp_sigma": 1.71,
+      "precip_mu": 0.0,
+      "precip_sigma": 0.07,
+      "humidity_mu": 66.04,
+      "humidity_sigma": 13.45,
+      "n_days": 651
+    },
+    "4": {
+      "temp_mu": 21.95,
+      "temp_sigma": 1.34,
+      "precip_mu": 0.0,
+      "precip_sigma": 0.02,
+      "humidity_mu": 73.19,
+      "humidity_sigma": 7.87,
+      "n_days": 630
+    },
+    "5": {
+      "temp_mu": 23.15,
+      "temp_sigma": 1.4,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.35,
+      "humidity_mu": 76.14,
+      "humidity_sigma": 6.26,
+      "n_days": 651
+    },
+    "6": {
+      "temp_mu": 25.19,
+      "temp_sigma": 1.2,
+      "precip_mu": 0.08,
+      "precip_sigma": 0.62,
+      "humidity_mu": 78.28,
+      "humidity_sigma": 3.88,
+      "n_days": 630
+    },
+    "7": {
+      "temp_mu": 26.75,
+      "temp_sigma": 0.79,
+      "precip_mu": 1.29,
+      "precip_sigma": 6.2,
+      "humidity_mu": 77.68,
+      "humidity_sigma": 3.68,
+      "n_days": 651
+    },
+    "8": {
+      "temp_mu": 27.13,
+      "temp_sigma": 0.66,
+      "precip_mu": 4.65,
+      "precip_sigma": 10.53,
+      "humidity_mu": 80.98,
+      "humidity_sigma": 3.88,
+      "n_days": 651
+    },
+    "9": {
+      "temp_mu": 27.47,
+      "temp_sigma": 0.69,
+      "precip_mu": 3.39,
+      "precip_sigma": 6.83,
+      "humidity_mu": 82.9,
+      "humidity_sigma": 2.76,
+      "n_days": 630
+    },
+    "10": {
+      "temp_mu": 28.02,
+      "temp_sigma": 0.75,
+      "precip_mu": 0.61,
+      "precip_sigma": 2.36,
+      "humidity_mu": 77.5,
+      "humidity_sigma": 6.31,
+      "n_days": 651
+    },
+    "11": {
+      "temp_mu": 26.79,
+      "temp_sigma": 1.32,
+      "precip_mu": 0.02,
+      "precip_sigma": 0.31,
+      "humidity_mu": 64.87,
+      "humidity_sigma": 10.19,
+      "n_days": 630
+    },
+    "12": {
+      "temp_mu": 24.41,
+      "temp_sigma": 1.4,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.11,
+      "humidity_mu": 56.08,
+      "humidity_sigma": 12.72,
+      "n_days": 651
+    }
+  },
+  "Thiès": {
+    "1": {
+      "temp_mu": 23.52,
+      "temp_sigma": 2.03,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.15,
+      "humidity_mu": 33.85,
+      "humidity_sigma": 14.72,
+      "n_days": 651
+    },
+    "2": {
+      "temp_mu": 23.62,
+      "temp_sigma": 2.52,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.13,
+      "humidity_mu": 40.66,
+      "humidity_sigma": 18.47,
+      "n_days": 593
+    },
+    "3": {
+      "temp_mu": 24.45,
+      "temp_sigma": 2.51,
+      "precip_mu": 0.0,
+      "precip_sigma": 0.08,
+      "humidity_mu": 47.58,
+      "humidity_sigma": 17.08,
+      "n_days": 651
+    },
+    "4": {
+      "temp_mu": 24.4,
+      "temp_sigma": 2.15,
+      "precip_mu": 0.0,
+      "precip_sigma": 0.01,
+      "humidity_mu": 56.61,
+      "humidity_sigma": 11.11,
+      "n_days": 630
+    },
+    "5": {
+      "temp_mu": 25.13,
+      "temp_sigma": 1.83,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.19,
+      "humidity_mu": 62.26,
+      "humidity_sigma": 9.19,
+      "n_days": 651
+    },
+    "6": {
+      "temp_mu": 26.42,
+      "temp_sigma": 1.27,
+      "precip_mu": 0.16,
+      "precip_sigma": 1.12,
+      "humidity_mu": 69.84,
+      "humidity_sigma": 5.5,
+      "n_days": 630
+    },
+    "7": {
+      "temp_mu": 27.1,
+      "temp_sigma": 0.77,
+      "precip_mu": 1.77,
+      "precip_sigma": 6.72,
+      "humidity_mu": 74.47,
+      "humidity_sigma": 4.6,
+      "n_days": 651
+    },
+    "8": {
+      "temp_mu": 26.86,
+      "temp_sigma": 0.81,
+      "precip_mu": 5.12,
+      "precip_sigma": 9.89,
+      "humidity_mu": 80.64,
+      "humidity_sigma": 5.16,
+      "n_days": 651
+    },
+    "9": {
+      "temp_mu": 26.96,
+      "temp_sigma": 0.85,
+      "precip_mu": 4.11,
+      "precip_sigma": 7.17,
+      "humidity_mu": 83.61,
+      "humidity_sigma": 3.18,
+      "n_days": 630
+    },
+    "10": {
+      "temp_mu": 27.78,
+      "temp_sigma": 0.96,
+      "precip_mu": 0.94,
+      "precip_sigma": 2.78,
+      "humidity_mu": 74.73,
+      "humidity_sigma": 9.71,
+      "n_days": 651
+    },
+    "11": {
+      "temp_mu": 26.8,
+      "temp_sigma": 1.39,
+      "precip_mu": 0.03,
+      "precip_sigma": 0.34,
+      "humidity_mu": 53.36,
+      "humidity_sigma": 14.19,
+      "n_days": 630
+    },
+    "12": {
+      "temp_mu": 24.67,
+      "temp_sigma": 1.74,
+      "precip_mu": 0.02,
+      "precip_sigma": 0.24,
+      "humidity_mu": 39.92,
+      "humidity_sigma": 16.05,
+      "n_days": 651
+    }
+  },
+  "Kaolack": {
+    "1": {
+      "temp_mu": 24.78,
+      "temp_sigma": 1.93,
+      "precip_mu": 0.0,
+      "precip_sigma": 0.03,
+      "humidity_mu": 26.43,
+      "humidity_sigma": 9.36,
+      "n_days": 651
+    },
+    "2": {
+      "temp_mu": 26.14,
+      "temp_sigma": 2.15,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.06,
+      "humidity_mu": 27.33,
+      "humidity_sigma": 12.79,
+      "n_days": 593
+    },
+    "3": {
+      "temp_mu": 27.83,
+      "temp_sigma": 2.11,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.29,
+      "humidity_mu": 31.41,
+      "humidity_sigma": 13.31,
+      "n_days": 651
+    },
+    "4": {
+      "temp_mu": 28.53,
+      "temp_sigma": 2.19,
+      "precip_mu": 0.0,
+      "precip_sigma": 0.01,
+      "humidity_mu": 39.43,
+      "humidity_sigma": 11.5,
+      "n_days": 630
+    },
+    "5": {
+      "temp_mu": 28.61,
+      "temp_sigma": 1.69,
+      "precip_mu": 0.07,
+      "precip_sigma": 1.29,
+      "humidity_mu": 49.01,
+      "humidity_sigma": 10.98,
+      "n_days": 651
+    },
+    "6": {
+      "temp_mu": 28.7,
+      "temp_sigma": 1.12,
+      "precip_mu": 0.58,
+      "precip_sigma": 2.92,
+      "humidity_mu": 62.54,
+      "humidity_sigma": 7.43,
+      "n_days": 630
+    },
+    "7": {
+      "temp_mu": 27.9,
+      "temp_sigma": 1.03,
+      "precip_mu": 3.12,
+      "precip_sigma": 6.92,
+      "humidity_mu": 74.47,
+      "humidity_sigma": 6.84,
+      "n_days": 651
+    },
+    "8": {
+      "temp_mu": 26.96,
+      "temp_sigma": 0.91,
+      "precip_mu": 7.18,
+      "precip_sigma": 12.75,
+      "humidity_mu": 82.65,
+      "humidity_sigma": 5.27,
+      "n_days": 651
+    },
+    "9": {
+      "temp_mu": 27.13,
+      "temp_sigma": 0.99,
+      "precip_mu": 5.56,
+      "precip_sigma": 11.27,
+      "humidity_mu": 84.23,
+      "humidity_sigma": 3.2,
+      "n_days": 630
+    },
+    "10": {
+      "temp_mu": 28.24,
+      "temp_sigma": 0.97,
+      "precip_mu": 1.35,
+      "precip_sigma": 3.73,
+      "humidity_mu": 75.26,
+      "humidity_sigma": 9.57,
+      "n_days": 651
+    },
+    "11": {
+      "temp_mu": 27.54,
+      "temp_sigma": 1.52,
+      "precip_mu": 0.04,
+      "precip_sigma": 0.33,
+      "humidity_mu": 47.45,
+      "humidity_sigma": 13.53,
+      "n_days": 630
+    },
+    "12": {
+      "temp_mu": 25.53,
+      "temp_sigma": 1.71,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.17,
+      "humidity_mu": 33.14,
+      "humidity_sigma": 11.03,
+      "n_days": 651
+    }
+  },
+  "Ziguinchor": {
+    "1": {
+      "temp_mu": 25.6,
+      "temp_sigma": 1.46,
+      "precip_mu": 0.0,
+      "precip_sigma": 0.03,
+      "humidity_mu": 35.57,
+      "humidity_sigma": 10.82,
+      "n_days": 651
+    },
+    "2": {
+      "temp_mu": 26.79,
+      "temp_sigma": 1.54,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.1,
+      "humidity_mu": 35.81,
+      "humidity_sigma": 11.94,
+      "n_days": 593
+    },
+    "3": {
+      "temp_mu": 27.67,
+      "temp_sigma": 1.43,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.14,
+      "humidity_mu": 43.83,
+      "humidity_sigma": 11.96,
+      "n_days": 651
+    },
+    "4": {
+      "temp_mu": 27.8,
+      "temp_sigma": 1.44,
+      "precip_mu": 0.0,
+      "precip_sigma": 0.01,
+      "humidity_mu": 51.0,
+      "humidity_sigma": 9.79,
+      "n_days": 630
+    },
+    "5": {
+      "temp_mu": 27.84,
+      "temp_sigma": 1.27,
+      "precip_mu": 0.07,
+      "precip_sigma": 0.77,
+      "humidity_mu": 59.53,
+      "humidity_sigma": 7.55,
+      "n_days": 651
+    },
+    "6": {
+      "temp_mu": 28.2,
+      "temp_sigma": 0.88,
+      "precip_mu": 1.7,
+      "precip_sigma": 4.48,
+      "humidity_mu": 69.96,
+      "humidity_sigma": 6.32,
+      "n_days": 630
+    },
+    "7": {
+      "temp_mu": 26.68,
+      "temp_sigma": 0.95,
+      "precip_mu": 8.62,
+      "precip_sigma": 11.2,
+      "humidity_mu": 82.57,
+      "humidity_sigma": 5.0,
+      "n_days": 651
+    },
+    "8": {
+      "temp_mu": 26.04,
+      "temp_sigma": 0.78,
+      "precip_mu": 13.08,
+      "precip_sigma": 15.34,
+      "humidity_mu": 86.44,
+      "humidity_sigma": 3.25,
+      "n_days": 651
+    },
+    "9": {
+      "temp_mu": 26.43,
+      "temp_sigma": 0.91,
+      "precip_mu": 10.02,
+      "precip_sigma": 14.02,
+      "humidity_mu": 86.01,
+      "humidity_sigma": 3.09,
+      "n_days": 630
+    },
+    "10": {
+      "temp_mu": 27.46,
+      "temp_sigma": 0.82,
+      "precip_mu": 4.04,
+      "precip_sigma": 5.78,
+      "humidity_mu": 83.02,
+      "humidity_sigma": 3.7,
+      "n_days": 651
+    },
+    "11": {
+      "temp_mu": 27.45,
+      "temp_sigma": 0.96,
+      "precip_mu": 0.43,
+      "precip_sigma": 2.0,
+      "humidity_mu": 66.07,
+      "humidity_sigma": 11.8,
+      "n_days": 630
+    },
+    "12": {
+      "temp_mu": 26.17,
+      "temp_sigma": 1.35,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.2,
+      "humidity_mu": 43.82,
+      "humidity_sigma": 11.67,
+      "n_days": 651
+    }
+  },
+  "Saint-Louis": {
+    "1": {
+      "temp_mu": 23.23,
+      "temp_sigma": 2.24,
+      "precip_mu": 0.02,
+      "precip_sigma": 0.25,
+      "humidity_mu": 33.95,
+      "humidity_sigma": 15.41,
+      "n_days": 651
+    },
+    "2": {
+      "temp_mu": 22.95,
+      "temp_sigma": 2.76,
+      "precip_mu": 0.05,
+      "precip_sigma": 0.49,
+      "humidity_mu": 42.74,
+      "humidity_sigma": 20.43,
+      "n_days": 593
+    },
+    "3": {
+      "temp_mu": 23.46,
+      "temp_sigma": 2.64,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.07,
+      "humidity_mu": 50.53,
+      "humidity_sigma": 18.98,
+      "n_days": 651
+    },
+    "4": {
+      "temp_mu": 23.26,
+      "temp_sigma": 2.35,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.06,
+      "humidity_mu": 59.97,
+      "humidity_sigma": 12.82,
+      "n_days": 630
+    },
+    "5": {
+      "temp_mu": 23.99,
+      "temp_sigma": 2.08,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.21,
+      "humidity_mu": 64.45,
+      "humidity_sigma": 11.87,
+      "n_days": 651
+    },
+    "6": {
+      "temp_mu": 25.54,
+      "temp_sigma": 1.63,
+      "precip_mu": 0.08,
+      "precip_sigma": 0.72,
+      "humidity_mu": 72.01,
+      "humidity_sigma": 8.93,
+      "n_days": 630
+    },
+    "7": {
+      "temp_mu": 26.89,
+      "temp_sigma": 0.94,
+      "precip_mu": 0.48,
+      "precip_sigma": 2.3,
+      "humidity_mu": 75.75,
+      "humidity_sigma": 3.56,
+      "n_days": 651
+    },
+    "8": {
+      "temp_mu": 27.73,
+      "temp_sigma": 0.78,
+      "precip_mu": 2.17,
+      "precip_sigma": 4.99,
+      "humidity_mu": 77.72,
+      "humidity_sigma": 4.31,
+      "n_days": 651
+    },
+    "9": {
+      "temp_mu": 28.38,
+      "temp_sigma": 0.9,
+      "precip_mu": 2.19,
+      "precip_sigma": 4.82,
+      "humidity_mu": 78.22,
+      "humidity_sigma": 5.37,
+      "n_days": 630
+    },
+    "10": {
+      "temp_mu": 28.79,
+      "temp_sigma": 1.37,
+      "precip_mu": 0.4,
+      "precip_sigma": 2.06,
+      "humidity_mu": 66.62,
+      "humidity_sigma": 13.53,
+      "n_days": 651
+    },
+    "11": {
+      "temp_mu": 27.1,
+      "temp_sigma": 1.88,
+      "precip_mu": 0.02,
+      "precip_sigma": 0.39,
+      "humidity_mu": 48.15,
+      "humidity_sigma": 15.88,
+      "n_days": 630
+    },
+    "12": {
+      "temp_mu": 24.61,
+      "temp_sigma": 1.9,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.1,
+      "humidity_mu": 38.24,
+      "humidity_sigma": 16.3,
+      "n_days": 651
+    }
+  },
+  "Accra": {
+    "1": {
+      "temp_mu": 27.27,
+      "temp_sigma": 0.59,
+      "precip_mu": 0.68,
+      "precip_sigma": 1.59,
+      "humidity_mu": 77.85,
+      "humidity_sigma": 6.85,
+      "n_days": 651
+    },
+    "2": {
+      "temp_mu": 27.76,
+      "temp_sigma": 0.61,
+      "precip_mu": 1.21,
+      "precip_sigma": 2.25,
+      "humidity_mu": 80.18,
+      "humidity_sigma": 2.63,
+      "n_days": 593
+    },
+    "3": {
+      "temp_mu": 28.07,
+      "temp_sigma": 0.51,
+      "precip_mu": 1.55,
+      "precip_sigma": 2.36,
+      "humidity_mu": 79.53,
+      "humidity_sigma": 2.66,
+      "n_days": 651
+    },
+    "4": {
+      "temp_mu": 27.87,
+      "temp_sigma": 0.61,
+      "precip_mu": 2.25,
+      "precip_sigma": 3.43,
+      "humidity_mu": 80.46,
+      "humidity_sigma": 2.72,
+      "n_days": 630
+    },
+    "5": {
+      "temp_mu": 27.1,
+      "temp_sigma": 0.81,
+      "precip_mu": 3.59,
+      "precip_sigma": 5.46,
+      "humidity_mu": 82.53,
+      "humidity_sigma": 2.88,
+      "n_days": 651
+    },
+    "6": {
+      "temp_mu": 25.59,
+      "temp_sigma": 0.66,
+      "precip_mu": 5.45,
+      "precip_sigma": 9.63,
+      "humidity_mu": 85.29,
+      "humidity_sigma": 2.61,
+      "n_days": 630
+    },
+    "7": {
+      "temp_mu": 24.7,
+      "temp_sigma": 0.46,
+      "precip_mu": 2.59,
+      "precip_sigma": 5.55,
+      "humidity_mu": 85.34,
+      "humidity_sigma": 2.76,
+      "n_days": 651
+    },
+    "8": {
+      "temp_mu": 24.34,
+      "temp_sigma": 0.51,
+      "precip_mu": 1.89,
+      "precip_sigma": 3.55,
+      "humidity_mu": 85.78,
+      "humidity_sigma": 2.74,
+      "n_days": 651
+    },
+    "9": {
+      "temp_mu": 24.99,
+      "temp_sigma": 0.5,
+      "precip_mu": 3.38,
+      "precip_sigma": 4.65,
+      "humidity_mu": 86.37,
+      "humidity_sigma": 1.98,
+      "n_days": 630
+    },
+    "10": {
+      "temp_mu": 25.96,
+      "temp_sigma": 0.57,
+      "precip_mu": 3.37,
+      "precip_sigma": 4.76,
+      "humidity_mu": 84.77,
+      "humidity_sigma": 2.2,
+      "n_days": 651
+    },
+    "11": {
+      "temp_mu": 26.97,
+      "temp_sigma": 0.55,
+      "precip_mu": 1.73,
+      "precip_sigma": 2.44,
+      "humidity_mu": 81.83,
+      "humidity_sigma": 2.48,
+      "n_days": 630
+    },
+    "12": {
+      "temp_mu": 27.39,
+      "temp_sigma": 0.51,
+      "precip_mu": 0.93,
+      "precip_sigma": 1.71,
+      "humidity_mu": 79.21,
+      "humidity_sigma": 3.77,
+      "n_days": 651
+    }
+  },
+  "Kumasi": {
+    "1": {
+      "temp_mu": 27.31,
+      "temp_sigma": 0.99,
+      "precip_mu": 0.61,
+      "precip_sigma": 2.45,
+      "humidity_mu": 59.59,
+      "humidity_sigma": 15.4,
+      "n_days": 651
+    },
+    "2": {
+      "temp_mu": 27.85,
+      "temp_sigma": 1.1,
+      "precip_mu": 1.55,
+      "precip_sigma": 3.3,
+      "humidity_mu": 67.65,
+      "humidity_sigma": 10.73,
+      "n_days": 593
+    },
+    "3": {
+      "temp_mu": 27.27,
+      "temp_sigma": 0.97,
+      "precip_mu": 3.51,
+      "precip_sigma": 4.86,
+      "humidity_mu": 75.75,
+      "humidity_sigma": 7.09,
+      "n_days": 651
+    },
+    "4": {
+      "temp_mu": 26.88,
+      "temp_sigma": 0.8,
+      "precip_mu": 3.56,
+      "precip_sigma": 4.49,
+      "humidity_mu": 79.0,
+      "humidity_sigma": 4.53,
+      "n_days": 630
+    },
+    "5": {
+      "temp_mu": 26.18,
+      "temp_sigma": 0.94,
+      "precip_mu": 4.13,
+      "precip_sigma": 5.59,
+      "humidity_mu": 81.36,
+      "humidity_sigma": 4.55,
+      "n_days": 651
+    },
+    "6": {
+      "temp_mu": 24.76,
+      "temp_sigma": 0.79,
+      "precip_mu": 5.32,
+      "precip_sigma": 8.19,
+      "humidity_mu": 84.22,
+      "humidity_sigma": 4.0,
+      "n_days": 630
+    },
+    "7": {
+      "temp_mu": 24.16,
+      "temp_sigma": 0.69,
+      "precip_mu": 4.04,
+      "precip_sigma": 9.52,
+      "humidity_mu": 82.92,
+      "humidity_sigma": 5.1,
+      "n_days": 651
+    },
+    "8": {
+      "temp_mu": 24.18,
+      "temp_sigma": 0.7,
+      "precip_mu": 3.62,
+      "precip_sigma": 6.99,
+      "humidity_mu": 81.86,
+      "humidity_sigma": 4.95,
+      "n_days": 651
+    },
+    "9": {
+      "temp_mu": 24.45,
+      "temp_sigma": 0.65,
+      "precip_mu": 5.37,
+      "precip_sigma": 6.18,
+      "humidity_mu": 84.78,
+      "humidity_sigma": 3.9,
+      "n_days": 630
+    },
+    "10": {
+      "temp_mu": 24.86,
+      "temp_sigma": 0.6,
+      "precip_mu": 4.55,
+      "precip_sigma": 5.93,
+      "humidity_mu": 85.53,
+      "humidity_sigma": 3.11,
+      "n_days": 651
+    },
+    "11": {
+      "temp_mu": 25.52,
+      "temp_sigma": 0.65,
+      "precip_mu": 2.09,
+      "precip_sigma": 3.42,
+      "humidity_mu": 82.41,
+      "humidity_sigma": 4.65,
+      "n_days": 630
+    },
+    "12": {
+      "temp_mu": 26.44,
+      "temp_sigma": 0.88,
+      "precip_mu": 0.83,
+      "precip_sigma": 2.5,
+      "humidity_mu": 70.92,
+      "humidity_sigma": 11.62,
+      "n_days": 651
+    }
+  },
+  "Tamale": {
+    "1": {
+      "temp_mu": 27.97,
+      "temp_sigma": 1.5,
+      "precip_mu": 0.08,
+      "precip_sigma": 1.04,
+      "humidity_mu": 22.98,
+      "humidity_sigma": 10.41,
+      "n_days": 651
+    },
+    "2": {
+      "temp_mu": 30.41,
+      "temp_sigma": 1.45,
+      "precip_mu": 0.18,
+      "precip_sigma": 1.24,
+      "humidity_mu": 28.85,
+      "humidity_sigma": 16.02,
+      "n_days": 593
+    },
+    "3": {
+      "temp_mu": 31.66,
+      "temp_sigma": 1.46,
+      "precip_mu": 0.64,
+      "precip_sigma": 1.9,
+      "humidity_mu": 45.16,
+      "humidity_sigma": 13.57,
+      "n_days": 651
+    },
+    "4": {
+      "temp_mu": 31.24,
+      "temp_sigma": 1.47,
+      "precip_mu": 1.4,
+      "precip_sigma": 3.08,
+      "humidity_mu": 56.75,
+      "humidity_sigma": 8.74,
+      "n_days": 630
+    },
+    "5": {
+      "temp_mu": 29.81,
+      "temp_sigma": 1.51,
+      "precip_mu": 1.83,
+      "precip_sigma": 3.66,
+      "humidity_mu": 65.23,
+      "humidity_sigma": 7.75,
+      "n_days": 651
+    },
+    "6": {
+      "temp_mu": 27.74,
+      "temp_sigma": 1.43,
+      "precip_mu": 2.7,
+      "precip_sigma": 6.49,
+      "humidity_mu": 72.65,
+      "humidity_sigma": 7.28,
+      "n_days": 630
+    },
+    "7": {
+      "temp_mu": 26.0,
+      "temp_sigma": 1.16,
+      "precip_mu": 4.89,
+      "precip_sigma": 8.48,
+      "humidity_mu": 79.83,
+      "humidity_sigma": 6.22,
+      "n_days": 651
+    },
+    "8": {
+      "temp_mu": 25.29,
+      "temp_sigma": 0.87,
+      "precip_mu": 7.26,
+      "precip_sigma": 12.74,
+      "humidity_mu": 83.73,
+      "humidity_sigma": 5.02,
+      "n_days": 651
+    },
+    "9": {
+      "temp_mu": 25.52,
+      "temp_sigma": 0.85,
+      "precip_mu": 5.97,
+      "precip_sigma": 7.89,
+      "humidity_mu": 85.71,
+      "humidity_sigma": 3.07,
+      "n_days": 630
+    },
+    "10": {
+      "temp_mu": 26.81,
+      "temp_sigma": 1.09,
+      "precip_mu": 2.21,
+      "precip_sigma": 4.31,
+      "humidity_mu": 79.63,
+      "humidity_sigma": 6.85,
+      "n_days": 651
+    },
+    "11": {
+      "temp_mu": 28.42,
+      "temp_sigma": 1.1,
+      "precip_mu": 0.24,
+      "precip_sigma": 1.3,
+      "humidity_mu": 57.52,
+      "humidity_sigma": 11.46,
+      "n_days": 630
+    },
+    "12": {
+      "temp_mu": 27.67,
+      "temp_sigma": 1.32,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.06,
+      "humidity_mu": 33.27,
+      "humidity_sigma": 11.83,
+      "n_days": 651
+    }
+  },
+  "Kano": {
+    "1": {
+      "temp_mu": 21.65,
+      "temp_sigma": 2.57,
+      "precip_mu": 0.0,
+      "precip_sigma": 0.01,
+      "humidity_mu": 21.71,
+      "humidity_sigma": 4.36,
+      "n_days": 651
+    },
+    "2": {
+      "temp_mu": 24.65,
+      "temp_sigma": 2.75,
+      "precip_mu": 0.01,
+      "precip_sigma": 0.16,
+      "humidity_mu": 16.92,
+      "humidity_sigma": 4.83,
+      "n_days": 593
+    },
+    "3": {
+      "temp_mu": 28.26,
+      "temp_sigma": 1.97,
+      "precip_mu": 0.0,
+      "precip_sigma": 0.02,
+      "humidity_mu": 15.22,
+      "humidity_sigma": 6.92,
+      "n_days": 651
+    },
+    "4": {
+      "temp_mu": 31.01,
+      "temp_sigma": 1.5,
+      "precip_mu": 0.04,
+      "precip_sigma": 0.31,
+      "humidity_mu": 25.88,
+      "humidity_sigma": 13.0,
+      "n_days": 630
+    },
+    "5": {
+      "temp_mu": 31.12,
+      "temp_sigma": 1.47,
+      "precip_mu": 0.66,
+      "precip_sigma": 2.23,
+      "humidity_mu": 45.34,
+      "humidity_sigma": 12.36,
+      "n_days": 651
+    },
+    "6": {
+      "temp_mu": 28.87,
+      "temp_sigma": 1.72,
+      "precip_mu": 2.14,
+      "precip_sigma": 4.14,
+      "humidity_mu": 62.25,
+      "humidity_sigma": 9.2,
+      "n_days": 630
+    },
+    "7": {
+      "temp_mu": 26.31,
+      "temp_sigma": 1.22,
+      "precip_mu": 4.52,
+      "precip_sigma": 6.59,
+      "humidity_mu": 74.76,
+      "humidity_sigma": 5.66,
+      "n_days": 651
+    },
+    "8": {
+      "temp_mu": 25.1,
+      "temp_sigma": 1.09,
+      "precip_mu": 8.09,
+      "precip_sigma": 11.16,
+      "humidity_mu": 80.72,
+      "humidity_sigma": 4.75,
+      "n_days": 651
+    },
+    "9": {
+      "temp_mu": 26.15,
+      "temp_sigma": 1.17,
+      "precip_mu": 3.83,
+      "precip_sigma": 6.88,
+      "humidity_mu": 77.08,
+      "humidity_sigma": 5.75,
+      "n_days": 630
+    },
+    "10": {
+      "temp_mu": 27.01,
+      "temp_sigma": 1.16,
+      "precip_mu": 0.58,
+      "precip_sigma": 2.05,
+      "humidity_mu": 54.4,
+      "humidity_sigma": 15.94,
+      "n_days": 651
+    },
+    "11": {
+      "temp_mu": 25.26,
+      "temp_sigma": 1.72,
+      "precip_mu": 0.0,
+      "precip_sigma": 0.01,
+      "humidity_mu": 28.82,
+      "humidity_sigma": 6.66,
+      "n_days": 630
+    },
+    "12": {
+      "temp_mu": 22.12,
+      "temp_sigma": 2.06,
+      "precip_mu": 0.0,
+      "precip_sigma": 0.01,
+      "humidity_mu": 24.93,
+      "humidity_sigma": 4.64,
+      "n_days": 651
+    }
+  },
+  "Ibadan": {
+    "1": {
+      "temp_mu": 27.11,
+      "temp_sigma": 0.91,
+      "precip_mu": 0.41,
+      "precip_sigma": 1.47,
+      "humidity_mu": 61.06,
+      "humidity_sigma": 17.52,
+      "n_days": 651
+    },
+    "2": {
+      "temp_mu": 27.92,
+      "temp_sigma": 0.95,
+      "precip_mu": 0.83,
+      "precip_sigma": 2.08,
+      "humidity_mu": 69.28,
+      "humidity_sigma": 12.34,
+      "n_days": 593
+    },
+    "3": {
+      "temp_mu": 27.74,
+      "temp_sigma": 0.89,
+      "precip_mu": 1.61,
+      "precip_sigma": 2.82,
+      "humidity_mu": 77.15,
+      "humidity_sigma": 5.6,
+      "n_days": 651
+    },
+    "4": {
+      "temp_mu": 26.93,
+      "temp_sigma": 0.9,
+      "precip_mu": 2.79,
+      "precip_sigma": 3.64,
+      "humidity_mu": 82.11,
+      "humidity_sigma": 4.33,
+      "n_days": 630
+    },
+    "5": {
+      "temp_mu": 25.94,
+      "temp_sigma": 0.91,
+      "precip_mu": 4.58,
+      "precip_sigma": 5.71,
+      "humidity_mu": 86.43,
+      "humidity_sigma": 3.85,
+      "n_days": 651
+    },
+    "6": {
+      "temp_mu": 24.66,
+      "temp_sigma": 0.82,
+      "precip_mu": 6.33,
+      "precip_sigma": 6.59,
+      "humidity_mu": 88.85,
+      "humidity_sigma": 3.54,
+      "n_days": 630
+    },
+    "7": {
+      "temp_mu": 23.97,
+      "temp_sigma": 0.68,
+      "precip_mu": 6.03,
+      "precip_sigma": 7.51,
+      "humidity_mu": 88.6,
+      "humidity_sigma": 3.82,
+      "n_days": 651
+    },
+    "8": {
+      "temp_mu": 23.75,
+      "temp_sigma": 0.63,
+      "precip_mu": 6.51,
+      "precip_sigma": 12.8,
+      "humidity_mu": 88.2,
+      "humidity_sigma": 4.23,
+      "n_days": 651
+    },
+    "9": {
+      "temp_mu": 24.17,
+      "temp_sigma": 0.71,
+      "precip_mu": 7.12,
+      "precip_sigma": 9.22,
+      "humidity_mu": 89.51,
+      "humidity_sigma": 3.45,
+      "n_days": 630
+    },
+    "10": {
+      "temp_mu": 24.94,
+      "temp_sigma": 0.72,
+      "precip_mu": 4.55,
+      "precip_sigma": 7.21,
+      "humidity_mu": 88.27,
+      "humidity_sigma": 3.02,
+      "n_days": 651
+    },
+    "11": {
+      "temp_mu": 26.13,
+      "temp_sigma": 0.74,
+      "precip_mu": 0.95,
+      "precip_sigma": 2.03,
+      "humidity_mu": 82.88,
+      "humidity_sigma": 4.69,
+      "n_days": 630
+    },
+    "12": {
+      "temp_mu": 26.74,
+      "temp_sigma": 0.82,
+      "precip_mu": 0.18,
+      "precip_sigma": 0.7,
+      "humidity_mu": 68.41,
+      "humidity_sigma": 12.82,
+      "n_days": 651
+    }
+  },
+  "Abuja": {
+    "1": {
+      "temp_mu": 27.8,
+      "temp_sigma": 1.33,
+      "precip_mu": 0.03,
+      "precip_sigma": 0.28,
+      "humidity_mu": 28.14,
+      "humidity_sigma": 11.67,
+      "n_days": 651
+    },
+    "2": {
+      "temp_mu": 29.43,
+      "temp_sigma": 1.27,
+      "precip_mu": 0.14,
+      "precip_sigma": 0.76,
+      "humidity_mu": 31.76,
+      "humidity_sigma": 15.95,
+      "n_days": 593
+    },
+    "3": {
+      "temp_mu": 30.01,
+      "temp_sigma": 1.39,
+      "precip_mu": 0.4,
+      "precip_sigma": 1.71,
+      "humidity_mu": 45.59,
+      "humidity_sigma": 15.64,
+      "n_days": 651
+    },
+    "4": {
+      "temp_mu": 28.86,
+      "temp_sigma": 1.51,
+      "precip_mu": 1.36,
+      "precip_sigma": 3.06,
+      "humidity_mu": 61.57,
+      "humidity_sigma": 11.95,
+      "n_days": 630
+    },
+    "5": {
+      "temp_mu": 26.85,
+      "temp_sigma": 1.3,
+      "precip_mu": 3.68,
+      "precip_sigma": 5.57,
+      "humidity_mu": 75.8,
+      "humidity_sigma": 7.2,
+      "n_days": 651
+    },
+    "6": {
+      "temp_mu": 25.02,
+      "temp_sigma": 0.96,
+      "precip_mu": 5.24,
+      "precip_sigma": 6.71,
+      "humidity_mu": 82.65,
+      "humidity_sigma": 4.35,
+      "n_days": 630
+    },
+    "7": {
+      "temp_mu": 23.89,
+      "temp_sigma": 0.87,
+      "precip_mu": 6.96,
+      "precip_sigma": 7.17,
+      "humidity_mu": 86.04,
+      "humidity_sigma": 4.14,
+      "n_days": 651
+    },
+    "8": {
+      "temp_mu": 23.47,
+      "temp_sigma": 0.89,
+      "precip_mu": 9.29,
+      "precip_sigma": 11.41,
+      "humidity_mu": 87.15,
+      "humidity_sigma": 4.75,
+      "n_days": 651
+    },
+    "9": {
+      "temp_mu": 24.12,
+      "temp_sigma": 0.88,
+      "precip_mu": 8.26,
+      "precip_sigma": 10.77,
+      "humidity_mu": 85.8,
+      "humidity_sigma": 3.88,
+      "n_days": 630
+    },
+    "10": {
+      "temp_mu": 25.28,
+      "temp_sigma": 1.01,
+      "precip_mu": 3.72,
+      "precip_sigma": 4.49,
+      "humidity_mu": 80.61,
+      "humidity_sigma": 7.67,
+      "n_days": 651
+    },
+    "11": {
+      "temp_mu": 26.99,
+      "temp_sigma": 0.87,
+      "precip_mu": 0.28,
+      "precip_sigma": 1.28,
+      "humidity_mu": 56.37,
+      "humidity_sigma": 15.41,
+      "n_days": 630
+    },
+    "12": {
+      "temp_mu": 27.47,
+      "temp_sigma": 0.97,
+      "precip_mu": 0.05,
+      "precip_sigma": 0.81,
+      "humidity_mu": 31.94,
+      "humidity_sigma": 11.32,
+      "n_days": 651
+    }
+  },
+  "Port Harcourt": {
+    "1": {
+      "temp_mu": 27.27,
+      "temp_sigma": 0.86,
+      "precip_mu": 1.49,
+      "precip_sigma": 2.47,
+      "humidity_mu": 77.39,
+      "humidity_sigma": 9.06,
+      "n_days": 651
+    },
+    "2": {
+      "temp_mu": 27.71,
+      "temp_sigma": 1.01,
+      "precip_mu": 2.64,
+      "precip_sigma": 3.76,
+      "humidity_mu": 80.23,
+      "humidity_sigma": 6.43,
+      "n_days": 593
+    },
+    "3": {
+      "temp_mu": 27.21,
+      "temp_sigma": 0.79,
+      "precip_mu": 5.36,
+      "precip_sigma": 5.43,
+      "humidity_mu": 85.13,
+      "humidity_sigma": 3.46,
+      "n_days": 651
+    },
+    "4": {
+      "temp_mu": 26.89,
+      "temp_sigma": 0.7,
+      "precip_mu": 6.9,
+      "precip_sigma": 6.32,
+      "humidity_mu": 87.05,
+      "humidity_sigma": 3.09,
+      "n_days": 630
+    },
+    "5": {
+      "temp_mu": 26.29,
+      "temp_sigma": 0.75,
+      "precip_mu": 8.78,
+      "precip_sigma": 10.13,
+      "humidity_mu": 88.91,
+      "humidity_sigma": 2.92,
+      "n_days": 651
+    },
+    "6": {
+      "temp_mu": 25.21,
+      "temp_sigma": 0.7,
+      "precip_mu": 11.25,
+      "precip_sigma": 12.63,
+      "humidity_mu": 89.9,
+      "humidity_sigma": 2.98,
+      "n_days": 630
+    },
+    "7": {
+      "temp_mu": 24.67,
+      "temp_sigma": 0.61,
+      "precip_mu": 9.94,
+      "precip_sigma": 11.53,
+      "humidity_mu": 89.42,
+      "humidity_sigma": 3.82,
+      "n_days": 651
+    },
+    "8": {
+      "temp_mu": 24.72,
+      "temp_sigma": 0.58,
+      "precip_mu": 9.15,
+      "precip_sigma": 12.78,
+      "humidity_mu": 88.42,
+      "humidity_sigma": 4.11,
+      "n_days": 651
+    },
+    "9": {
+      "temp_mu": 24.83,
+      "temp_sigma": 0.59,
+      "precip_mu": 11.3,
+      "precip_sigma": 13.43,
+      "humidity_mu": 90.21,
+      "humidity_sigma": 2.74,
+      "n_days": 630
+    },
+    "10": {
+      "temp_mu": 25.32,
+      "temp_sigma": 0.56,
+      "precip_mu": 10.07,
+      "precip_sigma": 9.07,
+      "humidity_mu": 90.14,
+      "humidity_sigma": 2.36,
+      "n_days": 651
+    },
+    "11": {
+      "temp_mu": 25.99,
+      "temp_sigma": 0.61,
+      "precip_mu": 5.74,
+      "precip_sigma": 5.45,
+      "humidity_mu": 88.37,
+      "humidity_sigma": 2.8,
+      "n_days": 630
+    },
+    "12": {
+      "temp_mu": 26.85,
+      "temp_sigma": 0.65,
+      "precip_mu": 1.64,
+      "precip_sigma": 2.69,
+      "humidity_mu": 82.1,
+      "humidity_sigma": 6.29,
+      "n_days": 651
+    }
+  },
+  "Yamoussoukro": {
+    "1": {
+      "temp_mu": 27.2,
+      "temp_sigma": 0.95,
+      "precip_mu": 0.54,
+      "precip_sigma": 1.93,
+      "humidity_mu": 61.41,
+      "humidity_sigma": 13.63,
+      "n_days": 651
+    },
+    "2": {
+      "temp_mu": 27.96,
+      "temp_sigma": 0.98,
+      "precip_mu": 1.72,
+      "precip_sigma": 3.98,
+      "humidity_mu": 67.96,
+      "humidity_sigma": 9.45,
+      "n_days": 593
+    },
+    "3": {
+      "temp_mu": 27.66,
+      "temp_sigma": 0.91,
+      "precip_mu": 3.02,
+      "precip_sigma": 4.43,
+      "humidity_mu": 74.43,
+      "humidity_sigma": 6.31,
+      "n_days": 651
+    },
+    "4": {
+      "temp_mu": 27.29,
+      "temp_sigma": 0.82,
+      "precip_mu": 3.44,
+      "precip_sigma": 5.24,
+      "humidity_mu": 77.86,
+      "humidity_sigma": 4.51,
+      "n_days": 630
+    },
+    "5": {
+      "temp_mu": 26.57,
+      "temp_sigma": 0.96,
+      "precip_mu": 3.83,
+      "precip_sigma": 5.74,
+      "humidity_mu": 80.25,
+      "humidity_sigma": 4.81,
+      "n_days": 651
+    },
+    "6": {
+      "temp_mu": 25.26,
+      "temp_sigma": 0.83,
+      "precip_mu": 4.57,
+      "precip_sigma": 7.06,
+      "humidity_mu": 82.3,
+      "humidity_sigma": 4.89,
+      "n_days": 630
+    },
+    "7": {
+      "temp_mu": 24.68,
+      "temp_sigma": 0.74,
+      "precip_mu": 3.3,
+      "precip_sigma": 4.79,
+      "humidity_mu": 80.93,
+      "humidity_sigma": 5.49,
+      "n_days": 651
+    },
+    "8": {
+      "temp_mu": 24.55,
+      "temp_sigma": 0.78,
+      "precip_mu": 4.22,
+      "precip_sigma": 7.64,
+      "humidity_mu": 81.31,
+      "humidity_sigma": 5.54,
+      "n_days": 651
+    },
+    "9": {
+      "temp_mu": 24.81,
+      "temp_sigma": 0.73,
+      "precip_mu": 6.21,
+      "precip_sigma": 9.69,
+      "humidity_mu": 84.26,
+      "humidity_sigma": 4.86,
+      "n_days": 630
+    },
+    "10": {
+      "temp_mu": 25.21,
+      "temp_sigma": 0.62,
+      "precip_mu": 4.15,
+      "precip_sigma": 4.84,
+      "humidity_mu": 84.93,
+      "humidity_sigma": 3.53,
+      "n_days": 651
+    },
+    "11": {
+      "temp_mu": 25.66,
+      "temp_sigma": 0.57,
+      "precip_mu": 2.08,
+      "precip_sigma": 3.37,
+      "humidity_mu": 83.24,
+      "humidity_sigma": 3.95,
+      "n_days": 630
+    },
+    "12": {
+      "temp_mu": 26.38,
+      "temp_sigma": 0.71,
+      "precip_mu": 0.49,
+      "precip_sigma": 1.32,
+      "humidity_mu": 72.52,
+      "humidity_sigma": 10.69,
+      "n_days": 651
+    }
+  },
+  "San-Pédro": {
+    "1": {
+      "temp_mu": 26.51,
+      "temp_sigma": 0.59,
+      "precip_mu": 1.34,
+      "precip_sigma": 2.08,
+      "humidity_mu": 83.31,
+      "humidity_sigma": 4.67,
+      "n_days": 651
+    },
+    "2": {
+      "temp_mu": 26.74,
+      "temp_sigma": 0.67,
+      "precip_mu": 2.0,
+      "precip_sigma": 2.76,
+      "humidity_mu": 84.83,
+      "humidity_sigma": 2.58,
+      "n_days": 593
+    },
+    "3": {
+      "temp_mu": 26.8,
+      "temp_sigma": 0.54,
+      "precip_mu": 2.16,
+      "precip_sigma": 3.16,
+      "humidity_mu": 84.95,
+      "humidity_sigma": 2.2,
+      "n_days": 651
+    },
+    "4": {
+      "temp_mu": 26.84,
+      "temp_sigma": 0.58,
+      "precip_mu": 2.93,
+      "precip_sigma": 3.76,
+      "humidity_mu": 84.95,
+      "humidity_sigma": 2.52,
+      "n_days": 630
+    },
+    "5": {
+      "temp_mu": 26.15,
+      "temp_sigma": 0.74,
+      "precip_mu": 6.98,
+      "precip_sigma": 11.1,
+      "humidity_mu": 86.92,
+      "humidity_sigma": 3.47,
+      "n_days": 651
+    },
+    "6": {
+      "temp_mu": 25.19,
+      "temp_sigma": 0.68,
+      "precip_mu": 10.47,
+      "precip_sigma": 16.88,
+      "humidity_mu": 86.56,
+      "humidity_sigma": 5.2,
+      "n_days": 630
+    },
+    "7": {
+      "temp_mu": 24.76,
+      "temp_sigma": 0.5,
+      "precip_mu": 4.63,
+      "precip_sigma": 10.39,
+      "humidity_mu": 83.26,
+      "humidity_sigma": 4.77,
+      "n_days": 651
+    },
+    "8": {
+      "temp_mu": 24.44,
+      "temp_sigma": 0.42,
+      "precip_mu": 3.3,
+      "precip_sigma": 9.91,
+      "humidity_mu": 84.99,
+      "humidity_sigma": 4.08,
+      "n_days": 651
+    },
+    "9": {
+      "temp_mu": 24.65,
+      "temp_sigma": 0.45,
+      "precip_mu": 5.12,
+      "precip_sigma": 12.14,
+      "humidity_mu": 88.31,
+      "humidity_sigma": 2.52,
+      "n_days": 630
+    },
+    "10": {
+      "temp_mu": 25.27,
+      "temp_sigma": 0.47,
+      "precip_mu": 4.13,
+      "precip_sigma": 8.24,
+      "humidity_mu": 87.5,
+      "humidity_sigma": 2.1,
+      "n_days": 651
+    },
+    "11": {
+      "temp_mu": 25.83,
+      "temp_sigma": 0.52,
+      "precip_mu": 3.3,
+      "precip_sigma": 4.36,
+      "humidity_mu": 86.73,
+      "humidity_sigma": 1.99,
+      "n_days": 630
+    },
+    "12": {
+      "temp_mu": 26.23,
+      "temp_sigma": 0.56,
+      "precip_mu": 2.07,
+      "precip_sigma": 2.66,
+      "humidity_mu": 85.23,
+      "humidity_sigma": 3.39,
+      "n_days": 651
+    }
+  },
+  "Korhogo": {
+    "1": {
+      "temp_mu": 26.15,
+      "temp_sigma": 1.43,
+      "precip_mu": 0.05,
+      "precip_sigma": 0.36,
+      "humidity_mu": 27.03,
+      "humidity_sigma": 10.63,
+      "n_days": 651
+    },
+    "2": {
+      "temp_mu": 28.31,
+      "temp_sigma": 1.39,
+      "precip_mu": 0.45,
+      "precip_sigma": 1.71,
+      "humidity_mu": 33.94,
+      "humidity_sigma": 16.86,
+      "n_days": 593
+    },
+    "3": {
+      "temp_mu": 29.47,
+      "temp_sigma": 1.41,
+      "precip_mu": 1.2,
+      "precip_sigma": 3.33,
+      "humidity_mu": 50.93,
+      "humidity_sigma": 14.74,
+      "n_days": 651
+    },
+    "4": {
+      "temp_mu": 29.21,
+      "temp_sigma": 1.36,
+      "precip_mu": 2.0,
+      "precip_sigma": 3.54,
+      "humidity_mu": 61.85,
+      "humidity_sigma": 9.35,
+      "n_days": 630
+    },
+    "5": {
+      "temp_mu": 28.04,
+      "temp_sigma": 1.29,
+      "precip_mu": 3.08,
+      "precip_sigma": 6.48,
+      "humidity_mu": 69.65,
+      "humidity_sigma": 6.94,
+      "n_days": 651
+    },
+    "6": {
+      "temp_mu": 26.52,
+      "temp_sigma": 1.26,
+      "precip_mu": 3.52,
+      "precip_sigma": 6.06,
+      "humidity_mu": 74.53,
+      "humidity_sigma": 6.34,
+      "n_days": 630
+    },
+    "7": {
+      "temp_mu": 24.97,
+      "temp_sigma": 1.05,
+      "precip_mu": 5.55,
+      "precip_sigma": 7.56,
+      "humidity_mu": 80.79,
+      "humidity_sigma": 5.6,
+      "n_days": 651
+    },
+    "8": {
+      "temp_mu": 24.37,
+      "temp_sigma": 0.83,
+      "precip_mu": 7.83,
+      "precip_sigma": 10.2,
+      "humidity_mu": 84.34,
+      "humidity_sigma": 4.68,
+      "n_days": 651
+    },
+    "9": {
+      "temp_mu": 24.71,
+      "temp_sigma": 0.82,
+      "precip_mu": 5.96,
+      "precip_sigma": 8.09,
+      "humidity_mu": 84.91,
+      "humidity_sigma": 3.63,
+      "n_days": 630
+    },
+    "10": {
+      "temp_mu": 25.8,
+      "temp_sigma": 0.96,
+      "precip_mu": 2.76,
+      "precip_sigma": 4.3,
+      "humidity_mu": 79.15,
+      "humidity_sigma": 6.95,
+      "n_days": 651
+    },
+    "11": {
+      "temp_mu": 26.74,
+      "temp_sigma": 1.01,
+      "precip_mu": 0.6,
+      "precip_sigma": 1.9,
+      "humidity_mu": 61.02,
+      "humidity_sigma": 12.69,
+      "n_days": 630
+    },
+    "12": {
+      "temp_mu": 26.13,
+      "temp_sigma": 1.27,
+      "precip_mu": 0.08,
+      "precip_sigma": 0.56,
+      "humidity_mu": 36.18,
+      "humidity_sigma": 12.52,
+      "n_days": 651
+    }
+  }
+}

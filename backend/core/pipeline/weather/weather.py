@@ -1,6 +1,6 @@
 import requests
 
-url = "https://wttr.in/Accra?format=j1"
+url = "https://Open-Meteo/Accra?format=j1"
 
 data = requests.get(url).json()
 

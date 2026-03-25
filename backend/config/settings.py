@@ -39,10 +39,10 @@ class Settings(BaseSettings):
     sentinel_scale:          int = 4
     sentinel_max_cloud_cover: int = 20
 
-    # ── Météo ─────────────────────────────────────────
-    weather_api_url:      str = "https://wttr.in"
-    weather_default_city: str = "Kaolack"
-    weather_timeout:      int = 10
+    # ── Météo (Open-Meteo — gratuit, sans clé) ────────
+    weather_forecast_url: str = "https://api.open-meteo.com/v1/forecast"
+    weather_archive_url:  str = "https://archive-api.open-meteo.com/v1/archive"
+    weather_timeout:      int = 12
 
     # ── Pondérations scoring ──────────────────────────
     weight_ndvi:     float = 0.35

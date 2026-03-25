@@ -1,0 +1,40 @@
+{
+  "trained_at": "2026-03-23T08:37:58.324031Z",
+  "model_type": "RandomForestRegressor",
+  "n_estimators": 300,
+  "n_samples_total": 978,
+  "n_samples_train": 782,
+  "n_samples_test": 196,
+  "n_features": 7,
+  "feature_names": [
+    "category",
+    "country",
+    "month",
+    "hazard_type",
+    "stockage",
+    "has_certification",
+    "severity_bonus"
+  ],
+  "feature_importances": {
+    "category": 0.0545,
+    "country": 0.0147,
+    "month": 0.0127,
+    "hazard_type": 0.1274,
+    "stockage": 0.2672,
+    "has_certification": 0.2494,
+    "severity_bonus": 0.2741
+  },
+  "metrics": {
+    "mae_train": 5.102,
+    "mae_test": 5.959,
+    "r2_train": 0.9581,
+    "r2_test": 0.9354
+  },
+  "data_sources": [
+    "RASFF_window_SEN.xlsx (Sénégal)",
+    "RASFF_window_GH.xlsx (Ghana)",
+    "RASFF_window_CDV.xlsx (Côte d'Ivoire)",
+    "RASFF_window_results_NGR.xlsx (Nigeria)"
+  ],
+  "synthetic_samples": "Oui — cas faible risque générés (stockage silo, certifiés, saison sèche)"
+}

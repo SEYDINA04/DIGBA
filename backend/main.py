@@ -34,9 +34,41 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Initialise la base de données au démarrage."""
+    """
+    Initialise la base de données et le modèle ML au démarrage.
+
+    Ordre d'initialisation :
+      1. seed_database()  — charge les données RASFF dans SQLite
+      2. train_model()    — entraîne le Random Forest (skip si model.pkl existe)
+      3. get_model_info() — précharge le modèle en mémoire (évite la latence au 1er appel)
+    """
     logger.info("🌱 Démarrage DIGBA API...")
+
+    # Étape 1 : base de données
     seed_database()
+
+    # Étape 2 : entraînement ML (skip automatique si model.pkl déjà présent)
+    try:
+        from backend.ml.train import train_model
+        trained = train_model(force=False)
+        if trained:
+            logger.info("🤖 Modèle ML entraîné avec succès au démarrage")
+    except Exception as e:
+        logger.warning(f"⚠️  Entraînement ML échoué (fallback rule-based actif) : {e}")
+
+    # Étape 3 : préchargement du modèle en mémoire
+    try:
+        from backend.ml.service import get_model_info
+        info = get_model_info()
+        if info["ml_available"]:
+            logger.info(
+                f"✅ ML opérationnel | MAE={info['mae_test']} pts | R²={info['r2_test']}"
+            )
+        else:
+            logger.warning("⚠️  ML indisponible — fallback rule-based actif")
+    except Exception as e:
+        logger.warning(f"⚠️  Préchargement ML échoué : {e}")
+
     logger.info("✅ DIGBA API prête")
     yield
     logger.info("🛑 Arrêt DIGBA API")

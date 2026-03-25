@@ -12,16 +12,38 @@ import type {
 
 const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:8000/api/v1",
-  timeout: 30_000,
+  timeout: 60_000,
   headers: { "Content-Type": "application/json" },
 });
 
-// Intercepteur global pour logger les erreurs
+// Intercepteur global — normalise toutes les erreurs en string lisible
 client.interceptors.response.use(
   (res) => res,
   (err) => {
-    const msg =
-      err.response?.data?.detail ?? err.message ?? "Erreur réseau";
+    const detail = err.response?.data?.detail;
+
+    let msg: string;
+
+    if (!detail) {
+      // Pas de réponse serveur (réseau, timeout, CORS...)
+      msg = err.message ?? "Erreur réseau";
+    } else if (typeof detail === "string") {
+      // Erreur FastAPI classique : { "detail": "message..." }
+      msg = detail;
+    } else if (Array.isArray(detail)) {
+      // Erreur de validation Pydantic : [{ loc, msg, type }]
+      // On extrait les messages lisibles et on les joint
+      msg = detail
+        .map((d: { msg?: string; loc?: string[] }) => {
+          const field = d.loc?.slice(1).join(".") ?? "";
+          return field ? `${field}: ${d.msg}` : (d.msg ?? "Champ invalide");
+        })
+        .join(" · ");
+    } else {
+      // Objet inconnu → sérialisation de secours
+      msg = JSON.stringify(detail);
+    }
+
     return Promise.reject(new Error(msg));
   }
 );

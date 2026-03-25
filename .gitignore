@@ -17,9 +17,29 @@ wheels/
 .env.*.local
 
 # ── Données satellite brutes (fichiers lourds) ────────
-backend/data/satellite/*.jp2
-backend/data/satellite/*.tif
-backend/data/satellite/*.TIF
+backend/data/satellite/**/*.jp2
+backend/data/satellite/**/*.tif
+backend/data/satellite/**/*.TIF
+backend/data/satellite/worldcover/
+
+# ── Données RASFF brutes (Excel / JSON volumineux) ────
+backend/RASFF_window_*.xlsx
+Products.json
+
+# ── Landing page (projet séparé, non versionné ici) ───
+frontend/landingpage/
+
+# ── TypeScript build cache ─────────────────────────────
+*.tsbuildinfo
+frontend/vite.config.js
+frontend/vite.config.d.ts
+
+# ── Modèle ML binaire (généré localement) ─────────────
+backend/ml/model.pkl
+
+# ── Présentation / assets volumineux hors-app ─────────
+presentation/
+frontend/salma_digba_icp
 
 # ── Outputs générés automatiquement ──────────────────
 backend/data/outputs/
@@ -56,3 +76,4 @@ Thumbs.db
 
 # ── Claude Code (sessions internes) ───────────────────
 .claude/
+.vercel

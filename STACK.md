@@ -1,170 +1,182 @@
-# DIGBA — Stack Technique
-> MVP v1.0 | MEST Africa | Mars 2026 | Babacar Ndao — Tech & AI Lead
+# DIGBA — Technical Stack
+> MVP v1.0 | MEST Africa | March 2026 | Babacar Ndao — Tech & AI Lead
 
 ---
 
-## Vue d'ensemble
+## Overview
 
-DIGBA est une application full-stack de scoring de risque alimentaire pour les lots d'anacarde sénégalais à l'export. Le pipeline croise 4 sources de données (satellite, météo, historique EU, formulaire opérateur) pour produire un score de risque en < 5 secondes.
+DIGBA is a full-stack food safety risk scoring application for West African agro-export lots. The pipeline combines 4 data sources (satellite, weather, EU rejection history, operator form) to produce a risk score in under 5 seconds.
 
 ---
 
 ## BACKEND
 
-### Langage & Runtime
-| Technologie | Version | Rôle |
+### Language & Runtime
+| Technology | Version | Role |
 |---|---|---|
-| **Python** | 3.13+ | Langage principal du backend |
-| **uv** | latest | Gestionnaire de paquets & environnements virtuels (remplace pip/poetry) |
+| **Python** | 3.13+ | Main backend language |
+| **uv** | latest | Package & virtual environment manager (replaces pip/poetry) |
 
-### Framework API
-| Technologie | Rôle |
+### API Framework
+| Technology | Role |
 |---|---|
-| **FastAPI** | Framework web async — expose les endpoints REST du pipeline |
-| **Uvicorn** | Serveur ASGI pour FastAPI |
-| **Pydantic** | Validation des données et schémas d'entrée/sortie |
+| **FastAPI** | Async web framework — exposes the pipeline's REST endpoints |
+| **Uvicorn** | ASGI server for FastAPI |
+| **Pydantic** | Data validation and input/output schemas |
 
-### Pipeline de données
-| Technologie | Rôle |
+### Data Pipeline
+| Technology | Role |
 |---|---|
-| **rasterio** | Lecture et traitement des images satellite Sentinel-2 (GeoTIFF, JP2) |
-| **numpy** | Calcul vectorisé du NDVI : `(NIR - RED) / (NIR + RED)` |
-| **requests** | Appels HTTP vers wttr.in (météo) et téléchargement des tuiles Sentinel-2 |
-| **python-dotenv** | Gestion des variables d'environnement |
+| **rasterio** | Reading and processing Sentinel-2 satellite images (GeoTIFF, JP2) |
+| **numpy** | Vectorised NDVI computation: `(NIR - RED) / (NIR + RED)` |
+| **requests** | HTTP calls to wttr.in (weather) and Sentinel-2 tile downloads |
+| **python-dotenv** | Environment variable management |
 
-### Base de données
-| Technologie | Rôle |
+### Database
+| Technology | Role |
 |---|---|
-| **SQLite** | Base locale pour la table RASFF (36+ rejets EU documentés) |
-| **SQLAlchemy** | ORM pour les requêtes RASFF et historique des lots |
-| **Alembic** | Migrations de schéma de base de données |
+| **SQLite** | Local database for the RASFF table (489+ documented EU rejections) |
+| **SQLAlchemy** | ORM for RASFF queries and lot history |
+| **Alembic** | Database schema migrations |
 
 ### Data Science & ML (V2)
-| Technologie | Rôle |
+| Technology | Role |
 |---|---|
-| **pandas** | Manipulation des datasets RASFF et feature engineering |
-| **scikit-learn** | Calibration des pondérations (régression logistique), normalisation |
-| **matplotlib** | Génération des visualisations NDVI (export PNG/GeoTIFF) |
+| **pandas** | RASFF dataset manipulation and feature engineering |
+| **scikit-learn** | Weight calibration (logistic regression), normalisation |
+| **matplotlib** | NDVI visualisation generation (PNG/GeoTIFF export) |
 
-### Tests
-| Technologie | Rôle |
+### Testing
+| Technology | Role |
 |---|---|
-| **pytest** | Framework de tests unitaires et d'intégration |
-| **httpx** | Client HTTP async pour tester les endpoints FastAPI |
+| **pytest** | Unit and integration test framework |
+| **httpx** | Async HTTP client for testing FastAPI endpoints |
 
 ---
 
 ## FRONTEND
 
-### Framework & Langage
-| Technologie | Version | Rôle |
+### Framework & Language
+| Technology | Version | Role |
 |---|---|---|
-| **React** | 18+ | Framework UI — interface de saisie et visualisation des scores |
-| **TypeScript** | 5+ | Typage statique pour la robustesse du code |
-| **Vite** | latest | Bundler ultra-rapide — remplace Create React App |
+| **React** | 18+ | UI framework — input interface and score visualisation |
+| **TypeScript** | 5+ | Static typing for code robustness |
+| **Vite** | latest | Ultra-fast bundler — replaces Create React App |
 
-### UI & Styles
-| Technologie | Rôle |
+### UI & Styling
+| Technology | Role |
 |---|---|
-| **Tailwind CSS** | Styling utility-first — design system cohérent et rapide |
-| **shadcn/ui** | Composants UI accessibles et customisables (boutons, formulaires, cards) |
-| **Lucide React** | Bibliothèque d'icônes SVG |
-| **Recharts** | Visualisation des scores de risque (gauge, bar, line charts) |
+| **Tailwind CSS** | Utility-first styling — coherent and fast design system |
+| **shadcn/ui** | Accessible and customisable UI components (buttons, forms, cards) |
+| **Lucide React** | SVG icon library |
+| **Recharts** | Risk score visualisation (gauge, bar, line charts) |
 
 ### State Management & Data Fetching
-| Technologie | Rôle |
+| Technology | Role |
 |---|---|
-| **TanStack Query** | Cache, synchronisation et gestion des états des appels API |
-| **Zustand** | State management global léger (session utilisateur, historique) |
+| **TanStack Query** | Caching, synchronisation and API call state management |
+| **Zustand** | Lightweight global state management (user session, history) |
 
-### Formulaires
-| Technologie | Rôle |
+### Forms
+| Technology | Role |
 |---|---|
-| **React Hook Form** | Gestion performante du formulaire opérateur |
-| **Zod** | Validation des schémas côté client (synchronisé avec Pydantic backend) |
+| **React Hook Form** | Performant operator form management |
+| **Zod** | Client-side schema validation (synchronised with backend Pydantic) |
 
 ---
 
 ## INFRASTRUCTURE & DEVOPS
 
-| Technologie | Rôle |
+| Technology | Role |
 |---|---|
-| **Docker** | Conteneurisation du backend et frontend |
-| **Docker Compose** | Orchestration locale des services (api + frontend + db) |
-| **GitHub Actions** | CI/CD — lint, tests, build automatique |
-| **Git** | Versioning du code |
+| **Docker** | Backend and frontend containerisation |
+| **Docker Compose** | Local service orchestration (api + frontend + db) |
+| **GitHub Actions** | CI/CD — automated lint, tests and build |
+| **Git** | Code versioning |
 
 ---
 
-## DONNÉES EXTERNES (APIs & Sources)
+## EXTERNAL DATA (APIs & Sources)
 
-| Source | URL | Auth | Fréquence |
+| Source | URL | Auth | Frequency |
 |---|---|---|---|
-| **Sentinel-2 (ESA/AWS)** | `sentinel-s2-l2a.s3.amazonaws.com` | Aucune | Par scène (~5 jours) |
-| **wttr.in** | `wttr.in/{city}?format=j1` | Aucune | À la demande |
-| **RASFF EU** | Table locale SQLite | N/A | Mise à jour manuelle |
+| **Sentinel-2 (ESA/AWS)** | `sentinel-s2-l2a.s3.amazonaws.com` | None | Per scene (~5 days) |
+| **wttr.in** | `wttr.in/{city}?format=j1` | None | On demand |
+| **RASFF EU** | Local SQLite table | N/A | Manual update |
 
 ---
 
-## STRUCTURE DES DOSSIERS
+## FOLDER STRUCTURE
 
 ```
 DIGBA/
 ├── backend/
 │   ├── api/
-│   │   ├── routes/          # Endpoints FastAPI (scoring, lots, historique)
+│   │   ├── routes/          # FastAPI endpoints (scoring, lots, history)
 │   │   └── middleware/      # Auth, CORS, logging
 │   ├── core/
-│   │   ├── scoring/         # Moteur de calcul du score final
+│   │   ├── scoring/         # Final score computation engine
 │   │   └── pipeline/
-│   │       ├── ndvi/        # Download Sentinel-2 + calcul NDVI
-│   │       ├── weather/     # Appel wttr.in + parsing météo
-│   │       ├── rasff/       # Lookup RASFF + détection rejets
-│   │       └── operator/    # Traitement formulaire opérateur
-│   ├── models/              # Schémas Pydantic + modèles SQLAlchemy
+│   │       ├── ndvi/        # Sentinel-2 download + NDVI calculation
+│   │       ├── weather/     # wttr.in call + weather parsing
+│   │       ├── rasff/       # RASFF lookup + rejection detection
+│   │       └── operator/    # Operator form processing
+│   ├── models/              # Pydantic schemas + SQLAlchemy models
 │   ├── db/
-│   │   └── migrations/      # Migrations Alembic
-│   ├── config/              # Settings, variables d'env
-│   ├── utils/               # Helpers partagés
+│   │   └── migrations/      # Alembic migrations
+│   ├── config/              # Settings, environment variables
+│   ├── utils/               # Shared helpers
 │   └── tests/
-│       ├── unit/            # Tests unitaires par composant
-│       └── integration/     # Tests end-to-end du pipeline
+│       ├── unit/            # Unit tests per component
+│       └── integration/     # End-to-end pipeline tests
 │
 ├── frontend/
-│   ├── public/              # Assets statiques
+│   ├── public/              # Static assets
 │   └── src/
 │       ├── components/
-│       │   ├── ui/          # Composants atomiques (Button, Card, Badge...)
-│       │   ├── forms/       # Formulaire opérateur
-│       │   ├── charts/      # Visualisations scores & NDVI
+│       │   ├── ui/          # Atomic components (Button, Card, Badge...)
+│       │   ├── forms/       # Operator form
+│       │   ├── charts/      # Score & NDVI visualisations
 │       │   └── layout/      # Header, Sidebar, Footer
 │       ├── pages/
-│       │   ├── Dashboard/   # Vue principale — score en temps réel
-│       │   ├── Analysis/    # Détail d'une analyse de lot
-│       │   ├── History/     # Historique des lots analysés
-│       │   └── Settings/    # Configuration (région, seuils...)
-│       ├── services/        # Appels API backend (fetch/axios)
+│       │   ├── Dashboard/   # Main view — real-time risk score
+│       │   ├── Analysis/    # Lot analysis detail
+│       │   ├── History/     # Analysed lots history
+│       │   └── Settings/    # Configuration (region, thresholds...)
+│       ├── services/        # Backend API calls (fetch/axios)
 │       ├── hooks/           # Custom React hooks
 │       ├── store/           # Zustand stores
-│       ├── utils/           # Fonctions utilitaires JS/TS
-│       └── assets/          # Images, icônes, fonts
+│       ├── utils/           # JS/TS utility functions
+│       └── assets/          # Images, icons, fonts
 │
 ├── .claude/
-│   └── launch.json          # Configurations de lancement des serveurs
-├── STACK.md                 # Ce fichier
+│   └── launch.json          # Server launch configurations
+├── STACK.md                 # This file
 └── DIGBA_Pipeline_Reference.docx.pdf
 ```
 
 ---
 
-## ROADMAP TECHNIQUE
+## RASFF DATABASE — 4-Country Coverage
 
-| Phase | Période | Focus |
-|---|---|---|
-| **MVP** | 0–3 mois | Pipeline 4 sources + API FastAPI + UI React formulaire |
-| **V1.1** | 3–6 mois | Open-Meteo historique, GPS parcelle, dashboard exportateur |
-| **V2** | 6–12 mois | Modèle ML (XGBoost/RF), API publique, expansion CI/GH |
+| Country | Alerts | Border Rejections | Primary Hazard | Primary Market |
+|---|---|---|---|---|
+| Senegal | 54 | 35% | Chlorpyrifos (chilli) | Spain |
+| Ghana | 98 | 63% | Sudan dyes (palm oil) | UK |
+| Côte d'Ivoire | 25 | 36% | Sudan dyes (palm oil) | Belgium |
+| Nigeria | 312 | 82% | Salmonella (sesame) | Greece |
+| **Total** | **489** | | | |
 
 ---
 
-*DIGBA by MEST Africa — Confidentiel*
+## TECHNICAL ROADMAP
+
+| Phase | Timeline | Focus |
+|---|---|---|
+| **MVP** | 0–3 weeks | 4-source pipeline + FastAPI + React operator form |
+| **V1.1** | 3–5 months | Open-Meteo history, plot GPS, exporter dashboard |
+| **V2** | 5–7 months | ML model (XGBoost/RF), public API, CI/GH/NG expansion |
+
+---
+
+*DIGBA by MEST Africa — Confidential*

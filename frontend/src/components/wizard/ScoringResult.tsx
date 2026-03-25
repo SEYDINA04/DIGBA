@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import type { ScoreResponse } from "../../types/api";
 import type { CountryData } from "../../data/countries";
+import { useLang } from "../../i18n/LangContext";
 
 interface ScoringResultProps {
   result: ScoreResponse;
@@ -59,10 +60,12 @@ const NIVEAU_CONFIG = {
 } as const;
 
 export function ScoringResult({ result, country, region, onDone }: ScoringResultProps) {
+  const { t } = useLang();
   const { score, niveau_risque, decision, details } = result;
   const { rasff, operator } = details;
   const cfg = NIVEAU_CONFIG[niveau_risque] ?? NIVEAU_CONFIG["Modéré"];
   const displayScore = useCountUp(score);
+  const riskLabel = t.risk[niveau_risque as keyof typeof t.risk] ?? niveau_risque;
 
   return (
     <div className="space-y-5">
@@ -81,12 +84,12 @@ export function ScoringResult({ result, country, region, onDone }: ScoringResult
           </span>
           <span className="text-3xl font-light text-white/70">%</span>
         </div>
-        <p className="text-sm text-white/70 mt-1">Score de risque DIGBA</p>
+        <p className="text-sm text-white/70 mt-1">{t.wizard.score_label}</p>
 
         {/* Risk badge */}
-        <div className={`inline-flex items-center gap-2 mt-3 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm`}>
+        <div className="inline-flex items-center gap-2 mt-3 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm">
           <span>{cfg.icon}</span>
-          <span className="font-bold text-sm">Risque {niveau_risque}</span>
+          <span className="font-bold text-sm">{t.wizard.risk_label(riskLabel)}</span>
         </div>
 
         {/* Score bar */}
@@ -98,15 +101,15 @@ export function ScoringResult({ result, country, region, onDone }: ScoringResult
         </div>
         <div className="flex justify-between text-xs text-white/50 mt-1">
           <span>0</span>
-          <span>Faible ←→ Modéré ←→ Élevé</span>
+          <span>{t.wizard.scale_label}</span>
           <span>100</span>
         </div>
       </div>
 
       {/* ── Decision banner ── */}
       <div className={`rounded-xl border-2 p-4 ${cfg.bg} ${cfg.border}`}>
-        <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-1">
-          Recommandation
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1">
+          {t.wizard.recommendation}
         </p>
         <p className={`text-sm font-medium leading-relaxed ${cfg.text}`}>
           {cfg.icon} {decision}
@@ -132,23 +135,23 @@ export function ScoringResult({ result, country, region, onDone }: ScoringResult
             {rasff.score.toFixed(0)}
             <span className="text-xl font-normal text-white/50">/100</span>
           </div>
-          <p className="text-xs text-white/60 mb-4">Score de risque RASFF</p>
+          <p className="text-xs text-white/60 mb-4">{t.wizard.rasff_score}</p>
 
           <div className="space-y-2 text-sm">
             <div className="flex justify-between items-center">
-              <span className="text-white/60">Rejets fournisseur (24m)</span>
+              <span className="text-white/60">{t.wizard.rasff_rejets}</span>
               <span className="font-bold">{rasff.nb_rejets_24m}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-white/60">Rejets région (24m)</span>
+              <span className="text-white/60">{t.wizard.rasff_region}</span>
               <span className="font-bold">{rasff.nb_rejets_region}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-white/60">Blacklisté</span>
+              <span className="text-white/60">{t.wizard.rasff_blacklist}</span>
               {rasff.blackliste ? (
-                <span className="font-bold text-red-300">Oui ⚠️</span>
+                <span className="font-bold text-red-300">{t.wizard.rasff_yes}</span>
               ) : (
-                <span className="font-bold text-emerald-300">Non ✓</span>
+                <span className="font-bold text-emerald-300">{t.wizard.rasff_no}</span>
               )}
             </div>
           </div>
@@ -183,19 +186,21 @@ export function ScoringResult({ result, country, region, onDone }: ScoringResult
             {operator.score.toFixed(0)}
             <span className="text-xl font-normal text-white/50">/100</span>
           </div>
-          <p className="text-xs text-white/60 mb-4">Score de risque opérateur</p>
+          <p className="text-xs text-white/60 mb-4">{t.wizard.op_score}</p>
 
           <div className="space-y-2 text-sm">
             <div className="flex justify-between items-center">
-              <span className="text-white/60">Stockage</span>
-              <span className="font-bold capitalize">{operator.stockage.replace(/_/g, " ")}</span>
+              <span className="text-white/60">{t.wizard.op_storage}</span>
+              <span className="font-bold capitalize">
+                {t.storage[operator.stockage as keyof typeof t.storage] ?? operator.stockage.replace(/_/g, " ")}
+              </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-white/60">Certifications</span>
+              <span className="text-white/60">{t.wizard.op_certs}</span>
               <span className="font-bold">
                 {operator.certifications.length > 0
                   ? operator.certifications.length
-                  : "Aucune"}
+                  : t.wizard.op_none}
               </span>
             </div>
           </div>
@@ -222,7 +227,7 @@ export function ScoringResult({ result, country, region, onDone }: ScoringResult
         className={`w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r ${cfg.gradient} py-3.5 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:opacity-90 focus:outline-none`}
       >
         <span>💾</span>
-        Sauvegarder dans l'historique
+        {t.wizard.save_btn}
         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
         </svg>

@@ -12,6 +12,7 @@ const styles: Record<NiveauRisque, string> = {
 interface BadgeProps {
   niveau: NiveauRisque;
   size?: "sm" | "md" | "lg";
+  label?: string;
 }
 
 const sizeClass = {
@@ -20,12 +21,12 @@ const sizeClass = {
   lg: "text-base px-4 py-1.5 font-semibold",
 };
 
-export function Badge({ niveau, size = "md" }: BadgeProps) {
+export function Badge({ niveau, size = "md", label }: BadgeProps) {
   return (
     <span
       className={`inline-flex items-center rounded-full font-medium ${styles[niveau]} ${sizeClass[size]}`}
     >
-      {niveau}
+      {label ?? niveau}
     </span>
   );
 }

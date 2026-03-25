@@ -21,6 +21,17 @@ services:
       timeout: 10s
       retries: 3
 
+  landingpage:
+    build:
+      context: ./frontend/landingpage
+      dockerfile: Dockerfile
+    container_name: digba-landingpage
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./frontend/landingpage/src:/app/src
+    restart: unless-stopped
+
   frontend:
     build:
       context: ./frontend
