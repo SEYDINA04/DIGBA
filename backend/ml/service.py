@@ -109,16 +109,8 @@ def predict_rasff_risk(
             score   — float 0–100 (ML si disponible, règle fixe sinon)
             ml_used — True si prédiction ML, False si fallback règle fixe
     """
-    # Charger le modèle si pas encore fait
-    # NOTE : fallback désactivé — 100% ML requis
-    # Pour réactiver le fallback en cas de problème :
-    #   remplacer le raise par : return _fallback_score(produit, country, certifications), False
     if not _load_model():
-        raise RuntimeError(
-            "Modèle ML DIGBA indisponible. "
-            "Vérifiez que model.pkl est présent dans backend/ml/ "
-            "ou relancez le container pour déclencher l'entraînement."
-        )
+        return _fallback_score(produit, country, certifications), False
 
     if month is None:
         month = datetime.now().month
