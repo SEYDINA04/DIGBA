@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: digba-api
+    runtime: docker
+    dockerfilePath: backend/Dockerfile
+    plan: free
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DEBUG
+        value: false
+      - key: CORS_ORIGINS
+        value: https://digba-hazel.vercel.app
+      - key: DATABASE_URL
+        value: sqlite:////app/backend/data/rasff/digba.db
+      - key: PORT
+        value: 8000
