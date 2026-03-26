@@ -4,19 +4,7 @@
 import { useHistoryStore } from "../../store/historyStore";
 import { Badge } from "../../components/ui/Badge";
 import type { NiveauRisque } from "../../types/api";
-
-const produitLabels: Record<string, string> = {
-  noix_de_cajou: "Noix de cajou",
-  arachide:      "Arachide",
-  mil:           "Mil",
-  sorgho:        "Sorgho",
-};
-
-const stockageLabels: Record<string, string> = {
-  silo_ventile: "Silo ventilé",
-  hangar:       "Hangar",
-  plein_air:    "Plein air",
-};
+import { useLang } from "../../i18n/LangContext";
 
 function scoreColor(score: number): string {
   if (score <= 35) return "text-green-600";
@@ -24,9 +12,9 @@ function scoreColor(score: number): string {
   return "text-red-600";
 }
 
-function formatDate(iso: string): string {
+function formatDate(iso: string, locale: string): string {
   try {
-    return new Intl.DateTimeFormat("fr-FR", {
+    return new Intl.DateTimeFormat(locale, {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
@@ -40,86 +28,84 @@ function formatDate(iso: string): string {
 
 export default function History() {
   const { entries, clearHistory } = useHistoryStore();
+  const { t, lang } = useLang();
 
   return (
     <div className="space-y-6">
-      {/* En-tête */}
+      {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Historique</h1>
-          <p className="mt-1 text-sm text-gray-500">
-            {entries.length} analyse{entries.length !== 1 ? "s" : ""} enregistrée
-            {entries.length !== 1 ? "s" : ""} localement.
+          <h1 className="text-2xl font-display font-bold text-foreground">{t.history.title}</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {t.history.n_analyses(entries.length)}
           </p>
         </div>
         {entries.length > 0 && (
           <button
             onClick={() => {
-              if (confirm("Vider l'historique ?")) clearHistory();
+              if (confirm(t.history.confirm_clear)) clearHistory();
             }}
             className="flex items-center gap-1.5 text-sm text-red-600 hover:text-red-700 border border-red-200 hover:border-red-300 bg-red-50 hover:bg-red-100 px-3 py-2 rounded-lg transition-colors"
           >
-            🗑️ Vider l'historique
+            🗑️ {t.history.clear}
           </button>
         )}
       </div>
 
-      {/* Vide */}
+      {/* Empty state */}
       {entries.length === 0 && (
-        <div className="bg-white rounded-xl border border-dashed border-gray-300 p-12 flex flex-col items-center gap-2 text-center">
+        <div className="bg-card rounded-xl border border-dashed border-border p-12 flex flex-col items-center gap-2 text-center">
           <span className="text-4xl">📋</span>
-          <p className="text-gray-500 text-sm">
-            Aucune analyse enregistrée pour l'instant.
+          <p className="text-muted-foreground text-sm">
+            {t.history.empty_desc}
             <br />
-            Lancez une analyse depuis la page <strong>Analyse</strong>.
+            {t.history.empty_hint}
           </p>
         </div>
       )}
 
       {/* Table */}
       {entries.length > 0 && (
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 border-b border-gray-200">
+              <thead className="bg-muted border-b border-border">
                 <tr>
-                  <th className="px-4 py-3 text-left font-semibold text-gray-700">Date</th>
-                  <th className="px-4 py-3 text-left font-semibold text-gray-700">Produit</th>
-                  <th className="px-4 py-3 text-left font-semibold text-gray-700">Région</th>
-                  <th className="px-4 py-3 text-left font-semibold text-gray-700">Fournisseur</th>
-                  <th className="px-4 py-3 text-left font-semibold text-gray-700">Stockage</th>
-                  <th className="px-4 py-3 text-right font-semibold text-gray-700">Score</th>
-                  <th className="px-4 py-3 text-center font-semibold text-gray-700">Niveau</th>
+                  <th className="px-4 py-3 text-left font-semibold text-foreground/70">{t.history.col_date}</th>
+                  <th className="px-4 py-3 text-left font-semibold text-foreground/70">{t.history.col_product}</th>
+                  <th className="px-4 py-3 text-left font-semibold text-foreground/70">{t.history.col_region}</th>
+                  <th className="px-4 py-3 text-left font-semibold text-foreground/70">{t.history.col_supplier}</th>
+                  <th className="px-4 py-3 text-left font-semibold text-foreground/70">{t.history.col_storage}</th>
+                  <th className="px-4 py-3 text-right font-semibold text-foreground/70">{t.history.col_score}</th>
+                  <th className="px-4 py-3 text-center font-semibold text-foreground/70">{t.history.col_level}</th>
                 </tr>
               </thead>
               <tbody>
                 {entries.map((entry) => (
                   <tr
                     key={entry.id}
-                    className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                    className="border-b border-border hover:bg-muted/40 transition-colors"
                   >
-                    <td className="px-4 py-3 text-gray-500 whitespace-nowrap">
-                      {formatDate(entry.date)}
+                    <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">
+                      {formatDate(entry.date, lang === "fr" ? "fr-FR" : "en-GB")}
                     </td>
-                    <td className="px-4 py-3 font-medium text-gray-900">
-                      {produitLabels[entry.produit] ?? entry.produit}
+                    <td className="px-4 py-3 font-medium text-foreground">
+                      {t.products[entry.produit as keyof typeof t.products] ?? entry.produit}
                     </td>
-                    <td className="px-4 py-3 text-gray-700">{entry.region}</td>
-                    <td className="px-4 py-3 text-gray-700 max-w-[160px] truncate">
+                    <td className="px-4 py-3 text-foreground/80">{entry.region}</td>
+                    <td className="px-4 py-3 text-foreground/80 max-w-[160px] truncate">
                       {entry.fournisseur}
                     </td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {stockageLabels[entry.stockage] ?? entry.stockage}
+                    <td className="px-4 py-3 text-muted-foreground">
+                      {t.storage[entry.stockage as keyof typeof t.storage] ?? entry.stockage}
                     </td>
                     <td className="px-4 py-3 text-right">
-                      <span
-                        className={`text-lg font-bold ${scoreColor(entry.score)}`}
-                      >
+                      <span className={`text-lg font-bold ${scoreColor(entry.score)}`}>
                         {entry.score}%
                       </span>
                     </td>
                     <td className="px-4 py-3 text-center">
-                      <Badge niveau={entry.niveau_risque as NiveauRisque} size="sm" />
+                      <Badge niveau={entry.niveau_risque as NiveauRisque} size="sm" label={t.risk[entry.niveau_risque as keyof typeof t.risk]} />
                     </td>
                   </tr>
                 ))}
