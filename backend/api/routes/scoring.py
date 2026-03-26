@@ -83,6 +83,8 @@ def score_lot(form: ScoreRequest, db: Session = Depends(get_db)):
             rasff=rasff_result,
             operator=operator_result,
             phenology=phenology_result,
+            produit=produit_val,
+            region=form.region,
         )
 
     except Exception as e:

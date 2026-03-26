@@ -1,37 +1,40 @@
 reference,date,pays_origine,produit,danger,categorie_danger,valeur_mesuree,unite,limite_eu,decision,fournisseur,region_senegal
-2024.0892,2024-03-12,Sénégal,Noix de cajou,Aflatoxine B1,Mycotoxine,18.5,ppb,5.0,Rejet frontière,Export Cashew SN,Kaolack
-2024.0761,2024-02-28,Sénégal,Noix de cajou,Aflatoxines totales,Mycotoxine,32.1,ppb,10.0,Rejet frontière,Thiès Agro,Thiès
-2024.0543,2024-02-10,Sénégal,Noix de cajou,Aflatoxine B1,Mycotoxine,12.3,ppb,5.0,Rejet frontière,SN Cashew Ltd,Ziguinchor
-2024.0412,2024-01-22,Sénégal,Noix de cajou,Chlorpyrifos,Pesticide,0.08,mg/kg,0.01,Rejet frontière,Delta Export,Kaolack
-2024.0301,2024-01-08,Sénégal,Noix de cajou,Aflatoxine B1,Mycotoxine,9.7,ppb,5.0,Rejet frontière,Casamance Nuts,Ziguinchor
-2023.4821,2023-11-15,Sénégal,Noix de cajou,Aflatoxines totales,Mycotoxine,24.6,ppb,10.0,Rejet frontière,Export Cashew SN,Kaolack
-2023.4654,2023-10-30,Sénégal,Noix de cajou,Chlorpyrifos,Pesticide,0.12,mg/kg,0.01,Rejet frontière,Nord Cashew,Saint-Louis
-2023.4312,2023-10-12,Sénégal,Noix de cajou,Aflatoxine B1,Mycotoxine,7.2,ppb,5.0,Rejet frontière,Thiès Agro,Thiès
-2023.4089,2023-09-25,Sénégal,Noix de cajou,Salmonella,Microbiologie,Présence,/25g,Absence,Rejet frontière,SN Premium Nuts,Dakar
-2023.3876,2023-09-08,Sénégal,Noix de cajou,Aflatoxine B1,Mycotoxine,15.4,ppb,5.0,Rejet frontière,Casamance Nuts,Ziguinchor
-2023.3654,2023-08-20,Sénégal,Noix de cajou,Aflatoxines totales,Mycotoxine,19.8,ppb,10.0,Rejet frontière,Delta Export,Kaolack
-2023.3421,2023-08-05,Sénégal,Noix de cajou,Chlorpyrifos,Pesticide,0.06,mg/kg,0.01,Rejet frontière,Export Cashew SN,Kaolack
-2023.3198,2023-07-18,Sénégal,Noix de cajou,Aflatoxine B1,Mycotoxine,22.1,ppb,5.0,Rejet frontière,Thiès Agro,Thiès
-2023.2987,2023-07-02,Sénégal,Noix de cajou,Aflatoxine B2,Mycotoxine,8.9,ppb,3.0,Rejet frontière,Casamance Nuts,Ziguinchor
-2023.2765,2023-06-15,Sénégal,Noix de cajou,Aflatoxine B1,Mycotoxine,11.3,ppb,5.0,Rejet frontière,SN Cashew Ltd,Ziguinchor
-2023.2543,2023-05-28,Sénégal,Noix de cajou,Pesticides multiples,Pesticide,Dépassement,mg/kg,MRL EU,Rejet frontière,Nord Cashew,Saint-Louis
-2023.2312,2023-05-10,Sénégal,Noix de cajou,Aflatoxine B1,Mycotoxine,6.8,ppb,5.0,Rejet frontière,Delta Export,Kaolack
-2023.2098,2023-04-22,Sénégal,Noix de cajou,Salmonella,Microbiologie,Présence,/25g,Absence,Rejet frontière,SN Premium Nuts,Dakar
-2023.1876,2023-04-05,Sénégal,Noix de cajou,Aflatoxines totales,Mycotoxine,28.4,ppb,10.0,Rejet frontière,Export Cashew SN,Kaolack
-2023.1654,2023-03-18,Sénégal,Noix de cajou,Aflatoxine B1,Mycotoxine,16.7,ppb,5.0,Rejet frontière,Thiès Agro,Thiès
-2022.5432,2022-12-10,Sénégal,Noix de cajou,Chlorpyrifos,Pesticide,0.09,mg/kg,0.01,Rejet frontière,Casamance Nuts,Ziguinchor
-2022.5210,2022-11-22,Sénégal,Noix de cajou,Aflatoxine B1,Mycotoxine,13.5,ppb,5.0,Rejet frontière,SN Cashew Ltd,Ziguinchor
-2022.4987,2022-11-05,Sénégal,Noix de cajou,Aflatoxines totales,Mycotoxine,21.2,ppb,10.0,Rejet frontière,Delta Export,Kaolack
-2022.4765,2022-10-18,Sénégal,Noix de cajou,Aflatoxine B1,Mycotoxine,8.4,ppb,5.0,Rejet frontière,Nord Cashew,Saint-Louis
-2022.4543,2022-10-01,Sénégal,Noix de cajou,Salmonella,Microbiologie,Présence,/25g,Absence,Rejet frontière,Export Cashew SN,Kaolack
-2022.4321,2022-09-14,Sénégal,Noix de cajou,Aflatoxine B1,Mycotoxine,19.3,ppb,5.0,Rejet frontière,Thiès Agro,Thiès
-2022.4098,2022-08-27,Sénégal,Noix de cajou,Chlorpyrifos,Pesticide,0.15,mg/kg,0.01,Rejet frontière,Casamance Nuts,Ziguinchor
-2022.3876,2022-08-10,Sénégal,Noix de cajou,Aflatoxines totales,Mycotoxine,35.6,ppb,10.0,Rejet frontière,SN Premium Nuts,Dakar
-2022.3654,2022-07-23,Sénégal,Noix de cajou,Aflatoxine B1,Mycotoxine,10.1,ppb,5.0,Rejet frontière,SN Cashew Ltd,Ziguinchor
-2022.3432,2022-07-06,Sénégal,Noix de cajou,Aflatoxine B1,Mycotoxine,14.8,ppb,5.0,Rejet frontière,Delta Export,Kaolack
-2022.3210,2022-06-19,Sénégal,Noix de cajou,Pesticides multiples,Pesticide,Dépassement,mg/kg,MRL EU,Rejet frontière,Nord Cashew,Saint-Louis
-2022.2987,2022-06-02,Sénégal,Noix de cajou,Aflatoxine B1,Mycotoxine,7.9,ppb,5.0,Rejet frontière,Export Cashew SN,Kaolack
-2022.2765,2022-05-15,Sénégal,Noix de cajou,Aflatoxines totales,Mycotoxine,17.3,ppb,10.0,Rejet frontière,Thiès Agro,Thiès
-2022.2543,2022-04-28,Sénégal,Noix de cajou,Salmonella,Microbiologie,Présence,/25g,Absence,Rejet frontière,Casamance Nuts,Ziguinchor
-2022.2321,2022-04-11,Sénégal,Noix de cajou,Aflatoxine B1,Mycotoxine,25.6,ppb,5.0,Rejet frontière,SN Cashew Ltd,Ziguinchor
-2022.2098,2022-03-24,Sénégal,Noix de cajou,Chlorpyrifos,Pesticide,0.11,mg/kg,0.01,Rejet frontière,Delta Export,Kaolack
+2026.0112,2026-01-20,Sénégal,Arachide,Aflatoxine B1,Mycotoxine,22.4,ppb,5.0,Rejet frontière,Delta Arachide Export,Kaolack
+2026.0089,2026-01-08,Sénégal,Arachide,Aflatoxines totales,Mycotoxine,41.2,ppb,10.0,Rejet frontière,Delta Arachide Export,Kaolack
+2025.4987,2025-12-15,Sénégal,Arachide,Aflatoxine B1,Mycotoxine,18.7,ppb,5.0,Rejet frontière,Kaolack Grain SA,Kaolack
+2025.4821,2025-11-28,Sénégal,Arachide,Aflatoxines totales,Mycotoxine,33.5,ppb,10.0,Rejet frontière,Delta Arachide Export,Kaolack
+2025.4654,2025-11-10,Sénégal,Sésame,Salmonella,Microbiologie,Présence,/25g,Absence,Rejet frontière,Thiès Sesame Export,Thiès
+2025.4432,2025-10-22,Sénégal,Arachide,Aflatoxine B1,Mycotoxine,9.3,ppb,5.0,Rejet frontière,Kaolack Grain SA,Kaolack
+2025.4210,2025-10-05,Sénégal,Arachide,Chlorpyrifos,Pesticide,0.09,mg/kg,0.01,Rejet frontière,Nord Arachide SN,Saint-Louis
+2025.3987,2025-09-18,Sénégal,Arachide,Aflatoxine B2,Mycotoxine,6.8,ppb,3.0,Rejet frontière,Delta Arachide Export,Thiès
+2025.3765,2025-09-01,Sénégal,Sésame,Pesticides multiples,Pesticide,Dépassement,mg/kg,MRL EU,Rejet frontière,Ziguinchor Oilseeds,Ziguinchor
+2025.3543,2025-08-14,Sénégal,Arachide,Aflatoxines totales,Mycotoxine,27.9,ppb,10.0,Rejet frontière,Kaolack Grain SA,Kaolack
+2025.3321,2025-07-28,Sénégal,Cacao,Ochratoxine A,Mycotoxine,4.2,ppb,2.0,Rejet frontière,Casamance Cacao,Ziguinchor
+2025.3098,2025-07-10,Sénégal,Arachide,Aflatoxine B1,Mycotoxine,15.1,ppb,5.0,Rejet frontière,Delta Arachide Export,Kaolack
+2025.2876,2025-06-23,Sénégal,Arachide,Aflatoxine B1,Mycotoxine,11.6,ppb,5.0,Rejet frontière,Nord Arachide SN,Saint-Louis
+2025.2654,2025-06-06,Sénégal,Sésame,Salmonella,Microbiologie,Présence,/25g,Absence,Rejet frontière,Thiès Sesame Export,Thiès
+2025.2432,2025-05-20,Sénégal,Arachide,Aflatoxines totales,Mycotoxine,38.4,ppb,10.0,Rejet frontière,Kaolack Grain SA,Kaolack
+2025.2210,2025-05-03,Sénégal,Arachide,Chlorpyrifos,Pesticide,0.13,mg/kg,0.01,Rejet frontière,Delta Arachide Export,Kaolack
+2025.1987,2025-04-15,Sénégal,Cacao,Ochratoxine A,Mycotoxine,3.7,ppb,2.0,Rejet frontière,Casamance Cacao,Ziguinchor
+2025.1765,2025-03-29,Sénégal,Arachide,Aflatoxine B1,Mycotoxine,8.2,ppb,5.0,Rejet frontière,Kaolack Grain SA,Kaolack
+2025.1543,2025-03-12,Sénégal,Sésame,Chlorpyrifos,Pesticide,0.07,mg/kg,0.01,Rejet frontière,Ziguinchor Oilseeds,Ziguinchor
+2025.1321,2025-02-23,Sénégal,Arachide,Aflatoxines totales,Mycotoxine,19.6,ppb,10.0,Rejet frontière,Nord Arachide SN,Saint-Louis
+2025.1098,2025-02-06,Sénégal,Arachide,Aflatoxine B1,Mycotoxine,29.3,ppb,5.0,Rejet frontière,Delta Arachide Export,Kaolack
+2025.0876,2025-01-20,Sénégal,Arachide,Salmonella,Microbiologie,Présence,/25g,Absence,Rejet frontière,Kaolack Grain SA,Kaolack
+2025.0654,2025-01-03,Sénégal,Sésame,Aflatoxines totales,Mycotoxine,14.8,ppb,10.0,Rejet frontière,Thiès Sesame Export,Thiès
+2024.5987,2024-12-17,Sénégal,Arachide,Aflatoxine B1,Mycotoxine,16.4,ppb,5.0,Rejet frontière,Delta Arachide Export,Kaolack
+2024.5765,2024-11-30,Sénégal,Arachide,Chlorpyrifos,Pesticide,0.11,mg/kg,0.01,Rejet frontière,Nord Arachide SN,Saint-Louis
+2024.5543,2024-11-13,Sénégal,Cacao,Ochratoxine A,Mycotoxine,5.1,ppb,2.0,Rejet frontière,Casamance Cacao,Ziguinchor
+2024.5321,2024-10-27,Sénégal,Arachide,Aflatoxines totales,Mycotoxine,44.7,ppb,10.0,Rejet frontière,Kaolack Grain SA,Kaolack
+2024.5098,2024-10-10,Sénégal,Arachide,Aflatoxine B1,Mycotoxine,12.9,ppb,5.0,Rejet frontière,Delta Arachide Export,Thiès
+2024.4876,2024-09-23,Sénégal,Sésame,Salmonella,Microbiologie,Présence,/25g,Absence,Rejet frontière,Ziguinchor Oilseeds,Ziguinchor
+2024.4654,2024-09-06,Sénégal,Arachide,Aflatoxine B2,Mycotoxine,7.5,ppb,3.0,Rejet frontière,Kaolack Grain SA,Kaolack
+2024.4432,2024-08-20,Sénégal,Arachide,Aflatoxine B1,Mycotoxine,20.8,ppb,5.0,Rejet frontière,Delta Arachide Export,Kaolack
+2024.4210,2024-08-03,Sénégal,Arachide,Pesticides multiples,Pesticide,Dépassement,mg/kg,MRL EU,Rejet frontière,Nord Arachide SN,Saint-Louis
+2024.3987,2024-07-17,Sénégal,Sésame,Chlorpyrifos,Pesticide,0.08,mg/kg,0.01,Rejet frontière,Thiès Sesame Export,Thiès
+2024.3765,2024-07-01,Sénégal,Arachide,Aflatoxines totales,Mycotoxine,31.2,ppb,10.0,Rejet frontière,Kaolack Grain SA,Kaolack
+2024.3543,2024-06-14,Sénégal,Cacao,Ochratoxine A,Mycotoxine,2.9,ppb,2.0,Rejet frontière,Casamance Cacao,Ziguinchor
+2024.3321,2024-05-28,Sénégal,Arachide,Aflatoxine B1,Mycotoxine,17.3,ppb,5.0,Rejet frontière,Delta Arachide Export,Kaolack
+2024.3098,2024-05-11,Sénégal,Arachide,Salmonella,Microbiologie,Présence,/25g,Absence,Rejet frontière,Kaolack Grain SA,Kaolack
+2024.2876,2024-04-24,Sénégal,Sésame,Aflatoxines totales,Mycotoxine,12.3,ppb,10.0,Rejet frontière,Ziguinchor Oilseeds,Ziguinchor
+2024.2654,2024-04-07,Sénégal,Arachide,Aflatoxine B1,Mycotoxine,24.6,ppb,5.0,Rejet frontière,Delta Arachide Export,Kaolack

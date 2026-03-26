@@ -2,17 +2,24 @@
  * DIGBA — Barre de navigation
  */
 import { NavLink } from "react-router-dom";
-import { ShieldCheck, BarChart3, ClipboardList, Globe } from "lucide-react";
+import { ShieldCheck, BarChart3, ClipboardList, Globe, HelpCircle } from "lucide-react";
 import { useLang } from "../../i18n/LangContext";
+import { useTour } from "../../hooks/useTour";
 
 export function Navbar() {
   const { lang, setLang, t } = useLang();
+  const { resetTour } = useTour();
 
   const links = [
-    { to: "/",        label: t.nav.analyse,  Icon: BarChart3    },
-    { to: "/rasff",   label: t.nav.rasff,    Icon: Globe        },
-    { to: "/history", label: t.nav.history,  Icon: ClipboardList },
+    { to: "/",        label: t.nav.analyse,  Icon: BarChart3,    tourId: undefined         },
+    { to: "/rasff",   label: t.nav.rasff,    Icon: Globe,        tourId: "tour-nav-rasff"  },
+    { to: "/history", label: t.nav.history,  Icon: ClipboardList, tourId: undefined        },
   ];
+
+  const handleRestartTour = () => {
+    resetTour();
+    window.location.reload();
+  };
 
   return (
     <header className="bg-section-dark sticky top-0 z-30 border-b border-white/10">
@@ -29,11 +36,12 @@ export function Navbar() {
         {/* Navigation + Lang toggle */}
         <div className="flex items-center gap-2">
           <nav className="flex items-center gap-1">
-            {links.map(({ to, label, Icon }) => (
+            {links.map(({ to, label, Icon, tourId }) => (
               <NavLink
                 key={to}
                 to={to}
                 end={to === "/"}
+                id={tourId}
                 className={({ isActive }) =>
                   `flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                     isActive
@@ -47,6 +55,16 @@ export function Navbar() {
               </NavLink>
             ))}
           </nav>
+
+          {/* Tour restart button */}
+          <button
+            type="button"
+            onClick={handleRestartTour}
+            title="Restart guide"
+            className="p-2 rounded-lg text-section-dark-foreground/50 hover:bg-white/10 hover:text-section-dark-foreground transition-colors"
+          >
+            <HelpCircle className="h-4 w-4" />
+          </button>
 
           {/* Language toggle */}
           <div className="flex items-center rounded-lg overflow-hidden border border-white/15 ml-2">

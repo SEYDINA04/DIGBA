@@ -5,7 +5,7 @@ import {
   Satellite, Wheat, Droplets, CloudRain, Wind,
   Sun, Cloud, CloudLightning, Snowflake, CloudSun, CloudFog,
   MapPin, Package, ArrowRight, CheckCircle,
-  Thermometer, Check, AlertTriangle,
+  Thermometer, Check, AlertTriangle, TreePine,
 } from "lucide-react";
 import type { PreviewResponse } from "../../types/api";
 import type { CountryData } from "../../data/countries";
@@ -128,9 +128,10 @@ export function LocationPreview({ data, country, onContinue }: LocationPreviewPr
         <span className="text-xl">{country.flag}</span>
         <span className="font-semibold text-foreground">{region}, {country.name}</span>
         {coords && (
-          <span className="flex items-center gap-1 text-xs text-muted-foreground font-mono">
-            <MapPin className="h-3 w-3 text-primary" />
-            {coords.lat.toFixed(4)}°N, {Math.abs(coords.lon).toFixed(4)}°{coords.lon < 0 ? "W" : "E"}
+          <span className="flex items-center gap-1 text-xs text-muted-foreground font-mono bg-muted/50 px-2 py-0.5 rounded-full">
+            <MapPin className="h-3 w-3 text-primary shrink-0" />
+            {Math.abs(coords.lat).toFixed(6)}°{coords.lat >= 0 ? "N" : "S"}&nbsp;
+            {Math.abs(coords.lon).toFixed(6)}°{coords.lon < 0 ? "W" : "E"}
           </span>
         )}
         <span className="ml-auto flex items-center gap-1 text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-medium">
@@ -196,6 +197,42 @@ export function LocationPreview({ data, country, onContinue }: LocationPreviewPr
               </div>
             )}
 
+            {/* EUDR Deforestation Check */}
+            {ndvi.eudr && (
+              <div className={`mb-3 rounded-lg border p-2.5 ${
+                !ndvi.eudr.data_available
+                  ? "bg-muted/30 border-border"
+                  : ndvi.eudr.deforestation_free
+                    ? "bg-emerald-50 border-emerald-200 dark:bg-emerald-950/30 dark:border-emerald-800"
+                    : "bg-red-50 border-red-200 dark:bg-red-950/30 dark:border-red-800"
+              }`}>
+                <div className="flex items-center gap-1.5 mb-1">
+                  <TreePine className={`h-3.5 w-3.5 shrink-0 ${
+                    !ndvi.eudr.data_available ? "text-muted-foreground"
+                    : ndvi.eudr.deforestation_free ? "text-emerald-600" : "text-red-500"
+                  }`} />
+                  <span className={`text-xs font-semibold uppercase tracking-wider ${
+                    !ndvi.eudr.data_available ? "text-muted-foreground"
+                    : ndvi.eudr.deforestation_free ? "text-emerald-700 dark:text-emerald-400" : "text-red-600"
+                  }`}>EUDR</span>
+                </div>
+                {!ndvi.eudr.data_available ? (
+                  <p className="text-xs text-muted-foreground">{ndvi.eudr.source}</p>
+                ) : (
+                  <>
+                    <p className={`text-xs font-medium ${ndvi.eudr.deforestation_free ? "text-emerald-700 dark:text-emerald-400" : "text-red-600"}`}>
+                      {ndvi.eudr.deforestation_free
+                        ? `Deforestation-free after ${ndvi.eudr.cutoff_date}`
+                        : `⚠ ${ndvi.eudr.deforested_pct.toFixed(2)}% deforested after ${ndvi.eudr.cutoff_date}`}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Forest 2020: {ndvi.eudr.forest_pct_2020}% → 2021: {ndvi.eudr.forest_pct_2021}%
+                    </p>
+                  </>
+                )}
+              </div>
+            )}
+
             {/* Risk score */}
             <div>
               <div className="flex justify-between text-xs text-muted-foreground mb-1">
@@ -224,8 +261,9 @@ export function LocationPreview({ data, country, onContinue }: LocationPreviewPr
                 {weather.lat !== 0 && (
                   <div className="flex items-center gap-1 mt-0.5">
                     <MapPin className="h-3 w-3 text-muted-foreground/60 shrink-0" />
-                    <p className="text-xs text-muted-foreground/60 tabular-nums">
-                      {weather.lat.toFixed(4)}°, {weather.lon.toFixed(4)}°
+                    <p className="text-xs text-muted-foreground/60 tabular-nums font-mono">
+                      {Math.abs(weather.lat).toFixed(6)}°{weather.lat >= 0 ? "N" : "S"}&nbsp;
+                      {Math.abs(weather.lon).toFixed(6)}°{weather.lon < 0 ? "W" : "E"}
                     </p>
                   </div>
                 )}

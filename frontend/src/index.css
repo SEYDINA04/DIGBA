@@ -26,3 +26,86 @@
     @apply block text-sm font-medium text-foreground mb-1;
   }
 }
+
+/* ── Driver.js — DIGBA Tour Theme ───────────────────────────────────────── */
+.digba-tour-popover {
+  background: #0f1a14 !important;
+  border: 1px solid rgba(52, 211, 153, 0.25) !important;
+  border-radius: 16px !important;
+  color: #f0fdf4 !important;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.6), 0 0 0 1px rgba(52,211,153,0.1) !important;
+  padding: 20px !important;
+  min-width: 280px !important;
+  max-width: 320px !important;
+}
+
+.digba-tour-popover .driver-popover-title {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #34d399 !important;
+  margin-bottom: 8px !important;
+  letter-spacing: -0.01em !important;
+}
+
+.digba-tour-popover .driver-popover-description {
+  font-size: 13px !important;
+  color: rgba(240, 253, 244, 0.7) !important;
+  line-height: 1.6 !important;
+}
+
+.digba-tour-popover .driver-popover-progress-text {
+  font-size: 11px !important;
+  color: rgba(52, 211, 153, 0.6) !important;
+  font-weight: 600 !important;
+}
+
+.digba-tour-popover .driver-popover-footer {
+  margin-top: 16px !important;
+  gap: 8px !important;
+}
+
+.digba-tour-popover button.driver-popover-next-btn {
+  background: #34d399 !important;
+  color: #0f1a14 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  padding: 6px 14px !important;
+  cursor: pointer !important;
+  transition: filter 0.15s !important;
+}
+
+.digba-tour-popover button.driver-popover-next-btn:hover {
+  filter: brightness(1.1) !important;
+}
+
+.digba-tour-popover button.driver-popover-prev-btn {
+  background: transparent !important;
+  color: rgba(240,253,244,0.5) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+  padding: 6px 14px !important;
+  cursor: pointer !important;
+}
+
+.digba-tour-popover button.driver-popover-close-btn {
+  color: rgba(240,253,244,0.3) !important;
+  font-size: 18px !important;
+  top: 12px !important;
+  right: 14px !important;
+}
+
+.digba-tour-popover .driver-popover-arrow-side-top.driver-popover-arrow {
+  border-top-color: #0f1a14 !important;
+}
+.digba-tour-popover .driver-popover-arrow-side-bottom.driver-popover-arrow {
+  border-bottom-color: #0f1a14 !important;
+}
+.digba-tour-popover .driver-popover-arrow-side-left.driver-popover-arrow {
+  border-left-color: #0f1a14 !important;
+}
+.digba-tour-popover .driver-popover-arrow-side-right.driver-popover-arrow {
+  border-right-color: #0f1a14 !important;
+}

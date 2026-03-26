@@ -252,7 +252,15 @@ export function AnalysisWizard({ onClose, onSave }: AnalysisWizardProps) {
           {state.phase === "step2-form"    && <StepDetails onSubmit={handleDetailsSubmit} />}
           {state.phase === "step2-loading" && <ProgressTracker steps={step2Steps} isApiDone={state.isApiDone} onAllDone={handleStep2AnimDone} />}
           {state.phase === "step2-result"  && state.result && state.country && (
-            <ScoringResult result={state.result} country={state.country} region={state.region} onDone={handleSave} />
+            <ScoringResult
+              result={state.result}
+              country={state.country}
+              region={state.region}
+              produit={state.produit as string}
+              fournisseur={state.fournisseur}
+              stockage={state.stockage as string}
+              onDone={handleSave}
+            />
           )}
         </div>
       </div>

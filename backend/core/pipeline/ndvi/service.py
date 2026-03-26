@@ -18,8 +18,10 @@ import numpy as np
 import rasterio
 from rasterio.enums import Resampling
 from rasterio.transform import Affine
+from rasterio.merge import merge as rio_merge
+from rasterio.windows import from_bounds as window_from_bounds
 from backend.config.settings import settings
-from backend.models.schemas import NdviResult
+from backend.models.schemas import NdviResult, EudrCheck
 from backend.core.pipeline.ndvi.anomaly import compute_anomaly, AnomalyResult
 
 logger = logging.getLogger(__name__)
@@ -95,6 +97,141 @@ def _evi_to_score(evi_mean: float) -> float:
         return 15.0
     else:
         return 5.0
+
+
+# Mapping tuile Sentinel-2 → tiles WorldCover qui l'intersectent
+TILE_TO_WC: dict[str, list[str]] = {
+    "28PBB": ["N12W018.tif", "N15W018.tif"],
+    "28PCA": ["N12W018.tif"],
+    "28PCC": ["N15W018.tif"],
+    "28PCU": ["N12W018.tif"],
+}
+
+
+def check_deforestation(tile_id: str, satellite_dir) -> EudrCheck:
+    """
+    Vérifie si la zone a subi une déforestation après le 31/12/2020 (EUDR Art. 3).
+
+    Compare ESA WorldCover 2020 (v100) vs 2021 (v200) sur l'emprise de la tuile
+    Sentinel-2. Pixels classe 10 (Tree cover) en 2020 mais pas en 2021 = déforestation.
+
+    Retourne EudrCheck avec data_available=False si les tiles 2020 sont absentes.
+    """
+    wc_dir_2021 = satellite_dir / "worldcover"
+    wc_dir_2020 = satellite_dir / "worldcover" / "2020"
+    wc_names    = TILE_TO_WC.get(tile_id, [])
+
+    if not wc_names:
+        return EudrCheck(
+            deforestation_free=True, deforested_pct=0.0,
+            forest_pct_2020=0.0, forest_pct_2021=0.0,
+            cutoff_date="2020-12-31",
+            source="ESA WorldCover — tile non mappée",
+            data_available=False,
+        )
+
+    # Vérifier que les tiles 2020 sont téléchargées
+    missing_2020 = [n for n in wc_names if not (wc_dir_2020 / n).exists()]
+    if missing_2020:
+        logger.info(f"[EUDR] Tiles 2020 manquantes : {missing_2020} — data_available=False")
+        return EudrCheck(
+            deforestation_free=True, deforested_pct=0.0,
+            forest_pct_2020=0.0, forest_pct_2021=0.0,
+            cutoff_date="2020-12-31",
+            source="ESA WorldCover 2020 — téléchargement en cours",
+            data_available=False,
+        )
+
+    # Récupérer l'emprise de la tuile depuis B4.jp2
+    b4_path = satellite_dir / tile_id / "B4.jp2"
+    if not b4_path.exists():
+        return EudrCheck(
+            deforestation_free=True, deforested_pct=0.0,
+            forest_pct_2020=0.0, forest_pct_2021=0.0,
+            cutoff_date="2020-12-31",
+            source="ESA WorldCover — B4.jp2 absent",
+            data_available=False,
+        )
+
+    try:
+        import rasterio.warp
+        FOREST_CLASS = 10
+
+        def _load_wc_clipped(wc_dir: object, names: list[str], bounds_wgs84) -> np.ndarray:
+            """Charge + mosaic + clip les tiles WorldCover à l'emprise donnée (WGS84)."""
+            paths = [wc_dir / n for n in names]
+            if len(paths) == 1:
+                with rasterio.open(paths[0]) as src:
+                    win = window_from_bounds(*bounds_wgs84, src.transform)
+                    arr = src.read(1, window=win)
+                    return arr
+            else:
+                srcs = [rasterio.open(p) for p in paths]
+                mosaic, mosaic_trans = rio_merge(srcs)
+                for s in srcs:
+                    s.close()
+                # Clip mosaic to bounds
+                from rasterio.transform import from_bounds as tb_from_bounds
+                h, w = mosaic.shape[1], mosaic.shape[2]
+                win = window_from_bounds(*bounds_wgs84, mosaic_trans)
+                row_off = max(0, int(win.row_off))
+                col_off = max(0, int(win.col_off))
+                row_end = min(h, int(win.row_off + win.height))
+                col_end = min(w, int(win.col_off + win.width))
+                return mosaic[0, row_off:row_end, col_off:col_end]
+
+        # Bounds de la tuile en WGS84
+        with rasterio.open(b4_path) as src:
+            bounds_utm = src.bounds
+            bounds_wgs84 = rasterio.warp.transform_bounds(src.crs, "EPSG:4326", *bounds_utm)
+
+        arr_2020 = _load_wc_clipped(wc_dir_2020, wc_names, bounds_wgs84)
+        arr_2021 = _load_wc_clipped(wc_dir_2021, wc_names, bounds_wgs84)
+
+        # Aligner les tailles (clip peut donner des shapes légèrement différentes)
+        h = min(arr_2020.shape[0], arr_2021.shape[0])
+        w = min(arr_2020.shape[1], arr_2021.shape[1])
+        arr_2020 = arr_2020[:h, :w]
+        arr_2021 = arr_2021[:h, :w]
+
+        total = arr_2020.size
+        forest_2020 = arr_2020 == FOREST_CLASS
+        forest_2021 = arr_2021 == FOREST_CLASS
+
+        # Pixels déforestés = forêt en 2020 ET plus forêt en 2021
+        deforested  = forest_2020 & ~forest_2021
+        n_defor     = int(deforested.sum())
+        n_for_2020  = int(forest_2020.sum())
+        n_for_2021  = int(forest_2021.sum())
+
+        deforested_pct  = round(n_defor  / total * 100, 3)
+        forest_pct_2020 = round(n_for_2020 / total * 100, 2)
+        forest_pct_2021 = round(n_for_2021 / total * 100, 2)
+
+        logger.info(
+            f"[EUDR] {tile_id} | forêt 2020={forest_pct_2020}% → 2021={forest_pct_2021}% "
+            f"| déforestation={deforested_pct}%"
+        )
+
+        return EudrCheck(
+            deforestation_free=deforested_pct < 1.0,
+            deforested_pct=deforested_pct,
+            forest_pct_2020=forest_pct_2020,
+            forest_pct_2021=forest_pct_2021,
+            cutoff_date="2020-12-31",
+            source="ESA WorldCover 2020 v100 / 2021 v200 — 10m",
+            data_available=True,
+        )
+
+    except Exception as e:
+        logger.warning(f"[EUDR] Erreur check_deforestation({tile_id}): {e}")
+        return EudrCheck(
+            deforestation_free=True, deforested_pct=0.0,
+            forest_pct_2020=0.0, forest_pct_2021=0.0,
+            cutoff_date="2020-12-31",
+            source=f"ESA WorldCover — erreur : {e}",
+            data_available=False,
+        )
 
 
 def _read_band(path, scale: int) -> tuple[np.ndarray, dict, object]:
@@ -366,6 +503,11 @@ def compute_ndvi(region: str, scale: int | None = None) -> NdviResult:
         available = anomaly.available,
     ) if anomaly.available else None
 
+    # ── EUDR : Vérification déforestation (WorldCover 2020 vs 2021) ─────────────
+    eudr_check = None
+    if tile_id:
+        eudr_check = check_deforestation(tile_id, satellite_dir)
+
     return NdviResult(
         ndvi_mean=round(ndvi_mean, 4),
         ndvi_min=round(ndvi_min, 4),
@@ -374,6 +516,7 @@ def compute_ndvi(region: str, scale: int | None = None) -> NdviResult:
         cropland_pct=cropland_pct_val,
         score=score_final,
         anomaly=ndvi_anomaly,
+        eudr=eudr_check,
         evi_mean=round(evi_mean, 4) if evi_mean is not None else None,
         evi_available=evi_mean is not None,
         map_path=map_path,

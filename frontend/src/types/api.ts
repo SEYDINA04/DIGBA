@@ -32,6 +32,16 @@ export interface NdviAnomaly {
   available: boolean;
 }
 
+export interface EudrCheck {
+  deforestation_free: boolean;
+  deforested_pct: number;
+  forest_pct_2020: number;
+  forest_pct_2021: number;
+  cutoff_date: string;
+  source: string;
+  data_available: boolean;
+}
+
 export interface NdviResult {
   score: number;
   ndvi_mean: number;
@@ -44,6 +54,7 @@ export interface NdviResult {
     vegetation_dense: number;
   };
   cropland_pct: number;           // % pixels agricoles analysés (WorldCover)
+  eudr: EudrCheck | null;         // Vérification déforestation EUDR
   anomaly: NdviAnomaly | null;    // Phase 3 — anomalie vs climatologie MODIS
   evi_mean: number | null;        // Phase 5 — EVI (null si B2 absent)
   evi_available: boolean;
@@ -112,6 +123,7 @@ export interface ScoreResponse {
   score: number;
   niveau_risque: NiveauRisque;
   decision: string;
+  eudr_decision: string;
   details: ScoreDetailsData;
 }
 

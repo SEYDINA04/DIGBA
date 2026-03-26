@@ -56,7 +56,7 @@ export default function Dashboard() {
     <div className="space-y-8">
 
       {/* ── Hero banner ── */}
-      <div className="rounded-2xl bg-gradient-to-br from-section-dark via-[hsl(152,35%,12%)] to-primary p-8 text-white shadow-xl overflow-hidden relative">
+      <div id="tour-hero" className="rounded-2xl bg-gradient-to-br from-section-dark via-[hsl(152,35%,12%)] to-primary p-8 text-white shadow-xl overflow-hidden relative">
         <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full bg-white/5" />
         <div className="absolute -right-4  -top-4  h-28 w-28 rounded-full bg-white/5" />
 
@@ -85,6 +85,7 @@ export default function Dashboard() {
 
           {/* CTA */}
           <button
+            id="tour-new-analysis"
             type="button"
             onClick={() => setWizardOpen(true)}
             className="flex-shrink-0 group flex items-center gap-3 rounded-2xl bg-secondary px-6 py-4 text-secondary-foreground font-bold shadow-lg hover:shadow-xl hover:brightness-110 hover:scale-105 transition-all duration-200 focus:outline-none"
@@ -98,7 +99,7 @@ export default function Dashboard() {
         </div>
 
         {/* Stats row — FB-03 : lucide icons */}
-        <div className="relative mt-6 grid grid-cols-3 gap-3">
+        <div id="tour-stats" className="relative mt-6 grid grid-cols-3 gap-3">
           {stats.map(({ label, value, Icon, color }) => (
             <div key={label} className="rounded-xl bg-white/10 p-3 text-center">
               <Icon className={`h-5 w-5 mx-auto ${color}`} />
@@ -110,7 +111,7 @@ export default function Dashboard() {
       </div>
 
       {/* ── Recent analyses ── */}
-      <div>
+      <div id="tour-recent">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-display font-bold text-foreground flex items-center gap-2">
             <Clock className="h-4 w-4 text-muted-foreground" />

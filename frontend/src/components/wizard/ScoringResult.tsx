@@ -4,16 +4,20 @@
 import { useEffect, useState } from "react";
 import {
   ShieldCheck, AlertTriangle, Ban, User, Save,
-  Globe, CheckCircle, XCircle,
+  Globe, CheckCircle, XCircle, FileDown,
 } from "lucide-react";
 import type { ScoreResponse } from "../../types/api";
 import type { CountryData } from "../../data/countries";
 import { useLang } from "../../i18n/LangContext";
+import { generateEudrPdf } from "../../utils/generateEudrPdf";
 
 interface ScoringResultProps {
   result: ScoreResponse;
   country: CountryData;
   region: string;
+  produit: string;
+  fournisseur: string;
+  stockage: string;
   onDone: () => void;
 }
 
@@ -65,8 +69,8 @@ const NIVEAU_CONFIG = {
   },
 } as const;
 
-export function ScoringResult({ result, country, region, onDone }: ScoringResultProps) {
-  const { t } = useLang();
+export function ScoringResult({ result, country, region, produit, fournisseur, stockage, onDone }: ScoringResultProps) {
+  const { t, lang } = useLang();
   const { score, niveau_risque, decision, details } = result;
   const { rasff, operator } = details;
   const cfg = NIVEAU_CONFIG[niveau_risque] ?? NIVEAU_CONFIG["Modéré"];
@@ -116,7 +120,7 @@ export function ScoringResult({ result, country, region, onDone }: ScoringResult
         </div>
       </div>
 
-      {/* ── Decision banner ── */}
+      {/* ── Food Safety Recommendation ── */}
       <div className={`rounded-xl border-2 p-4 ${cfg.bg} ${cfg.border}`}>
         <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1">
           {t.wizard.recommendation}
@@ -126,6 +130,40 @@ export function ScoringResult({ result, country, region, onDone }: ScoringResult
           <span>{decision}</span>
         </div>
       </div>
+
+      {/* ── EUDR Recommendation ── */}
+      {result.eudr_decision && (() => {
+        const raw        = result.eudr_decision;
+        const isCompliant = raw.includes("EUDR COMPLIANT") || raw.includes("CONFORME EUDR");
+        const isPending   = raw.includes("unverified") || raw.includes("non vérifiable");
+
+        const borderColor = isCompliant ? "border-emerald-400" : isPending ? "border-amber-400" : "border-red-400";
+        const bgColor     = isCompliant ? "bg-emerald-50 dark:bg-emerald-950/30" : isPending ? "bg-amber-50 dark:bg-amber-950/30" : "bg-red-50 dark:bg-red-950/30";
+        const textColor   = isCompliant ? "text-emerald-800 dark:text-emerald-300" : isPending ? "text-amber-800 dark:text-amber-300" : "text-red-800 dark:text-red-300";
+        const labelColor  = isCompliant ? "text-emerald-600" : isPending ? "text-amber-600" : "text-red-600";
+        const EudrIcon    = isCompliant ? CheckCircle : isPending ? Globe : XCircle;
+
+        // Pick only the language matching user preference
+        const parts = raw.split("||").map(s => s.trim());
+        const enRaw = parts.find(p => p.startsWith("[EN]")) ?? parts[0] ?? raw;
+        const frRaw = parts.find(p => p.startsWith("[FR]")) ?? parts[1] ?? raw;
+        const text = (lang === "en" ? enRaw : frRaw)
+          .replace(/^\[(EN|FR)\]\s*/, "");
+
+        return (
+          <div className={`rounded-xl border-2 p-4 space-y-3 ${bgColor} ${borderColor}`}>
+            <div className="flex items-center gap-2">
+              <EudrIcon className={`h-4 w-4 shrink-0 ${labelColor}`} />
+              <p className={`text-xs font-semibold uppercase tracking-widest ${labelColor}`}>
+                EUDR — EU Regulation 2023/1115
+              </p>
+            </div>
+            <div className={`text-sm font-medium leading-relaxed ${textColor}`}>
+              {text}
+            </div>
+          </div>
+        );
+      })()}
 
       {/* ── RASFF + Operator cards — FB-04 : fond neutre ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -240,6 +278,25 @@ export function ScoringResult({ result, country, region, onDone }: ScoringResult
           </div>
         </div>
       </div>
+
+      {/* ── EUDR Export button ── */}
+      <button
+        type="button"
+        onClick={() => generateEudrPdf(result, {
+          region,
+          countryName: country.name,
+          countryCode: country.code,
+          produit,
+          fournisseur,
+          stockage,
+          lat: result.details.weather.lat,
+          lon: result.details.weather.lon,
+        })}
+        className="w-full flex items-center justify-center gap-2 rounded-xl border border-border bg-muted/50 py-3 text-sm font-semibold text-foreground transition-all duration-200 hover:bg-muted focus:outline-none"
+      >
+        <FileDown className="h-4 w-4 text-emerald-600" />
+        Export EUDR Declaration (PDF)
+      </button>
 
       {/* ── Done button ── */}
       <button

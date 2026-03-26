@@ -7,11 +7,13 @@ import Dashboard from "./pages/Dashboard";
 import Rasff from "./pages/Rasff";
 import History from "./pages/History";
 import { LangProvider } from "./i18n/LangContext";
+import OnboardingTour from "./components/onboarding/OnboardingTour";
 
 export default function App() {
   return (
     <LangProvider>
       <BrowserRouter>
+        <OnboardingTour />
         <Routes>
           <Route element={<Layout />}>
             <Route index element={<Dashboard />} />

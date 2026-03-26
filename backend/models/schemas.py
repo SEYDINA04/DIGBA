@@ -66,6 +66,17 @@ class NdviAnomaly(BaseModel):
     available : bool
 
 
+class EudrCheck(BaseModel):
+    """Vérification déforestation EUDR — comparaison WorldCover 2020 vs 2021."""
+    deforestation_free : bool    # True si < 1% de conversion forêt→autre après 31/12/2020
+    deforested_pct     : float   # % pixels convertis forêt→autre (classe 10 en 2020, pas en 2021)
+    forest_pct_2020    : float   # % pixels forêt (classe 10) dans la zone en 2020
+    forest_pct_2021    : float   # % pixels forêt (classe 10) dans la zone en 2021
+    cutoff_date        : str     # "2020-12-31"
+    source             : str     # "ESA WorldCover 2020/2021 v100/v200"
+    data_available     : bool    # False si tiles 2020 non encore téléchargées
+
+
 class NdviResult(BaseModel):
     ndvi_mean:      float
     ndvi_min:       float
@@ -74,6 +85,7 @@ class NdviResult(BaseModel):
     cropland_pct:   float = 0.0             # % pixels agricoles analysés (WorldCover classe 40)
     score:          float                   # 0–100
     anomaly:        Optional[NdviAnomaly] = None
+    eudr:           Optional[EudrCheck]  = None   # Vérification déforestation EUDR
     evi_mean:       Optional[float] = None  # EVI moyen (Phase 5) — None si B2 absent
     evi_available:  bool = False            # True dès que B2.jp2 présent
     map_path:       Optional[str] = None
@@ -152,10 +164,11 @@ class ScoreDetails(BaseModel):
 
 
 class ScoreResponse(BaseModel):
-    score:         float        = Field(..., description="Score de risque global 0–100")
-    niveau_risque: str          = Field(..., description="Faible | Modéré | Élevé")
-    decision:      str          = Field(..., description="Recommandation d'achat")
-    details:       ScoreDetails
+    score:            float  = Field(..., description="Score de risque global 0–100")
+    niveau_risque:    str    = Field(..., description="Faible | Modéré | Élevé")
+    decision:         str    = Field(..., description="Recommandation food safety")
+    eudr_decision:    str    = Field(default="", description="Recommandation conformité EUDR")
+    details:          ScoreDetails
 
 
 # ── Schémas utilitaires (routes RASFF) ────────────────────────────────────────
