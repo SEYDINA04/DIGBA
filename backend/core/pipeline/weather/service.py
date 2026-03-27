@@ -129,20 +129,30 @@ def _precip_score(precip_mm: float) -> float:
 
 
 def _anomaly_label(z: float, var: str) -> str:
-    """Génère un label lisible pour un z-score météo (sans emoji)."""
+    """Génère un label bilingue [EN]...[FR]... pour un z-score météo."""
     sign = f"+{z:.1f}σ" if z >= 0 else f"{z:.1f}σ"
     if var == "temp":
-        if z > 2.0:    return f"Canicule exceptionnelle ({sign})"
-        elif z > 1.0:  return f"Chaleur anormale ({sign})"
-        elif z < -2.0: return f"Fraîcheur exceptionnelle ({sign})"
-        elif z < -1.0: return f"Fraîcheur anormale ({sign})"
-        else:          return f"Température normale ({sign})"
+        if z > 2.0:
+            return f"[EN] Exceptional heat wave ({sign}) || [FR] Canicule exceptionnelle ({sign})"
+        elif z > 1.0:
+            return f"[EN] Abnormal heat ({sign}) || [FR] Chaleur anormale ({sign})"
+        elif z < -2.0:
+            return f"[EN] Exceptional cold snap ({sign}) || [FR] Fraîcheur exceptionnelle ({sign})"
+        elif z < -1.0:
+            return f"[EN] Abnormal cold ({sign}) || [FR] Fraîcheur anormale ({sign})"
+        else:
+            return f"[EN] Normal temperature ({sign}) || [FR] Température normale ({sign})"
     else:  # precip
-        if z > 2.0:    return f"Excès pluie exceptionnel ({sign})"
-        elif z > 1.0:  return f"Pluies au-dessus normale ({sign})"
-        elif z < -2.0: return f"Sécheresse sévère ({sign})"
-        elif z < -1.0: return f"Déficit pluviométrique ({sign})"
-        else:          return f"Précipitations normales ({sign})"
+        if z > 2.0:
+            return f"[EN] Exceptional excess rainfall ({sign}) || [FR] Excès pluie exceptionnel ({sign})"
+        elif z > 1.0:
+            return f"[EN] Above-normal rainfall ({sign}) || [FR] Pluies au-dessus normale ({sign})"
+        elif z < -2.0:
+            return f"[EN] Severe drought ({sign}) || [FR] Sécheresse sévère ({sign})"
+        elif z < -1.0:
+            return f"[EN] Rainfall deficit ({sign}) || [FR] Déficit pluviométrique ({sign})"
+        else:
+            return f"[EN] Normal precipitation ({sign}) || [FR] Précipitations normales ({sign})"
 
 
 def _anomaly_penalty(z_temp: float, z_precip: float) -> float:

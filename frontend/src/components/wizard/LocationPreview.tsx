@@ -73,26 +73,35 @@ function WeatherIcon({ desc, className }: { desc: string; className?: string }) 
   return <Sun className={`${cls} text-amber-500`} />;
 }
 
-/** Associe une icône lucide à un label d'anomalie météo (texte pur, sans emoji) */
-function AnomalyRow({ label }: { label: string }) {
-  const l = label.toLowerCase();
+/** Picks the right language part from a bilingual [EN]...[FR]... label */
+function parseBilingual(raw: string, lang: string): string {
+  const parts = raw.split("||").map(s => s.trim());
+  const enRaw = parts.find(p => p.startsWith("[EN]")) ?? parts[0] ?? raw;
+  const frRaw = parts.find(p => p.startsWith("[FR]")) ?? parts[1] ?? raw;
+  return (lang === "en" ? enRaw : frRaw).replace(/^\[(EN|FR)\]\s*/, "");
+}
+
+/** Associe une icône lucide à un label d'anomalie météo bilingue */
+function AnomalyRow({ label, lang }: { label: string; lang: string }) {
+  const text = parseBilingual(label, lang);
+  const l = text.toLowerCase();
   let Icon = Check;
   let color = "text-emerald-600";
 
-  if (l.includes("canicule") || l.includes("chaleur")) {
+  if (l.includes("heat wave") || l.includes("canicule") || l.includes("abnormal heat") || l.includes("chaleur")) {
     Icon = Thermometer; color = "text-red-500";
-  } else if (l.includes("fraîcheur") || l.includes("fraicheur")) {
+  } else if (l.includes("cold") || l.includes("fraîcheur") || l.includes("fraicheur")) {
     Icon = Snowflake;   color = "text-blue-500";
-  } else if (l.includes("excès") || l.includes("exces") || l.includes("pluies")) {
+  } else if (l.includes("rainfall") || l.includes("excess") || l.includes("excès") || l.includes("pluies")) {
     Icon = CloudRain;   color = "text-sky-500";
-  } else if (l.includes("sécheresse") || l.includes("secheresse") || l.includes("déficit") || l.includes("deficit")) {
+  } else if (l.includes("drought") || l.includes("deficit") || l.includes("sécheresse") || l.includes("déficit")) {
     Icon = Sun;         color = "text-amber-500";
   }
 
   return (
     <div className="flex items-center gap-1.5">
       <Icon className={`h-3.5 w-3.5 shrink-0 ${color}`} />
-      <span className="text-xs text-foreground/80">{label}</span>
+      <span className="text-xs text-foreground/80">{text}</span>
     </div>
   );
 }
@@ -106,7 +115,7 @@ const VEG_PALETTE: Record<string, string> = {
 };
 
 export function LocationPreview({ data, country, onContinue }: LocationPreviewProps) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { ndvi, weather, region } = data;
   const coords = REGION_COORDS[region];
 
@@ -188,10 +197,10 @@ export function LocationPreview({ data, country, onContinue }: LocationPreviewPr
               <div className="mb-3 flex items-center gap-2 text-xs text-muted-foreground">
                 <Wheat className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                 <span>
-                  Terres agricoles :{" "}
+                  {t.wizard.cropland}:{" "}
                   <span className="text-foreground font-semibold">{ndvi.cropland_pct.toFixed(1)}%</span>
                   {ndvi.cropland_pct < 5 && (
-                    <span className="ml-1 text-amber-500">(zone peu agricole)</span>
+                    <span className="ml-1 text-amber-500">{t.wizard.low_agri_zone}</span>
                   )}
                 </span>
               </div>
@@ -254,7 +263,7 @@ export function LocationPreview({ data, country, onContinue }: LocationPreviewPr
                 <div className="flex items-center gap-1.5 mb-0.5">
                   <WeatherIcon desc={weather.weather_desc} className="h-3.5 w-3.5" />
                   <p className="text-xs font-semibold uppercase tracking-widest text-sky-600">
-                    Météo
+                    {t.wizard.weather}
                   </p>
                 </div>
                 <p className="text-xs text-muted-foreground">Open-Meteo · {weather.city}</p>
@@ -288,7 +297,7 @@ export function LocationPreview({ data, country, onContinue }: LocationPreviewPr
               {[
                 { Icon: Droplets,  label: t.wizard.humidity,      value: `${weather.humidity}%` },
                 { Icon: CloudRain, label: t.wizard.precipitation,  value: `${weather.precip_mm} mm` },
-                { Icon: Wind,      label: "Vent",                  value: `${weather.wind_speed?.toFixed(1) ?? "—"} km/h` },
+                { Icon: Wind,      label: t.wizard.wind,            value: `${weather.wind_speed?.toFixed(1) ?? "—"} km/h` },
               ].map(({ Icon, label, value }) => (
                 <div key={label} className="rounded-lg bg-muted/50 p-2.5">
                   <Icon className="h-4 w-4 text-sky-500 mb-1" />
@@ -302,15 +311,15 @@ export function LocationPreview({ data, country, onContinue }: LocationPreviewPr
             {weather.anomaly && (
               <div className="mb-4 rounded-lg bg-muted/40 border border-border p-3 space-y-1.5">
                 <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                  Vs normale ERA5
+                  {t.wizard.era5_baseline}
                 </p>
-                <AnomalyRow label={weather.anomaly.temp_label} />
-                <AnomalyRow label={weather.anomaly.precip_label} />
+                <AnomalyRow label={weather.anomaly.temp_label} lang={lang} />
+                <AnomalyRow label={weather.anomaly.precip_label} lang={lang} />
                 {weather.anomaly.penalty > 0 && (
                   <div className="flex items-center gap-1.5 mt-1.5 pt-1.5 border-t border-border">
                     <AlertTriangle className="h-3.5 w-3.5 text-red-500 shrink-0" />
                     <p className="text-xs text-red-600 font-semibold">
-                      +{weather.anomaly.penalty} pts pénalité anomalie
+                      {t.wizard.anomaly_penalty(weather.anomaly.penalty)}
                     </p>
                   </div>
                 )}

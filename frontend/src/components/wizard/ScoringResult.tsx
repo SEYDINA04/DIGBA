@@ -127,7 +127,14 @@ export function ScoringResult({ result, country, region, produit, fournisseur, s
         </p>
         <div className={`flex items-start gap-2 text-sm font-medium leading-relaxed ${cfg.text}`}>
           <RiskIcon className="h-4 w-4 shrink-0 mt-0.5" />
-          <span>{decision}</span>
+          <span>{
+            (() => {
+              const parts = decision.split("||").map(s => s.trim());
+              const enRaw = parts.find(p => p.startsWith("[EN]")) ?? parts[0] ?? decision;
+              const frRaw = parts.find(p => p.startsWith("[FR]")) ?? parts[1] ?? decision;
+              return (lang === "en" ? enRaw : frRaw).replace(/^\[(EN|FR)\]\s*/, "");
+            })()
+          }</span>
         </div>
       </div>
 
@@ -180,7 +187,7 @@ export function ScoringResult({ result, country, region, produit, fournisseur, s
                     RASFF EU
                   </p>
                 </div>
-                <p className="text-xs text-muted-foreground">Historique rejets</p>
+                <p className="text-xs text-muted-foreground">{t.wizard.rasff_subtitle}</p>
               </div>
               <div className="text-right">
                 <div className="text-3xl font-black tabular-nums text-foreground">
@@ -235,10 +242,10 @@ export function ScoringResult({ result, country, region, produit, fournisseur, s
                 <div className="flex items-center gap-1.5 mb-0.5">
                   <User className="h-3.5 w-3.5 text-slate-600" />
                   <p className="text-xs font-semibold uppercase tracking-widest text-slate-600">
-                    Opérateur
+                    {t.wizard.operator_title}
                   </p>
                 </div>
-                <p className="text-xs text-muted-foreground">Profil terrain</p>
+                <p className="text-xs text-muted-foreground">{t.wizard.operator_subtitle}</p>
               </div>
               <div className="text-right">
                 <div className="text-3xl font-black tabular-nums text-foreground">
@@ -268,11 +275,17 @@ export function ScoringResult({ result, country, region, produit, fournisseur, s
 
             {Object.keys(operator.facteurs).length > 0 && (
               <div className="mt-3 flex flex-wrap gap-1">
-                {Object.values(operator.facteurs).map((label, i) => (
-                  <span key={i} className="text-xs bg-muted px-2 py-0.5 rounded-full text-muted-foreground">
-                    {label}
-                  </span>
-                ))}
+                {Object.values(operator.facteurs).map((raw, i) => {
+                  const parts = raw.split("||").map(s => s.trim());
+                  const enRaw = parts.find(p => p.startsWith("[EN]")) ?? parts[0] ?? raw;
+                  const frRaw = parts.find(p => p.startsWith("[FR]")) ?? parts[1] ?? raw;
+                  const label = (lang === "en" ? enRaw : frRaw).replace(/^\[(EN|FR)\]\s*/, "");
+                  return (
+                    <span key={i} className="text-xs bg-muted px-2 py-0.5 rounded-full text-muted-foreground">
+                      {label}
+                    </span>
+                  );
+                })}
               </div>
             )}
           </div>
