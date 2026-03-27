@@ -44,7 +44,8 @@ def process_operator(form: ScoreRequest) -> OperatorResult:
     stockage_val = form.stockage.value if hasattr(form.stockage, "value") else str(form.stockage)
     score = _STOCKAGE_SCORE.get(stockage_val, 50.0)
     facteurs["stockage"] = (
-        f"{stockage_val} → score de base {score:.0f}/100"
+        f"[EN] {stockage_val} → base score {score:.0f}/100"
+        f" || [FR] {stockage_val} → score de base {score:.0f}/100"
     )
 
     # Réductions certifications
@@ -58,11 +59,15 @@ def process_operator(form: ScoreRequest) -> OperatorResult:
 
     if total_reduction > 0:
         score = max(0.0, score - total_reduction)
+        certs_str = ', '.join(certs_reconnues)
         facteurs["certifications"] = (
-            f"{', '.join(certs_reconnues)} → réduction -{total_reduction:.0f} pts"
+            f"[EN] {certs_str} → -{total_reduction:.0f} pts reduction"
+            f" || [FR] {certs_str} → réduction -{total_reduction:.0f} pts"
         )
     else:
-        facteurs["certifications"] = "Aucune certification reconnue"
+        facteurs["certifications"] = (
+            "[EN] No recognised certification || [FR] Aucune certification reconnue"
+        )
 
     score = round(score, 1)
     logger.info(

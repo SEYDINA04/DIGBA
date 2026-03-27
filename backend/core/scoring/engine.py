@@ -42,6 +42,180 @@ _TEST: dict[str, str] = {
 _HIGH_RISK_STADES = {"harvest", "post_harvest_drying", "storage_medium", "grain_fill", "flowering"}
 
 
+_MYCOTOXIN_EN: dict[str, str] = {
+    "arachide": "aflatoxin B1 (EU limit: 2 ppb grain, 8 ppb animal feed)",
+    "mil":      "fumonisins B1+B2 and aflatoxins (EU limit: 1,000 ppb fumonisins)",
+    "sorgho":   "fumonisins and deoxynivalenol DON (EU limit: 750 ppb DON cereals)",
+    "sesame":   "ochratoxin A – OTA (EU limit: 15 ppb spices)",
+    "cacao":    "ochratoxin A – OTA and cadmium (EU limit: 2 ppb OTA, 0.8 mg/kg Cd)",
+}
+
+_NIVEAU_EN: dict[str, str] = {
+    "Faible": "Low", "Modéré": "Moderate", "Élevé": "High",
+}
+
+
+def _build_recommendation(
+    score: float, niveau: str,
+    ndvi: "NdviResult", weather: "WeatherResult",
+    rasff: "RasffResult", operator: "OperatorResult",
+    phenology: "PhenologyResult | None", produit: str,
+    lang: str,
+) -> str:
+    """Builds the recommendation string for a single language (en or fr)."""
+    parts: list[str] = []
+    factors: list[str] = []
+
+    # ── 1. Dominant factors ───────────────────────────────────────────────────
+    if ndvi.score >= 55:
+        if lang == "en":
+            factors.append(f"satellite vegetation stress (NDVI={ndvi.ndvi_mean:.2f})")
+        else:
+            factors.append(f"stress végétatif satellite (NDVI={ndvi.ndvi_mean:.2f})")
+    if ndvi.anomaly and ndvi.anomaly.available and ndvi.anomaly.z_score < -1.5:
+        if lang == "en":
+            factors.append(f"abnormal NDVI deficit ({ndvi.anomaly.z_score:+.1f}σ vs climatology)")
+        else:
+            factors.append(f"déficit NDVI anormal ({ndvi.anomaly.z_score:+.1f}σ vs climatologie)")
+
+    if weather.anomaly:
+        z_t = weather.anomaly.temp_z
+        z_p = weather.anomaly.precip_z
+        if z_t > 1.5:
+            factors.append(f"ERA5 heat wave ({z_t:+.1f}σ above normal)" if lang == "en" else f"canicule ERA5 ({z_t:+.1f}σ au-dessus de la normale)")
+        elif z_t < -1.5:
+            factors.append(f"abnormal ERA5 cold ({z_t:+.1f}σ)" if lang == "en" else f"fraîcheur anormale ERA5 ({z_t:+.1f}σ)")
+        if z_p > 1.5:
+            factors.append(f"ERA5 excess rainfall ({z_p:+.1f}σ)" if lang == "en" else f"excès pluviométrique ERA5 ({z_p:+.1f}σ)")
+        elif z_p < -1.5:
+            factors.append(f"ERA5 drought ({z_p:+.1f}σ)" if lang == "en" else f"sécheresse ERA5 ({z_p:+.1f}σ)")
+    elif weather.score >= 55:
+        if lang == "en":
+            factors.append(f"unfavourable weather (humidity {weather.humidity}%, {weather.temp_c:.0f}°C)")
+        else:
+            factors.append(f"conditions météo défavorables (humidité {weather.humidity}%, {weather.temp_c:.0f}°C)")
+
+    if rasff.blackliste:
+        factors.append("supplier BLACKLISTED in EU RASFF database" if lang == "en" else "fournisseur BLACKLISTÉ dans la base RASFF EU")
+    elif rasff.nb_rejets_24m > 0:
+        factors.append(
+            f"{rasff.nb_rejets_24m} EU RASFF rejection(s) for this supplier (24 months)" if lang == "en"
+            else f"{rasff.nb_rejets_24m} rejet(s) RASFF EU sur ce fournisseur (24 mois)"
+        )
+        if rasff.derniers_dangers:
+            factors.append(
+                f"reported hazards: {', '.join(rasff.derniers_dangers[:2])}" if lang == "en"
+                else f"dangers signalés : {', '.join(rasff.derniers_dangers[:2])}"
+            )
+    if rasff.nb_rejets_region > 3:
+        factors.append(
+            f"{rasff.nb_rejets_region} RASFF rejections in the region (24 months)" if lang == "en"
+            else f"{rasff.nb_rejets_region} rejets RASFF dans la région (24 mois)"
+        )
+
+    op_issues: list[str] = []
+    if operator.stockage == "plein_air":
+        op_issues.append("open-air storage (moisture/insect exposure)" if lang == "en" else "stockage plein air (exposition humidité/insectes)")
+    if not operator.certifications:
+        op_issues.append("no quality certification" if lang == "en" else "aucune certification qualité")
+    if op_issues:
+        factors.append(" + ".join(op_issues))
+
+    if phenology and phenology.stade in _HIGH_RISK_STADES:
+        pheno_labels_en = {
+            "harvest":             "harvest in progress (critical handling)",
+            "post_harvest_drying": "post-harvest drying (critical moisture)",
+            "storage_medium":      "prolonged storage > 3 months",
+            "grain_fill":          "grain filling (peak mycotoxin accumulation)",
+            "flowering":           "flowering (critical mycotoxin window)",
+        }
+        pheno_labels_fr = {
+            "harvest":             "récolte en cours (manipulation critique)",
+            "post_harvest_drying": "séchage post-récolte (humidité critique)",
+            "storage_medium":      "stockage prolongé > 3 mois",
+            "grain_fill":          "remplissage des grains (accumulation max mycotoxines)",
+            "flowering":           "floraison (fenêtre critique mycotoxines)",
+        }
+        labels = pheno_labels_en if lang == "en" else pheno_labels_fr
+        lbl = labels.get(phenology.stade, phenology.stade)
+        factors.append(f"critical phenological stage: {lbl}" if lang == "en" else f"stade phénologique critique : {lbl}")
+
+    if factors:
+        sep = " · "
+        parts.append(f"Dominant factors: {sep.join(factors)}." if lang == "en" else f"Facteurs dominants : {sep.join(factors)}.")
+    else:
+        parts.append("No major risk factor detected for this period." if lang == "en" else "Aucun facteur de risque majeur détecté sur cette période.")
+
+    # ── 2. Mycotoxin risk ────────────────────────────────────────────────────
+    if lang == "en":
+        mycotoxin = _MYCOTOXIN_EN.get(produit.lower(), "mycotoxins (unregistered product)")
+        parts.append(f"Main risk for {produit}: {mycotoxin}.")
+    else:
+        mycotoxin = _MYCOTOXIN.get(produit.lower(), "mycotoxines (produit non référencé)")
+        parts.append(f"Risque principal pour {produit} : {mycotoxin}.")
+
+    # ── 3. Action ────────────────────────────────────────────────────────────
+    test = _TEST.get(produit.lower(), "accredited laboratory test" if lang == "en" else "test laboratoire accrédité")
+    niveau_en = _NIVEAU_EN.get(niveau, niveau)
+
+    if niveau == "Faible":
+        if lang == "en":
+            parts.append(
+                f"Action: purchase possible — require original phytosanitary certificate "
+                f"and retain a reference sample (min. 500g). "
+                f"{test} test recommended if storage > 2 months."
+            )
+        else:
+            parts.append(
+                f"Action : achat possible — exiger le certificat phytosanitaire d'origine "
+                f"et conserver un échantillon de référence (min. 500g). "
+                f"Test {test} recommandé si stockage > 2 mois."
+            )
+    elif niveau == "Modéré":
+        if lang == "en":
+            parts.append(
+                f"Action: conditional purchase — {test} mandatory before financial commitment. "
+                f"Negotiate a downgrading clause if result > 50% of EU limit. "
+                f"Visual lot inspection (colour, smell, moisture) required."
+            )
+        else:
+            parts.append(
+                f"Action : achat conditionnel — {test} obligatoire avant engagement financier. "
+                f"Négocier une clause de déclassement si résultat > 50% de la limite EU. "
+                f"Inspection visuelle du lot (couleur, odeur, humidité) requise."
+            )
+    else:  # Élevé / High
+        if rasff.blackliste:
+            if lang == "en":
+                parts.append(
+                    f"Action: immediate refusal recommended — supplier blacklisted in EU RASFF. "
+                    f"If purchase is unavoidable: {test} + full storage site audit "
+                    f"+ contractual penalty clause (reimbursement if > EU limit)."
+                )
+            else:
+                parts.append(
+                    f"Action : refus immédiat recommandé — fournisseur blacklisté RASFF EU. "
+                    f"Si achat impératif : {test} + audit complet du site de stockage "
+                    f"+ clause pénale contractuelle (remboursement si > limite EU)."
+                )
+        else:
+            if lang == "en":
+                parts.append(
+                    f"Action: refusal or renegotiation — {test} mandatory + site audit. "
+                    f"Factor in testing cost into purchase price. "
+                    f"Require full parcel traceability (GPS + harvest date)."
+                )
+            else:
+                parts.append(
+                    f"Action : refus ou renégociation — {test} obligatoire + audit site. "
+                    f"Intégrer le coût du test ({test.split()[0]}) dans le prix d'achat. "
+                    f"Exiger traçabilité parcelle complète (GPS + date récolte)."
+                )
+
+    niveau_label = niveau_en if lang == "en" else niveau
+    return f"Score {score:.0f}/100 — {niveau_label}. " + " ".join(parts)
+
+
 def generate_recommendation(
     score:     float,
     niveau:    str,
@@ -53,109 +227,11 @@ def generate_recommendation(
     produit:   str,
 ) -> str:
     """
-    Génère une recommandation contextuelle expliquant les facteurs dominants du score.
-
-    Structure :
-        Score X/100 — Niveau.
-        Facteurs dominants : [liste des causes identifiées].
-        Risque principal : [mycotoxine spécifique au produit].
-        Action : [mesure concrète adaptée au niveau].
+    Génère une recommandation bilingue [EN]...[FR]... pour le scoring DIGBA.
     """
-    parts: list[str] = []
-
-    # ── 1. Facteurs dominants ─────────────────────────────────────────────────
-    factors: list[str] = []
-
-    # Satellite / végétation
-    if ndvi.score >= 55:
-        factors.append(f"stress végétatif satellite (NDVI={ndvi.ndvi_mean:.2f})")
-    if ndvi.anomaly and ndvi.anomaly.available and ndvi.anomaly.z_score < -1.5:
-        factors.append(f"déficit NDVI anormal ({ndvi.anomaly.z_score:+.1f}σ vs climatologie)")
-
-    # Météo / ERA5
-    if weather.anomaly:
-        z_t = weather.anomaly.temp_z
-        z_p = weather.anomaly.precip_z
-        if z_t > 1.5:
-            factors.append(f"canicule ERA5 ({z_t:+.1f}σ au-dessus de la normale)")
-        elif z_t < -1.5:
-            factors.append(f"fraîcheur anormale ERA5 ({z_t:+.1f}σ)")
-        if z_p > 1.5:
-            factors.append(f"excès pluviométrique ERA5 ({z_p:+.1f}σ)")
-        elif z_p < -1.5:
-            factors.append(f"sécheresse ERA5 ({z_p:+.1f}σ)")
-    elif weather.score >= 55:
-        factors.append(f"conditions météo défavorables (humidité {weather.humidity}%, {weather.temp_c:.0f}°C)")
-
-    # RASFF
-    if rasff.blackliste:
-        factors.append("fournisseur BLACKLISTÉ dans la base RASFF EU")
-    elif rasff.nb_rejets_24m > 0:
-        factors.append(f"{rasff.nb_rejets_24m} rejet(s) RASFF EU sur ce fournisseur (24 mois)")
-        if rasff.derniers_dangers:
-            factors.append(f"dangers signalés : {', '.join(rasff.derniers_dangers[:2])}")
-    if rasff.nb_rejets_region > 3:
-        factors.append(f"{rasff.nb_rejets_region} rejets RASFF dans la région (24 mois)")
-
-    # Opérateur
-    op_issues: list[str] = []
-    if operator.stockage == "plein_air":
-        op_issues.append("stockage plein air (exposition humidité/insectes)")
-    if not operator.certifications:
-        op_issues.append("aucune certification qualité")
-    if op_issues:
-        factors.append(" + ".join(op_issues))
-
-    # Phénologie
-    if phenology and phenology.stade in _HIGH_RISK_STADES:
-        pheno_labels = {
-            "harvest":             "récolte en cours (manipulation critique)",
-            "post_harvest_drying": "séchage post-récolte (humidité critique)",
-            "storage_medium":      "stockage prolongé > 3 mois",
-            "grain_fill":          "remplissage des grains (accumulation max mycotoxines)",
-            "flowering":           "floraison (fenêtre critique mycotoxines)",
-        }
-        factors.append(f"stade phénologique critique : {pheno_labels.get(phenology.stade, phenology.stade)}")
-
-    if factors:
-        parts.append(f"Facteurs dominants : {' · '.join(factors)}.")
-    else:
-        parts.append("Aucun facteur de risque majeur détecté sur cette période.")
-
-    # ── 2. Risque mycotoxine spécifique ───────────────────────────────────────
-    mycotoxin = _MYCOTOXIN.get(produit.lower(), "mycotoxines (produit non référencé)")
-    parts.append(f"Risque principal pour {produit} : {mycotoxin}.")
-
-    # ── 3. Action concrète selon le niveau ────────────────────────────────────
-    test = _TEST.get(produit.lower(), "test laboratoire accrédité")
-
-    if niveau == "Faible":
-        parts.append(
-            f"Action : achat possible — exiger le certificat phytosanitaire d'origine "
-            f"et conserver un échantillon de référence (min. 500g). "
-            f"Test {test} recommandé si stockage > 2 mois."
-        )
-    elif niveau == "Modéré":
-        parts.append(
-            f"Action : achat conditionnel — {test} obligatoire avant engagement financier. "
-            f"Négocier une clause de déclassement si résultat > 50% de la limite EU. "
-            f"Inspection visuelle du lot (couleur, odeur, humidité) requise."
-        )
-    else:  # Élevé
-        if rasff.blackliste:
-            parts.append(
-                f"Action : refus immédiat recommandé — fournisseur blacklisté RASFF EU. "
-                f"Si achat impératif : {test} + audit complet du site de stockage "
-                f"+ clause pénale contractuelle (remboursement si > limite EU)."
-            )
-        else:
-            parts.append(
-                f"Action : refus ou renégociation — {test} obligatoire + audit site. "
-                f"Intégrer le coût du test ({test.split()[0]}) dans le prix d'achat. "
-                f"Exiger traçabilité parcelle complète (GPS + date récolte)."
-            )
-
-    return f"Score {score:.0f}/100 — {niveau}. " + " ".join(parts)
+    en = _build_recommendation(score, niveau, ndvi, weather, rasff, operator, phenology, produit, "en")
+    fr = _build_recommendation(score, niveau, ndvi, weather, rasff, operator, phenology, produit, "fr")
+    return f"[EN] {en} || [FR] {fr}"
 
 
 def generate_eudr_recommendation(ndvi: NdviResult, region: str, lat: float, lon: float) -> str:
